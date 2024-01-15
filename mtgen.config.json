@@ -1,0 +1,8 @@
+{
+  "input": {
+    "target": "src/Modals/**/**.ts"
+  },
+  "output": {
+    "target": "src/types/mongoose"
+  }
+}
