@@ -1,5 +1,4 @@
 import mongoose, { Types, model, models } from "mongoose";
-import usersSchema from "@/Modals/UsersModals/users";
 const Schema = mongoose.Schema;
 const renterUserSchema = new Schema({
   name: {
@@ -80,7 +79,6 @@ const renterUserSchema = new Schema({
   },
   refreshToken: {
     type: String,
-    required: true,
   },
 });
 const renter =

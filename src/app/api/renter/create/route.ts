@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { connect } from "@/DataBase/dbConfig";
 import { renterConfirmationMail } from "@/Helpers/NodeMailer/renterMailConfigs";
+import landlord from "@/Modals/UsersModals/landlord";
 connect();
 export async function POST(request: NextRequest) {
   try {
@@ -12,38 +13,47 @@ export async function POST(request: NextRequest) {
     if (!name && !surname && !email && !password) {
       return NextResponse.json({ error: "Missing Inputs !" });
     }
-    let newRenter = await renter.findOne({ email });
-    if (!newRenter) {
-      const securePassword = bcrypt.hashSync(password);
-      const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      let activationCode = "";
-      for (let i = 0; i < 25; i++) {
-        activationCode +=
-          characters[Math.floor(Math.random() * characters.length)];
-      }
-
-      !profilePicture
-        ? (newRenter = await renter.create({
-            name,
-            surname,
-            email,
-            password: securePassword,
-            activationCode,
-          }))
-        : (newRenter = await renter.create({
-            name,
-            surname,
-            email,
-            password: securePassword,
-            activationCode,
-            profilePicture,
-          }));
-      await renterConfirmationMail(name, email, newRenter._id, activationCode);
-    } else {
+    let newRenter = await landlord.findOne({ email });
+    if (newRenter) {
       return NextResponse.json({ error: "Account Allready Exists" });
+    } else {
+      newRenter = await renter.findOne({ email });
+      if (!newRenter) {
+        const securePassword = bcrypt.hashSync(password);
+        const characters =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let activationCode = "";
+        for (let i = 0; i < 25; i++) {
+          activationCode +=
+            characters[Math.floor(Math.random() * characters.length)];
+        }
+        !profilePicture
+          ? (newRenter = await renter.create({
+              name,
+              surname,
+              email,
+              password: securePassword,
+              activationCode,
+            }))
+          : (newRenter = await renter.create({
+              name,
+              surname,
+              email,
+              password: securePassword,
+              activationCode,
+              profilePicture,
+            }));
+        await renterConfirmationMail(
+          name,
+          email,
+          newRenter._id,
+          activationCode
+        );
+        return NextResponse.json({ success: "Created" });
+      } else {
+        return NextResponse.json({ error: "Account Allready Exists" });
+      }
     }
-    return NextResponse.json({ success: "Created" });
   } catch (err) {
     console.log(err);
     return NextResponse.json({ serverError: "Server Error" });

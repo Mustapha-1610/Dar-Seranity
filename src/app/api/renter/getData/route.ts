@@ -12,20 +12,18 @@ export async function GET(request: NextRequest) {
         success: "Valid",
         account: routeProtectionResponse.renterAccount,
       });
-      if (routeProtectionResponse.newAccessToken) {
-        response.cookies.set(
-          "accessRenterToken",
-          routeProtectionResponse.newAccessToken,
-          {
-            httpOnly: true,
-            sameSite: "none",
-            secure: true,
-          }
-        );
-      }
+      response.cookies.set(
+        "accessRenterToken",
+        routeProtectionResponse.newAccessToken!,
+        {
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+        }
+      );
       return response;
     } else {
-      return NextResponse.json({ error: routeProtectionResponse.reason });
+      return routeProtectionResponse.response;
     }
   } catch (err) {
     console.error(err);

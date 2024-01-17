@@ -13,6 +13,7 @@ export const verifyRenterToken = async (request: NextRequest) => {
       ) as JwtPayload;
       const renterAccount = await renter.findById(decodedAccessToken.renter_id);
       return { isValid: true, renterAccount };
+    } else {
     }
   } catch (err) {
     try {
@@ -34,10 +35,30 @@ export const verifyRenterToken = async (request: NextRequest) => {
           );
           return { isValid: true, newAccessToken, renterAccount };
         }
+      } else {
+        const response = NextResponse.json({
+          reason: "Login required",
+        });
+        response.cookies.set("refreshRenterToken", "", {
+          expires: new Date(0),
+        });
+        return { isValid: false, response };
       }
     } catch (refreshErr) {
-      return { isValid: false, reason: "Login required" };
+      const response = NextResponse.json({
+        reason: "Login required",
+      });
+      response.cookies.set("refreshRenterToken", "", {
+        expires: new Date(0),
+      });
+      return { isValid: false, response };
     }
   }
-  return { isValid: false, reason: "Login required" };
+  const response = NextResponse.json({
+    reason: "Login required",
+  });
+  response.cookies.set("refreshRenterToken", "", {
+    expires: new Date(0),
+  });
+  return { isValid: false, response };
 };
