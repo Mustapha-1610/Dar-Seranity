@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import renter from "@/Modals/UsersModals/renter";
 import { JwtPayload } from "jsonwebtoken";
-
+import { connect } from "@/DataBase/dbConfig";
+connect();
 export const verifyRenterToken = async (request: NextRequest) => {
   try {
     const accessToken = request.cookies.get("accessRenterToken")?.value || "";

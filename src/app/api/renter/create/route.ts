@@ -43,12 +43,7 @@ export async function POST(request: NextRequest) {
               activationCode,
               profilePicture,
             }));
-        await renterConfirmationMail(
-          name,
-          email,
-          newRenter._id,
-          activationCode
-        );
+        await renterConfirmationMail(name, email, activationCode);
         return NextResponse.json({ success: "Created" });
       } else {
         return NextResponse.json({ error: "Account Allready Exists" });

@@ -35,14 +35,14 @@ export async function POST(request: NextRequest) {
             { landlord_id: existingUser._id },
             process.env.ACCESS_TOKEN_SECRET!,
             {
-              expiresIn: "5m",
+              expiresIn: "10m",
             }
           );
           const refreshToken = jwt.sign(
             { landlord_id: existingUser._id },
             process.env.REFRESH_TOKEN_SECRET!,
             {
-              expiresIn: "30d",
+              expiresIn: "1y",
             }
           );
           existingUser.refreshToken = refreshToken;
@@ -85,14 +85,14 @@ export async function POST(request: NextRequest) {
         { renter_id: existingUser._id },
         process.env.ACCESS_TOKEN_SECRET!,
         {
-          expiresIn: "5s",
+          expiresIn: "10m",
         }
       );
       const refreshToken = jwt.sign(
         { renter_id: existingUser._id },
         process.env.REFRESH_TOKEN_SECRET!,
         {
-          expiresIn: "5s",
+          expiresIn: "1y",
         }
       );
       existingUser.refreshToken = refreshToken;

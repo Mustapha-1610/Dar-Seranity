@@ -13,11 +13,10 @@ const transport = nodemailer.createTransport({
 export const renterConfirmationMail = async (
   name: string,
   email: string,
-  renterId: string,
   activationCode: string
 ) => {
   const tokenPayload = {
-    id: renterId,
+    email: email,
     aCode: activationCode,
   };
   const mailToken = jwt.sign(
@@ -37,10 +36,10 @@ export const renterConfirmationMail = async (
     <h2 style="text-align: center; margin-bottom: 20px;">Welcome to Dar-Seranity !</h2>
   <div style="text-align: center; margin-bottom: 5px;">
     <img src="https://firebasestorage.googleapis.com/v0/b/dar-seranity.appspot.com/o/favicon.ico?alt=media&token=b5499d11-7d68-4da1-91ec-fee14c22e513" style="width: 130px;">
-    <h3>Hi ${name},Activate your account and start exploring our serene offerings.</h3>
+    <h3>Hi ${name}, Activate Your Account And Start Exploring Our Serene Offerings.</h3>
   </div>
   <div style="text-align: center; margin-bottom: 5px;">
-    <a href="https://auctionwebapp-liard.vercel.app//Bactivation=${mailToken}" style="background-color: #C1E1C1; border: 1px solid #007bff; color: white; padding: 10px 20px; text-decoration: none;">Activate</a>
+    <a href="http://localhost:3000/verify/${mailToken}" style="background-color: #C1E1C1; border: 1px solid #097969; color: white; padding: 10px 20px; text-decoration: none;">Activate</a>
     <p>Thank you for choosing Dar-Seranity !</p>
   </div>
 </div>`,
