@@ -39,7 +39,7 @@ export const renterConfirmationMail = async (
     <h3>Hi ${name}, Activate Your Account And Start Exploring Our Serene Offerings.</h3>
   </div>
   <div style="text-align: center; margin-bottom: 5px;">
-    <a href="http://localhost:3000/verify/${mailToken}" style="background-color: #C1E1C1; border: 1px solid #097969; color: white; padding: 10px 20px; text-decoration: none;">Activate</a>
+    <a href="https://dar-seranity.vercel.app/verify/${mailToken}" style="background-color: #C1E1C1; border: 1px solid #097969; color: white; padding: 10px 20px; text-decoration: none;">Activate</a>
     <p>Thank you for choosing Dar-Seranity !</p>
   </div>
 </div>`,
