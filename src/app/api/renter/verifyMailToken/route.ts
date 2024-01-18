@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import renter from "@/Modals/UsersModals/renter";
 import { JwtPayload } from "jsonwebtoken";
+import { connect } from "@/DataBase/dbConfig";
+connect();
 export async function POST(request: NextRequest) {
   try {
     const reqbody = await request.json();

@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../globals.css";
 import RenterNavbar from "@/app/components/renterNavbar";
 
 export default function RootLayout({

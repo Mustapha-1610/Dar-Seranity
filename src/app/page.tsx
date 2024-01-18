@@ -1,9 +1,9 @@
 "use client";
-import renterSocket from "@/Helpers/socketLogic/renterSocket";
+import LandingPageNavbar from "@/app/components/landingPageNavbar";
 export default function Home() {
-  renterSocket.on("testRenter", () => {});
   return (
     <div>
+      <LandingPageNavbar />
       <h1>Hello test</h1>
     </div>
   );

@@ -29,7 +29,7 @@ export default function Page({ params }: { params: { token: string } }) {
     }
   };
   useEffect(() => {
-    if (params.token) {
+    if (params.token !== null && params.token !== null) {
       verifyToken(params.token);
     }
   }, [params.token]);

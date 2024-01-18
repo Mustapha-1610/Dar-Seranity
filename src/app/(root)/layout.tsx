@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import Navbar from "@/components/navbar";
+import LandingPageNavbar from "../components/landingPageNavbar";
 
 export const metadata: Metadata = {
   title: "Dar-Seranity",
@@ -14,7 +13,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <LandingPageNavbar />
+        {children}
+      </body>
     </html>
   );
 }
