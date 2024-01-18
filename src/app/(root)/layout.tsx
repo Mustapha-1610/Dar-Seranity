@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "../globals.css";
 import LandingPageNavbar from "../components/landingPageNavbar";
 
 export const metadata: Metadata = {
@@ -12,11 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
-        <LandingPageNavbar />
-        {children}
-      </body>
-    </html>
+    <>
+      <LandingPageNavbar />
+      {children}
+    </>
   );
 }
