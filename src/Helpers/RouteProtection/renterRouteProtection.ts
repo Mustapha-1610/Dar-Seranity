@@ -6,7 +6,7 @@ import { connect } from "@/DataBase/dbConfig";
 connect();
 export const verifyRenterToken = async (request: NextRequest) => {
   try {
-    console.log(request.cookies);
+    console.log(request);
     const accessToken = request.cookies.get("accessRenterToken")?.value || "";
     if (accessToken) {
       const decodedAccessToken = jwt.verify(
