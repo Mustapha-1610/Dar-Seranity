@@ -3,7 +3,7 @@ import { connect } from "@/DataBase/dbConfig";
 import renter from "@/Modals/UsersModals/renter";
 import { verifyRenterToken } from "@/Helpers/RouteProtection/renterRouteProtection";
 import { refreshAccessToken } from "@/Helpers/RouteProtection/refreshRenterToken";
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
     const routeProtectionResponse: any = await verifyRenterToken(request);
 

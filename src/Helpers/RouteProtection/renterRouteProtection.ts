@@ -6,7 +6,6 @@ import { connect } from "@/DataBase/dbConfig";
 connect();
 export const verifyRenterToken = async (request: NextRequest) => {
   try {
-    console.log(request);
     const accessToken = request.cookies.get("accessRenterToken")?.value || "";
     if (accessToken) {
       const decodedAccessToken = jwt.verify(
@@ -24,10 +23,10 @@ export const verifyRenterToken = async (request: NextRequest) => {
         );
         return { isValid: true, newAccessToken, renterAccount };
       } else {
-        return denyAccess();
+        return denyAccess(request, "error Stage 1");
       }
     } else {
-      return denyAccess();
+      return denyAccess(request, "error Stage 2");
     }
   } catch (err) {
     try {
@@ -49,19 +48,21 @@ export const verifyRenterToken = async (request: NextRequest) => {
           );
           return { isValid: true, newAccessToken, renterAccount };
         } else {
-          return denyAccess();
+          return denyAccess(request, "error Stage 3");
         }
       } else {
-        return denyAccess();
+        return denyAccess(request, "error Stage 4");
       }
     } catch (refreshErr) {
-      return denyAccess();
+      return denyAccess(request, "error Stage 5");
     }
   }
 };
-const denyAccess = () => {
+const denyAccess = (request: NextRequest, errorStage: string) => {
   const response = NextResponse.json({
     reason: "Login required",
+    request: request,
+    stage: errorStage,
   });
   response.cookies.set("refreshRenterToken", "", {
     expires: new Date(0),

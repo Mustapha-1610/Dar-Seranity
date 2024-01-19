@@ -5,7 +5,6 @@ export async function POST(request: NextRequest) {
     const reqbody = await request.json();
 
     const { token } = reqbody;
-    console.log(token);
     const decodedRefreshToken = jwt.verify(
       token,
       process.env.REFRESH_TOKEN_SECRET!
