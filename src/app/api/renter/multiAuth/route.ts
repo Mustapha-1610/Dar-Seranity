@@ -51,13 +51,11 @@ export async function POST(request: NextRequest) {
             httpOnly: true,
             sameSite: "none",
             secure: true,
-            domain: "dar-seranity.vercel.app",
           });
           response.cookies.set("refreshLandlordToken", refreshToken, {
             httpOnly: true,
             sameSite: "none",
             secure: true,
-            domain: "dar-seranity.vercel.app",
           });
           return response;
         }
@@ -100,16 +98,14 @@ export async function POST(request: NextRequest) {
       existingUser.refreshToken = refreshToken;
       await existingUser.save();
       response.cookies.set("accessRenterToken", accessToken, {
-        httpOnly: true,
+        httpOnly: false,
         sameSite: "none",
         secure: true,
-        domain: "vercel.app",
       });
       response.cookies.set("refreshRenterToken", refreshToken, {
         httpOnly: false,
         sameSite: "none",
         secure: true,
-        domain: ".vercel.app",
       });
       return response;
     }
