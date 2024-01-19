@@ -2,8 +2,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-// Import statements...
-
 export default function LoginPage() {
   const router = useRouter();
   const [loginForm, setLoginForm] = useState({
@@ -48,7 +46,7 @@ export default function LoginPage() {
         <div className="flex flex-col text-center md:text-left md:flex-row h-screen justify-evenly md:items-center">
           <div className="flex flex-col w-full">
             <div>
-              <img
+              <Image
                 src="https://firebasestorage.googleapis.com/v0/b/dar-seranity.appspot.com/o/_dbae0cfe-578a-4317-aaf7-1ae8619b5d41.jpg?alt=media&token=cf991b5e-6a04-43e0-9bde-0d6d71f58bd3"
                 alt="Logo"
                 width="500"

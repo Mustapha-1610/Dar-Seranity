@@ -55,7 +55,8 @@ export async function POST(request: NextRequest) {
             }));
         await landlordConfirmationMail(name, email);
         return NextResponse.json({
-          success: "Account Application Submitted !",
+          success:
+            "Account Application Submitted! You'll receive an email notification once the review is complete",
         });
       } else {
         return NextResponse.json({ error: "Account Allready Exists" });

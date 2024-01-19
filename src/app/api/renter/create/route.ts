@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     }
     let newRenter = await landlord.findOne({ email });
     if (newRenter) {
-      return NextResponse.json({ error: "Account Allready Exists" });
+      return NextResponse.json({ error: "Account Allready Exists !" });
     } else {
       newRenter = await renter.findOne({ email });
       if (!newRenter) {
@@ -44,9 +44,11 @@ export async function POST(request: NextRequest) {
               profilePicture,
             }));
         await renterConfirmationMail(name, email, activationCode);
-        return NextResponse.json({ success: "Created" });
+        return NextResponse.json({
+          success: "Account Created ! Verification Mail Sent",
+        });
       } else {
-        return NextResponse.json({ error: "Account Allready Exists" });
+        return NextResponse.json({ error: "Account Allready Exists !" });
       }
     }
   } catch (err) {

@@ -1,13 +1,14 @@
 "use client";
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 
 export default function LandingPageNavbar() {
   return (
     <>
-      <div className=" flex-col items-center justify-between relative w-full">
-        <section className="relative mx-auto w-full">
-          <nav className="flex justify-between bg-gray-900 text-white w-full">
+      <div className="flex-col items-center justify-between w-full">
+        <section className="mx-auto w-full">
+          <nav className="flex justify-between bg-gray-900 text-white w-full position: fixed; top: 0;">
             <div className="px-5 xl:px-6 py-6 flex w-full items-center w-full">
               <Link className="text-2xl font-bold font-heading" href="/">
                 Dar-Seranity
@@ -73,9 +74,12 @@ export default function LandingPageNavbar() {
               target="_blank"
               className="block w-16 h-16 rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12"
             >
-              <img
+              <Image
                 className="object-cover object-center w-full h-full rounded-full"
                 src="https://ryver.com/wp-content/uploads/2018/10/outlook-icon.png"
+                alt="Logo"
+                width="70"
+                height="30"
               />
             </a>
           </div>
@@ -86,9 +90,12 @@ export default function LandingPageNavbar() {
               target="_blank"
               className="block w-16 h-16 rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12"
             >
-              <img
+              <Image
                 className="object-cover object-center w-full h-full rounded-full"
                 src="https://seeklogo.com/images/L/linkedin-black-icon-logo-ECC426C572-seeklogo.com.png"
+                alt=""
+                width="70"
+                height="30"
               />
             </a>
           </div>
@@ -99,9 +106,12 @@ export default function LandingPageNavbar() {
               target="_blank"
               className="block w-16 h-16 rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12"
             >
-              <img
+              <Image
                 className="object-cover object-center w-30 h-30 rounded-full"
                 src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+                alt=""
+                width="70"
+                height="30"
               />
             </a>
           </div>
