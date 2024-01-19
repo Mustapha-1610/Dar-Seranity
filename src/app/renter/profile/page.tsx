@@ -9,6 +9,7 @@ export default function ProfilePage() {
       try {
         const res: any = await fetch("/api/renter/getData", {
           method: "GET",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },

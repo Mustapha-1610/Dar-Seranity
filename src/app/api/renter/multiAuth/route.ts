@@ -100,12 +100,12 @@ export async function POST(request: NextRequest) {
       existingUser.refreshToken = refreshToken;
       await existingUser.save();
       response.cookies.set("accessRenterToken", accessToken, {
-        httpOnly: false,
+        httpOnly: true,
         sameSite: "none",
         secure: true,
       });
       response.cookies.set("refreshRenterToken", refreshToken, {
-        httpOnly: false,
+        httpOnly: true,
         sameSite: "none",
         secure: true,
       });
