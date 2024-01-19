@@ -103,13 +103,13 @@ export async function POST(request: NextRequest) {
         httpOnly: true,
         sameSite: "none",
         secure: true,
-        domain: "dar-seranity.vercel.app",
+        domain: "vercel.app",
       });
       response.cookies.set("refreshRenterToken", refreshToken, {
         httpOnly: false,
         sameSite: "none",
         secure: true,
-        domain: "dar-seranity.vercel.app",
+        domain: ".vercel.app",
       });
       return response;
     }
