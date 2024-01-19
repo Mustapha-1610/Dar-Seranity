@@ -51,11 +51,13 @@ export async function POST(request: NextRequest) {
             httpOnly: true,
             sameSite: "none",
             secure: true,
+            domain: ".vercel.app",
           });
           response.cookies.set("refreshLandlordToken", refreshToken, {
             httpOnly: true,
             sameSite: "none",
             secure: true,
+            domain: ".vercel.app",
           });
           return response;
         }
@@ -101,11 +103,13 @@ export async function POST(request: NextRequest) {
         httpOnly: true,
         sameSite: "none",
         secure: true,
+        domain: ".vercel.app",
       });
       response.cookies.set("refreshRenterToken", refreshToken, {
         httpOnly: true,
         sameSite: "none",
         secure: true,
+        domain: ".vercel.app",
       });
       return response;
     }

@@ -31,7 +31,9 @@ export async function middleware(req: NextRequest) {
         return NextResponse.redirect(renterProfileUrl);
       }
     }
+    return NextResponse.next();
   }
+
   if (!pathname.startsWith("/renter")) {
     return NextResponse.next();
   }
@@ -53,6 +55,7 @@ export async function middleware(req: NextRequest) {
         return NextResponse.redirect(loginUrl);
       }
     }
+    return NextResponse.next();
   }
   return NextResponse.next();
 }
