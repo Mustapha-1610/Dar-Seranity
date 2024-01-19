@@ -62,6 +62,7 @@ const RenterSignupPage = () => {
           className="mb-5"
           variant="outlined"
           open={alerOpen}
+          color="red"
           icon={<IconAlert />}
           action={
             <Button

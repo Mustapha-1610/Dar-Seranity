@@ -3,7 +3,9 @@ import jwt from "jsonwebtoken";
 export async function POST(request: NextRequest) {
   try {
     const reqbody = await request.json();
+
     const { token } = reqbody;
+    console.log(token);
     const decodedRefreshToken = jwt.verify(
       token,
       process.env.REFRESH_TOKEN_SECRET!

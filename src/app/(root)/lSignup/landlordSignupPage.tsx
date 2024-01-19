@@ -194,10 +194,11 @@ export default function LandlordSignupPage() {
   };
   return (
     <>
-      <form className="bg-white" onSubmit={handleImageUpload}>
+      <form className="bg-white overflow-y-auto" onSubmit={handleImageUpload}>
         <Alert
           className="mb-5"
           variant="outlined"
+          color="red"
           open={open}
           icon={<IconAlert />}
           action={

@@ -83,12 +83,14 @@ export default function SignupPage() {
                 </label>
               </div>
             </div>
-            {/* Render the corresponding signup form based on the selected account type */}
-            {selectedComponent === "renter" ? (
-              <RenterSignupPage />
-            ) : (
-              <LandlordSignupPage />
-            )}
+            <div className="h-signupForm  overflow-y-auto">
+              {selectedComponent === "renter" ? (
+                <RenterSignupPage />
+              ) : (
+                <LandlordSignupPage />
+              )}
+            </div>
+
             <div className="flex justify-center items-center mt-6">
               <div className="w-1/4 border-b border-gray-400"></div>
               <span className="ml-2 text-gray-500 font-medium text-sm">OR</span>
