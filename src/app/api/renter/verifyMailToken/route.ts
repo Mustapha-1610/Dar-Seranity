@@ -13,19 +13,21 @@ export async function POST(request: NextRequest) {
       process.env.NODEMAILER_TOKEN_SECRET!
     ) as JwtPayload;
     if (decodedMailToken) {
-      const unverifiedRenter = await renter.findOneAndUpdate(
-        { email: decodedMailToken.email! },
-        {
-          verificationStatus: true,
-        },
-        {
-          new: true,
+      const verifiedRenter = await renter.findOne({
+        email: decodedMailToken.email!,
+      });
+      if (verifiedRenter) {
+        if (verifiedRenter.verificationStatus) {
+          return NextResponse.json({
+            error: "This Account Is Already Verified You Can Use It To Login !",
+          });
+        } else {
+          verifiedRenter.verificationStatus = true;
+          await verifiedRenter.save();
+          return NextResponse.json({
+            success: "Mail Verified You Can Now Login",
+          });
         }
-      );
-      if (unverifiedRenter) {
-        return NextResponse.json({
-          success: "Mail Verified You Can Now Login !",
-        });
       } else {
         return NextResponse.json({
           error: "Account Deleted Or Non Existant !",
@@ -37,7 +39,7 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     console.log(err);
     return NextResponse.json({
-      error: "Verification Mail Expired ! Send New One",
+      mailError: "Verification Mail Expired !",
     });
   }
 }

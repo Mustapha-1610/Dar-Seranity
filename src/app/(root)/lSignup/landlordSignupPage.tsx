@@ -382,12 +382,6 @@ export default function LandlordSignupPage() {
         >
           Sign Up
         </button>
-        <span className="text-sm ml-2">
-          Allready Have An Account ?{" "}
-          <span className="text-sm  hover:text-blue-500 cursor-pointer">
-            <Link href="/login">Login</Link>
-          </span>
-        </span>
       </form>
     </>
   );

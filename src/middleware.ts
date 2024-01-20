@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
 async function verifyToken(token: any) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/verifyToken/renter`,
@@ -14,7 +13,6 @@ async function verifyToken(token: any) {
 
   if (response.ok) {
     const data = await response.json();
-
     return data.isValid;
   }
   return false;

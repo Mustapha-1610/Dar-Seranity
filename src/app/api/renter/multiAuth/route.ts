@@ -4,14 +4,15 @@ import renter from "@/Modals/UsersModals/renter";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import landlord from "@/Modals/UsersModals/landlord";
+import { errorHandler } from "@/Helpers/errorHandler/errorHandler";
 connect();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { email, password } = reqBody;
-    let existingUser = await renter.findOne({ email });
+    let existingUser = await renter.findOne({ email: email.toUpperCase() });
     if (!existingUser || !bcrypt.compareSync(password, existingUser.password)) {
-      existingUser = await landlord.findOne({ email });
+      existingUser = await landlord.findOne({ email: email.toUpperCase() });
       if (!existingUser) {
         return NextResponse.json({ error: "Wrong mail or password" });
       } else {
@@ -28,7 +29,7 @@ export async function POST(request: NextRequest) {
           const landlordData = {
             name: existingUser.name,
             surname: existingUser.surname,
-            email: existingUser.email,
+            email: existingUser.email.toLowerCase(),
           };
           const response = NextResponse.json({ landlordData });
           const accessToken = jwt.sign(
@@ -63,7 +64,8 @@ export async function POST(request: NextRequest) {
     }
     if (!existingUser.verificationStatus) {
       return NextResponse.json({
-        mailError: "You need to verify your mail first before logging in !",
+        renterMailError:
+          "You need to verify your mail first before logging in !",
         name: existingUser.name,
         email: existingUser.email,
         _id: existingUser._id,
@@ -110,7 +112,6 @@ export async function POST(request: NextRequest) {
       return response;
     }
   } catch (err) {
-    console.log(err);
-    return NextResponse.json({ serverError: "Server Error" });
+    return errorHandler(err);
   }
 }

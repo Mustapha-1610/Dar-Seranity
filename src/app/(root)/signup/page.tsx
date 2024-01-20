@@ -3,6 +3,7 @@
 import { useState } from "react";
 import RenterSignupPage from "../rSignup/renterSignupPage";
 import LandlordSignupPage from "../lSignup/landlordSignupPage";
+import Link from "next/link";
 
 export default function SignupPage() {
   const [selectedComponent, setSelectedComponent] = useState("renter");
@@ -14,16 +15,14 @@ export default function SignupPage() {
   return (
     <>
       <div className="h-screen md:flex">
-        {/* Left side with background image */}
         <div
           className="relative overflow-hidden md:flex w-1/2 justify-around items-center hidden"
           style={{
-            backgroundImage: `url('https://assets-global.website-files.com/5fcff9094e6ad8e939c7fa3a/64ff6242279772c2d44868aa_2022-05-23_Orchard_1_Briarcliff_Rd_Larchmont_Livingroom_Moving_is_Easy_3076.jpeg')`,
+            backgroundImage: `url('https://firebasestorage.googleapis.com/v0/b/dar-seranity.appspot.com/o/Needs%20For%20Project%2FsignUpPicture.jpg?alt=media&token=1c7ab10b-38fe-4b7c-814d-86baa8bc6826')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
-          {/* Decorative circles can be kept or removed as per design preference */}
           <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
           <div className="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
           <div className="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
@@ -90,7 +89,12 @@ export default function SignupPage() {
                 <LandlordSignupPage />
               )}
             </div>
-
+            <span className="text-sm ml-2">
+              Allready Have An Account ?{" "}
+              <span className="text-sm  hover:text-blue-500 cursor-pointer">
+                <Link href="/login">Login</Link>
+              </span>
+            </span>
             <div className="flex justify-center items-center mt-6">
               <div className="w-1/4 border-b border-gray-400"></div>
               <span className="ml-2 text-gray-500 font-medium text-sm">OR</span>

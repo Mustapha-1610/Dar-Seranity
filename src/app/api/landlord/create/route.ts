@@ -3,7 +3,7 @@ import landlord from "@/Modals/UsersModals/landlord";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { connect } from "@/DataBase/dbConfig";
-import { landlordConfirmationMail } from "@/Helpers/NodeMailer/landlordMailConfigs";
+import { landlordConfirmationMail } from "@/Helpers/NodeMailer/landlord/landlordMailConfigs";
 import renter from "@/Modals/UsersModals/renter";
 connect();
 export async function POST(request: NextRequest) {
@@ -14,7 +14,6 @@ export async function POST(request: NextRequest) {
       surname,
       email,
       password,
-      profilePicture,
       idCardFrontSideImage,
       idCardBackSideImage,
     } = reqBody;
@@ -28,38 +27,28 @@ export async function POST(request: NextRequest) {
     ) {
       return NextResponse.json({ error: "Missing Inputs !" });
     }
-    let newLandlord = await renter.findOne({ email });
+    let newLandlord = await renter.findOne({ email: email.toUpperCase() });
     if (newLandlord) {
-      return NextResponse.json({ error: "Account Allready Exists" });
+      return NextResponse.json({ error: "Account Already Exists" });
     } else {
-      newLandlord = await landlord.findOne({ email });
+      newLandlord = await landlord.findOne({ email: email.toUpperCase() });
       if (!newLandlord) {
         const securePassword = bcrypt.hashSync(password);
-        !profilePicture
-          ? (newLandlord = await landlord.create({
-              name,
-              surname,
-              email,
-              password: securePassword,
-              idCardBackSideImage,
-              idCardFrontSideImage,
-            }))
-          : (newLandlord = await landlord.create({
-              name,
-              surname,
-              email,
-              password: securePassword,
-              profilePicture,
-              idCardBackSideImage,
-              idCardFrontSideImage,
-            }));
+        newLandlord = await landlord.create({
+          name,
+          surname,
+          email: email.toUpperCase(),
+          password: securePassword,
+          idCardBackSideImage,
+          idCardFrontSideImage,
+        });
         await landlordConfirmationMail(name, email);
         return NextResponse.json({
           success:
             "Account Application Submitted! You'll receive an email notification once the review is complete",
         });
       } else {
-        return NextResponse.json({ error: "Account Allready Exists" });
+        return NextResponse.json({ error: "Account Already Exists" });
       }
     }
   } catch (err) {

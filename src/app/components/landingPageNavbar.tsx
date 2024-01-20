@@ -46,7 +46,7 @@ export default function LandingPageNavbar() {
                   className="bg-transparent text-white hover:bg-gray-700 hover:text-white font-semibold py-2 px-4 rounded-lg"
                   href="/signup"
                 >
-                  Sign Up
+                  SignUp
                 </Link>
               </div>
             </div>
@@ -76,7 +76,7 @@ export default function LandingPageNavbar() {
             >
               <Image
                 className="object-cover object-center w-full h-full rounded-full"
-                src="https://ryver.com/wp-content/uploads/2018/10/outlook-icon.png"
+                src="https://firebasestorage.googleapis.com/v0/b/dar-seranity.appspot.com/o/Needs%20For%20Project%2Foutlook-icon.png?alt=media&token=8e8f1ffc-0129-4965-8821-63a6f25a0c38"
                 alt="Logo"
                 width="70"
                 height="30"
@@ -92,7 +92,7 @@ export default function LandingPageNavbar() {
             >
               <Image
                 className="object-cover object-center w-full h-full rounded-full"
-                src="https://seeklogo.com/images/L/linkedin-black-icon-logo-ECC426C572-seeklogo.com.png"
+                src="https://firebasestorage.googleapis.com/v0/b/dar-seranity.appspot.com/o/Needs%20For%20Project%2Flinkedin-black-icon-logo-ECC426C572-seeklogo.com.png?alt=media&token=1e1e3665-1c11-48c2-ab58-d181297a8761"
                 alt=""
                 width="70"
                 height="30"
@@ -108,7 +108,7 @@ export default function LandingPageNavbar() {
             >
               <Image
                 className="object-cover object-center w-30 h-30 rounded-full"
-                src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+                src="https://firebasestorage.googleapis.com/v0/b/dar-seranity.appspot.com/o/Needs%20For%20Project%2F25231.png?alt=media&token=2493caca-4283-41d7-892d-ef68f4c68581"
                 alt=""
                 width="70"
                 height="30"
