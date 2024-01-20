@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-export default function Page({ params }: { params: { token: string } }) {
+export default function VerifyMailToken({
+  params,
+}: {
+  params: { token: string };
+}) {
   const [responseMessage, setResponseMessage] = useState("");
   const [sendNewMailMessage, setSendNewMailMessage] = useState("");
   const verifyToken = async (token: string) => {

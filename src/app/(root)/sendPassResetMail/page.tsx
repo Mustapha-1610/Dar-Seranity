@@ -1,7 +1,6 @@
 "use client";
-import { Spin } from "antd";
 import React from "react";
-import { Alert, Space } from "antd";
+import { Alert, Space, Spin } from "antd";
 import Link from "next/link";
 
 export default function SendPassResetMail() {
@@ -108,9 +107,23 @@ export default function SendPassResetMail() {
                     <div>
                       <button
                         type="submit"
-                        className="w-full px-4 py-2 font-medium text-center text-white bg-indigo-600 transition-colors duration-200 rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+                        className="w-full px-4 py-2 rounded-lg border-indigo-500 hover:shadow font-medium text-center text-white bg-indigo-600 hover:bg-indigo-500 transition-colors duration-200 rounded-md  focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
                       >
-                        Send
+                        Reset Password
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="inline-block ml-2 w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
+                          />
+                        </svg>
                       </button>
                     </div>
                   </form>

@@ -10,6 +10,9 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { email, password } = reqBody;
+    if (!email || !password) {
+      return NextResponse.json({ error: "Missing Inputs" });
+    }
     let existingUser = await renter.findOne({ email: email.toUpperCase() });
     if (!existingUser || !bcrypt.compareSync(password, existingUser.password)) {
       existingUser = await landlord.findOne({ email: email.toUpperCase() });

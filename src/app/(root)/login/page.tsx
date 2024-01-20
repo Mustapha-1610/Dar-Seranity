@@ -40,6 +40,7 @@ export default function LoginPage() {
         router.push("/renter/profile");
       } else if (data.error) {
         setErrorMessage(data.error);
+        setShow(true);
       } else if (data.landlordMailError) {
         setLandlordMailError(data.landlordMailError);
         setShow(true);
@@ -87,6 +88,7 @@ export default function LoginPage() {
                 alt="Logo"
                 width="600"
                 height="150"
+                className={`hidden md:block`}
               />
             </div>
           </div>
