@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
             surname: existingUser.surname,
             email: existingUser.email.toLowerCase(),
           };
-          const response = NextResponse.json({ landlordData });
+          const response = NextResponse.json({ success: true, landlordData });
           const accessToken = jwt.sign(
             { landlord_id: existingUser._id },
             process.env.ACCESS_TOKEN_SECRET!,
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
         surname: existingUser.surname,
         email: existingUser.email,
       };
-      const response = NextResponse.json({ success: "welcome", renterData });
+      const response = NextResponse.json({ success: true, renterData });
       const accessToken = jwt.sign(
         { renter_id: existingUser._id },
         process.env.ACCESS_TOKEN_SECRET!,

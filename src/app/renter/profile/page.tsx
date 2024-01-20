@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 export default function ProfilePage() {
   const router = useRouter();
@@ -15,9 +15,7 @@ export default function ProfilePage() {
         },
       });
       const data = await res.json();
-      console.log(data);
       if (data.success === "Valid") {
-        localStorage.setItem("renterData", JSON.stringify(data.responseData!));
         setRenterData(data.responseData!);
       } else {
         router.push("/");
@@ -26,6 +24,9 @@ export default function ProfilePage() {
       console.log(err);
     }
   };
+  useEffect(() => {
+    setRenterData(JSON.parse(localStorage.getItem("renterData")!));
+  }, []);
   return (
     <>
       <h1>Hello {renterData?.name}</h1>

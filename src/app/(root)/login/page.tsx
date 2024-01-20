@@ -36,6 +36,7 @@ export default function LoginPage() {
       });
       const data = await res.json();
       if (data.success) {
+        localStorage.setItem("renterData", JSON.stringify(data.renterData!));
         router.push("/renter/profile");
       } else if (data.error) {
         setErrorMessage(data.error);
