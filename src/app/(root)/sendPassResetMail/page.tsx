@@ -59,16 +59,17 @@ export default function SendPassResetMail() {
           <div className="pt-24">
             <div className="flex w-full items-center justify-center">
               <div className="w-full max-w-lg px-4 py-16 space-y-6 bg-white rounded-md">
-                <h1 className="mb-6 text-3xl font-bold text-center">
-                  Dont worry
-                </h1>
-                <p className="text-center mx-12">
-                  We are here to help you to recover your password. Enter the
-                  email address you used when you joined and we ll send you
-                  instructions to reset your password.
-                </p>
-                {/* ... rest of your form content */}
                 <Spin spinning={loading} delay={350}>
+                  <h1 className="mb-6 text-3xl font-bold text-center">
+                    Don&apos;t Worry !
+                  </h1>
+                  <p className="text-center mx-12 mb-6">
+                    We are here to help you to recover your password. Enter the
+                    email address you used when you joined and we ll send you
+                    instructions to reset your password.
+                  </p>
+                  {/* ... rest of your form content */}
+
                   {show && (
                     <Space
                       className="mb-4"
@@ -113,27 +114,31 @@ export default function SendPassResetMail() {
                       </button>
                     </div>
                   </form>
-                </Spin>
-                <div className="text-sm text-gray-600 items-center flex justify-between">
-                  <p className="text-gray-800 cursor-pointer hover:text-blue-500 inline-flex items-center ml-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 mr-2"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
+
+                  <div className="text-sm text-gray-600 items-center flex justify-between mt-8">
+                    <p className="text-gray-800 cursor-pointer hover:text-blue-500 inline-flex items-center ml-4">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 mr-2"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <Link href="/login">Login</Link>
+                    </p>
+                    <Link
+                      href="/"
+                      className="hover:text-blue-500 cursor-pointer"
                     >
-                      <path
-                        fillRule="evenodd"
-                        d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    <Link href="/login">Login</Link>
-                  </p>
-                  <Link href="/" className="hover:text-blue-500 cursor-pointer">
-                    Contact Me ?
-                  </Link>
-                </div>
+                      Contact Me ?
+                    </Link>
+                  </div>
+                </Spin>
               </div>
             </div>
           </div>

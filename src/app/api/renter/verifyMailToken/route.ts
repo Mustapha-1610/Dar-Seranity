@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     ) as JwtPayload;
     if (decodedMailToken) {
       const verifiedRenter = await renter.findOne({
-        email: decodedMailToken.email!,
+        email: decodedMailToken.email!.toUpperCase(),
       });
       if (verifiedRenter) {
         if (verifiedRenter.verificationStatus) {

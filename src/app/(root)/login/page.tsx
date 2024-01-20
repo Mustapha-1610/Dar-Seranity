@@ -41,6 +41,7 @@ export default function LoginPage() {
         setErrorMessage(data.error);
       } else if (data.landlordMailError) {
         setLandlordMailError(data.landlordMailError);
+        setShow(true);
       } else if (data.renterMailError) {
         if (loginForm.email?.includes("@gmail")) {
           setRenterMailError({
@@ -60,9 +61,9 @@ export default function LoginPage() {
               'You need to verify your mail first before logging in ! Check Your <a href="https://outlook.live.com/mail/0/" target="_blank" rel="noopener noreferrer" style="color: #1890ff; text-decoration: underline; font-weight: bold;">Inbox</a>',
           });
         }
+        setShow(true);
       }
       setLoading(false);
-      setShow(true);
     } catch (err) {
       console.log(err);
     }
