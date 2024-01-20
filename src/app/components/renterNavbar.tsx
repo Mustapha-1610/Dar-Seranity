@@ -24,7 +24,6 @@ export default function RenterNavbar() {
         renterSocket.emit("renterDisconnected", {
           renterMail: renterData.email,
         });
-        renterSocket.close();
         router.push("/");
       }
     } catch (err) {

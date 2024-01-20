@@ -73,7 +73,7 @@ export const sendPassResetMail = async (name: string, email: string) => {
   </div>
   <div style="text-align: center; margin-bottom: 5px;">
     <a href="${process.env
-      .NEXT_PUBLIC_API_BASE_URL!}/passReset/${mailToken}" style="background-color: #000000; border: 1px solid #097969; color: white; padding: 10px 20px; text-decoration: none;">Reset Password</a>
+      .NEXT_PUBLIC_API_BASE_URL!}/resetPassword/${mailToken}" style="background-color: #000000; border: 1px solid #097969; color: white; padding: 10px 20px; text-decoration: none;">Reset Password</a>
           <p>This Link Will Expire In 1 Hour </p>
   </div>
 </div>`,

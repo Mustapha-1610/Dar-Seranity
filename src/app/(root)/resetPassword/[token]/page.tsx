@@ -48,13 +48,12 @@ export default function ResetPassword({
         }),
       });
       const data = await res.json();
-      console.log(data);
       if (data.success!) {
         setSuccessMessage("Password Changed !");
       } else if (data.mailError!) {
         setSendNewMailMessage({
           __html:
-            'Link Expired <Link href="/login"  style="color: #1890ff; text-decoration: underline; font-weight: bold;">Send New One</Link>',
+            'Link Expired <a href="https://dar-seranity.vercel.app/sendPassResetMail" target="_blank" rel="noopener noreferrer" style="color: #1890ff; text-decoration: underline; font-weight: bold;">Send New One</a>',
         });
       } else {
         setErrorMessage(data.error);
@@ -84,9 +83,19 @@ export default function ResetPassword({
                 <>
                   <Alert message={errorMessage} type="error" showIcon />
                 </>
-              ) : (
+              ) : successMessage ? (
                 <>
                   <Alert message={successMessage} type="success" showIcon />
+                </>
+              ) : (
+                <>
+                  <Alert
+                    message={
+                      <div dangerouslySetInnerHTML={sendNewMailMessage} />
+                    }
+                    type="error"
+                    showIcon
+                  />
                 </>
               )}
             </Space>
@@ -98,7 +107,7 @@ export default function ResetPassword({
                 id="password"
                 name="password"
                 placeholder="New Password"
-                className="w-80 appearance-none rounded-full border-0 bg-slate-800/50 p-2 px-4 focus:bg-slate-800 focus:ring-2 focus:ring-orange-500"
+                className="w-80 appearance-none rounded-full border-black border p-2 px-4 focus:bg-slate-800 focus:ring-1"
                 onChange={handleformChange}
               />
               <div>
@@ -107,7 +116,7 @@ export default function ResetPassword({
                   id="confirm_password"
                   name="confirmPassword"
                   placeholder="Confirm New Password"
-                  className="w-80 appearance-none rounded-full border-0 bg-slate-800/50 p-2 px-4 focus:bg-slate-800 focus:ring-2 focus:ring-orange-500"
+                  className="w-80 appearance-none rounded-full border-black border p-2 px-4 focus:bg-slate-800 focus:ring-1"
                   onChange={handleformChange}
                 />
                 <p
@@ -119,7 +128,6 @@ export default function ResetPassword({
                 type="button"
                 id="showPw"
                 className="rounded-full bg-blue-500 p-2 px-4 text-white hover:bg-blue-700"
-                onClick={() => console.log(show)}
               >
                 {show ? (
                   <div
