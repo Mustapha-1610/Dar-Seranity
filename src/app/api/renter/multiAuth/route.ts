@@ -14,7 +14,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing Inputs" });
     }
     let existingUser = await renter.findOne({ email: email.toUpperCase() });
-    if (!existingUser || !bcrypt.compareSync(password, existingUser.password)) {
+    if (existingUser || existingUser.gmailAccount) {
+      return NextResponse.json({
+        error: "Account Exists But Is Not A Gmail Account !",
+      });
+    } else if (
+      !existingUser ||
+      !bcrypt.compareSync(password, existingUser.password)
+    ) {
       existingUser = await landlord.findOne({ email: email.toUpperCase() });
       if (!existingUser) {
         return NextResponse.json({ error: "Wrong mail or password" });

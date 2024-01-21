@@ -37,7 +37,10 @@ export async function POST(request: NextRequest) {
           surname: newRenter.surname,
           email: newRenter.email,
         };
-        const response = NextResponse.json({ success: true, renterData });
+        const response = NextResponse.json({
+          success: "Account Created !",
+          renterData,
+        });
         const accessToken = jwt.sign(
           { renter_id: newRenter._id },
           process.env.ACCESS_TOKEN_SECRET!,

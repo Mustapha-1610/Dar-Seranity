@@ -20,11 +20,18 @@ export async function POST(request: NextRequest) {
       if (userAccount) {
         await sendPassResetMail(userAccount.name, userAccount.email);
         return NextResponse.json({ success: true, status: 201 });
+      } else {
+        return NextResponse.json({ success: true, status: 201 });
       }
-      return NextResponse.json({ error: "Account Dosent Exist !" });
     } else {
-      await sendPassResetMail(userAccount.name, userAccount.email);
-      return NextResponse.json({ success: true, status: 201 });
+      if (userAccount.gmailAccount) {
+        return NextResponse.json({
+          error: "Gmail Accounts Are Only Accessible With Gmail Login !",
+        });
+      } else {
+        await sendPassResetMail(userAccount.name, userAccount.email);
+        return NextResponse.json({ success: true, status: 201 });
+      }
     }
   } catch (err) {
     return errorHandler(err);

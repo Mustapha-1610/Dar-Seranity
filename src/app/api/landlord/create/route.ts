@@ -17,19 +17,16 @@ export async function POST(request: NextRequest) {
       idCardFrontSideImage,
       idCardBackSideImage,
     } = reqBody;
-    if (
-      !name &&
-      !surname &&
-      !email &&
-      !password &&
-      !idCardBackSideImage &&
-      !idCardFrontSideImage
-    ) {
-      return NextResponse.json({ error: "Missing Inputs !" });
+    if (!name || !surname || !email || !password) {
+      return NextResponse.json({ error: "Missing Inputs" });
+    } else if (!idCardBackSideImage || !idCardFrontSideImage) {
+      return NextResponse.json({
+        error: "Both Front And Back Id Pictures Are Required !",
+      });
     }
     let newLandlord = await renter.findOne({ email: email.toUpperCase() });
     if (newLandlord) {
-      return NextResponse.json({ error: "Account Already Exists" });
+      return NextResponse.json({ error: "Account Already Exists !" });
     } else {
       newLandlord = await landlord.findOne({ email: email.toUpperCase() });
       if (!newLandlord) {
@@ -45,10 +42,10 @@ export async function POST(request: NextRequest) {
         await landlordConfirmationMail(name, email);
         return NextResponse.json({
           success:
-            "Account Application Submitted! You'll receive an email notification once the review is complete",
+            "Account Application Submitted! You'll receive an email notification once the review is complete !",
         });
       } else {
-        return NextResponse.json({ error: "Account Already Exists" });
+        return NextResponse.json({ error: "Account Already Exists !" });
       }
     }
   } catch (err) {

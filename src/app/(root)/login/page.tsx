@@ -243,7 +243,7 @@ export default function LoginPage() {
                     </div>
                   </div>
 
-                  <div id="button" className="flex flex-col w-full my-5">
+                  <div id="button" className="flex flex-col w-full my-2">
                     <GoogleOAuthProvider clientId="1013596441829-qrijadjokakadne57dol6o1vae3aj2nj.apps.googleusercontent.com">
                       <GoogleLogin
                         theme="outline"
@@ -261,9 +261,12 @@ export default function LoginPage() {
                         useOneTap
                       />
                     </GoogleOAuthProvider>
+                    <p className="mt-2  text-gray-500 italic ">
+                      Only Available For Renter Accounts !
+                    </p>
                   </div>
 
-                  <div className="flex justify-evenly mt-5">
+                  <div className="flex justify-evenly mt-3">
                     <Link
                       href="/sendPassResetMail"
                       className="w-full text-center font-medium text-gray-500"

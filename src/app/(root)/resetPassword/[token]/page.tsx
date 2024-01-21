@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Alert, Space, Spin } from "antd";
+
 export default function ResetPassword({
   params,
 }: {
@@ -51,10 +52,7 @@ export default function ResetPassword({
       if (data.success!) {
         setSuccessMessage("Password Changed !");
       } else if (data.mailError!) {
-        setSendNewMailMessage({
-          __html:
-            'Link Expired <a href="https://dar-seranity.vercel.app/sendPassResetMail" target="_blank" rel="noopener noreferrer" style="color: #1890ff; text-decoration: underline; font-weight: bold;">Send New One</a>',
-        });
+        setSendNewMailMessage("Link Expired ! ");
       } else {
         setErrorMessage(data.error);
       }
@@ -64,91 +62,110 @@ export default function ResetPassword({
       console.log(err);
     }
   };
+
   return (
     <>
-      <section className="grid h-screen place-content-center bg-slate-900 text-slate-300">
+      <section
+        className="grid bg-opacity-500 h-screen place-content-center bg-cover bg-center text-slate-300 relative"
+        style={{
+          backgroundImage: `url('https://i.pinimg.com/originals/5c/3b/64/5c3b64f233c01ca11268b4a15415a722.jpg')`,
+        }}
+      >
         <Spin spinning={loading} delay={350}>
-          <div className="mb-10 text-center text-indigo-400">
-            <h1 className="text-3xl font-bold tracking-widest">
-              Password Reset
-            </h1>
-          </div>
-          {showAlert && (
-            <Space
-              className="mb-4"
-              direction="vertical"
-              style={{ width: "100%" }}
-            >
-              {errorMessage ? (
-                <>
-                  <Alert message={errorMessage} type="error" showIcon />
-                </>
-              ) : successMessage ? (
-                <>
-                  <Alert message={successMessage} type="success" showIcon />
-                </>
-              ) : (
-                <>
-                  <Alert
-                    message={
-                      <div dangerouslySetInnerHTML={sendNewMailMessage} />
-                    }
-                    type="error"
-                    showIcon
-                  />
-                </>
-              )}
-            </Space>
-          )}
-          <form onSubmit={handlePassResetSubmit}>
-            <div className="flex flex-col items-center justify-center space-y-6">
-              <input
-                type={showType}
-                id="password"
-                name="password"
-                placeholder="New Password"
-                className="w-80 appearance-none rounded-full border-black border p-2 px-4 focus:bg-slate-800 focus:ring-1"
-                onChange={handleformChange}
-              />
-              <div>
-                <input
-                  type={showType}
-                  id="confirm_password"
-                  name="confirmPassword"
-                  placeholder="Confirm New Password"
-                  className="w-80 appearance-none rounded-full border-black border p-2 px-4 focus:bg-slate-800 focus:ring-1"
-                  onChange={handleformChange}
-                />
-                <p
-                  id="validation"
-                  className="text-center text-orange-500 italic text-sm"
-                ></p>
+          <div className="container mx-auto px-4">
+            <div className="bg-black bg-opacity-40 rounded-lg p-8 text-white">
+              <div className="mb-10 text-center text-white">
+                <h1 className="text-3xl font-bold tracking-widest">
+                  Password Reset
+                </h1>
               </div>
-              <button
-                type="button"
-                id="showPw"
-                className="rounded-full bg-blue-500 p-2 px-4 text-white hover:bg-blue-700"
-              >
-                {show ? (
-                  <div
-                    onClick={() => (setShowType("password"), setShow(!show))}
+
+              {showAlert && (
+                <Space
+                  className="mb-4"
+                  direction="vertical"
+                  style={{ width: "100%" }}
+                >
+                  {errorMessage ? (
+                    <Alert message={errorMessage} type="error" showIcon />
+                  ) : successMessage ? (
+                    <Alert
+                      message={
+                        <>
+                          <div>
+                            {successMessage}
+                            <Link href="/login"> Login</Link>{" "}
+                          </div>{" "}
+                        </>
+                      }
+                      type="success"
+                      showIcon
+                    />
+                  ) : (
+                    <Alert
+                      message={
+                        <div>
+                          {sendNewMailMessage}
+                          <Link href="/sendPassResetMail">Send New One</Link>
+                        </div>
+                      }
+                      type="error"
+                      showIcon
+                    />
+                  )}
+                </Space>
+              )}
+              <form onSubmit={handlePassResetSubmit}>
+                <div className="flex flex-col items-center justify-center space-y-6">
+                  <input
+                    type={showType}
+                    id="password"
+                    name="password"
+                    placeholder="New Password"
+                    className="w-80 appearance-none text-black rounded-full border-black border p-2 px-4 focus:bg-slate-800 focus:ring-1"
+                    onChange={handleformChange}
+                  />
+                  <div>
+                    <input
+                      type={showType}
+                      id="confirm_password"
+                      name="confirmPassword"
+                      placeholder="Confirm New Password"
+                      className="w-80 text-black appearance-none rounded-full border-black border p-2 px-4 focus:bg-slate-800 focus:ring-1"
+                      onChange={handleformChange}
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    id="showPw"
+                    className="rounded-full bg-black p-2 px-4 text-white"
                   >
-                    <AiFillEyeInvisible />
-                  </div>
-                ) : (
-                  <div onClick={() => (setShowType("text"), setShow(!show))}>
-                    <AiFillEye />
-                  </div>
-                )}
-              </button>
-              <button
-                id="showPw"
-                className="rounded-f rounded-full  ull bg-indigo-500 p-2 px-4 text-white hover:bg-indigo-700"
-              >
-                Reset Password
-              </button>
+                    {show ? (
+                      <div
+                        onClick={() => (
+                          setShowType("password"), setShow(!show)
+                        )}
+                      >
+                        <AiFillEyeInvisible size={21} />
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => (setShowType("text"), setShow(!show))}
+                      >
+                        <AiFillEye size={21} />
+                      </div>
+                    )}
+                  </button>
+                  <button
+                    id="showPw"
+                    className="rounded-full bg-white p-3 px-14 text-black font-bold hover:bg-black hover:text-white"
+                  >
+                    Reset Password
+                  </button>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </Spin>
       </section>
     </>

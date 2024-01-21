@@ -14,7 +14,7 @@ export default function SignupPage() {
 
   return (
     <>
-      <div className="h-screen md:flex">
+      <div className="h-screen md:flex ">
         <div
           className="relative overflow-hidden md:flex w-1/2 justify-around items-center hidden"
           style={{
@@ -82,7 +82,7 @@ export default function SignupPage() {
                 </label>
               </div>
             </div>
-            <div className="h-signupForm  overflow-y-auto">
+            <div className="h-signupForm max-h-[calc(100vh-4rem)] overflow-y-auto">
               {selectedComponent === "renter" ? (
                 <RenterSignupPage />
               ) : (

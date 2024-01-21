@@ -68,10 +68,6 @@ const landlordUserSchema = new Schema({
   refreshToken: {
     type: String,
   },
-  gmailAccount: {
-    type: Boolean,
-    default: false,
-  },
 });
 const landlord =
   mongoose.models.landlord || mongoose.model("landlord", landlordUserSchema);

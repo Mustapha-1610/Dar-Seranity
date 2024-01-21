@@ -25,24 +25,23 @@ export default function SendPassResetMail() {
       }),
     });
     const data = await res.json();
-    console.log(data);
     if (data.success) {
       if (email?.includes("@gmail")) {
         setSuccessMessage({
           __html:
-            'Verification Mail Sent! Check Your <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" rel="noopener noreferrer" style="color: #1890ff; text-decoration: underline; font-weight: bold;">Inbox</a>',
+            'If Your Account Exists, A Password Reset Link Will Be Sent To You In A Few Moments. Check Your <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" rel="noopener noreferrer" style="color: #1890ff; text-decoration: underline; font-weight: bold;">Inbox</a>',
         });
       }
       if (email?.includes("@outlook")) {
         setSuccessMessage({
           __html:
-            'Verification Mail Sent! Check Your <a href="https://outlook.live.com/mail/0/" target="_blank" rel="noopener noreferrer" style="color: #1890ff; text-decoration: underline; font-weight: bold;">Inbox</a>',
+            'If Your Account Exists, A Password Reset Link Will Be Sent To You In A Few Moments. Check Your <a href="https://outlook.live.com/mail/0/" target="_blank" rel="noopener noreferrer" style="color: #1890ff; text-decoration: underline; font-weight: bold;">Inbox</a>',
         });
       }
       if (email?.includes("@hotmail")) {
         setSuccessMessage({
           __html:
-            'Verification Mail Sent! Check Your <a href="https://outlook.live.com/mail/0/" target="_blank" rel="noopener noreferrer" style="color: #1890ff; text-decoration: underline; font-weight: bold;">Inbox</a>',
+            'If Your Account Exists, A Password Reset Link Will Be Sent To You In A Few Moments. Check Your <a href="https://outlook.live.com/mail/0/" target="_blank" rel="noopener noreferrer" style="color: #1890ff; text-decoration: underline; font-weight: bold;">Inbox</a>',
         });
       }
     } else {
@@ -53,8 +52,14 @@ export default function SendPassResetMail() {
   };
   return (
     <>
-      <div className="min-h-screen bg-gray-100 text-gray-900 antialiased">
-        <div className="flex flex-col items-center justify-center h-full">
+      <div
+        className="min-h-screen bg-gray-100 text-gray-900 antialiased"
+        style={{
+          backgroundImage: `url('https://firebasestorage.googleapis.com/v0/b/dar-seranity.appspot.com/o/Needs%20For%20Project%2Fflorian-schmidinger-b_79nOqf95I-unsplash.jpg?alt=media&token=297f0b91-2000-4884-b629-525eb35db293')`,
+          backgroundSize: "cover",
+        }}
+      >
+        <div className="flex flex-col mx-auto items-center justify-center h-full">
           <div className="pt-24">
             <div className="flex w-full items-center justify-center">
               <div className="w-full max-w-lg px-4 py-16 space-y-6 bg-white rounded-md">

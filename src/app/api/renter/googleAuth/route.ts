@@ -61,45 +61,9 @@ export async function POST(request: NextRequest) {
         email: userToken.email.toUpperCase(),
       });
       if (existingUser) {
-        if (!existingUser.gmailAccount) {
-          return NextResponse.json({
-            error: "Account Exists But Is Not A Gmail Account !",
-          });
-        } else {
-          const landlordData = {
-            name: existingUser.name,
-            surname: existingUser.surname,
-            email: existingUser.email.toLowerCase(),
-          };
-          const response = NextResponse.json({ success: true, landlordData });
-          const accessToken = jwt.sign(
-            { landlord_id: existingUser._id },
-            process.env.ACCESS_TOKEN_SECRET!,
-            {
-              expiresIn: "10m",
-            }
-          );
-          const refreshToken = jwt.sign(
-            { landlord_id: existingUser._id },
-            process.env.REFRESH_TOKEN_SECRET!,
-            {
-              expiresIn: "1y",
-            }
-          );
-          existingUser.refreshToken = refreshToken;
-          await existingUser.save();
-          response.cookies.set("accessLandlordToken", accessToken, {
-            httpOnly: true,
-            sameSite: "none",
-            secure: true,
-          });
-          response.cookies.set("refreshLandlordToken", refreshToken, {
-            httpOnly: true,
-            sameSite: "none",
-            secure: true,
-          });
-          return response;
-        }
+        return NextResponse.json({
+          error: "Landlord Accounts Are Not Accessible With Gmail Login !",
+        });
       } else {
         return NextResponse.json({ error: "Account Non Existant ! Signup" });
       }
