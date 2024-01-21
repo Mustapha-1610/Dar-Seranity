@@ -80,3 +80,23 @@ export const sendPassResetMail = async (name: string, email: string) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const sendContactMeMail = async (
+  email: string,
+  name: string,
+  subject: string
+) => {
+  await transport
+    .sendMail({
+      from: email,
+      to: user,
+      subject: "Contact Me Mail",
+      html: `
+      <div style="font-family: Arial, sans-serif; font-size: 16px; padding: 20px; background-color: #F5F5F5; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+      <h3>From ${email} </h3>
+      <p>Sent By ${name} : ${subject}</p>
+      </div>
+`,
+    })
+    .catch((err) => console.log(err));
+};

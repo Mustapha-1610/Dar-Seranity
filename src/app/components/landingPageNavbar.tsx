@@ -1,4 +1,3 @@
-"use client";
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
@@ -8,12 +7,12 @@ export default function LandingPageNavbar() {
     <>
       <div className="flex-col items-center justify-between w-full">
         <section className="mx-auto w-full">
-          <nav className="flex justify-between bg-gray-900 text-white w-full position: fixed; top: 0;">
-            <div className="px-5 xl:px-6 py-6 flex w-full items-center w-full">
+          <nav className="bg-gray-900 text-white w-full py-4 position:sticky top-0 z-50">
+            <div className="container mx-auto flex justify-between items-center">
               <Link className="text-2xl font-bold font-heading" href="/">
                 Dar-Seranity
               </Link>
-              <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
+              <ul className="hidden md:flex space-x-12">
                 <li>
                   <Link className="hover:text-gray-200" href="/">
                     Home
@@ -25,17 +24,17 @@ export default function LandingPageNavbar() {
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-gray-200" href="/">
+                  <Link className="hover:text-gray-200" href="/aboutMe">
                     About Me
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-gray-200" href="/">
+                  <Link className="hover:text-gray-200" href="/contactMe">
                     Contact Me
                   </Link>
                 </li>
               </ul>
-              <div className="hidden xl:flex items-center space-x-5 items-center">
+              <div className="hidden xl:flex space-x-5 items-center">
                 <Link
                   className="bg-transparent text-white hover:bg-gray-700 hover:text-white font-semibold py-2 px-4 rounded-lg"
                   href="/login"
@@ -49,20 +48,20 @@ export default function LandingPageNavbar() {
                   SignUp
                 </Link>
               </div>
-            </div>
-            <div className="xl:hidden flex mr-6 items-center">
-              <Link
-                className="bg-transparent text-white hover:bg-gray-700 hover:text-white font-semibold py-2 px-4 rounded-lg"
-                href="/login"
-              >
-                Login
-              </Link>
-              <Link
-                className="bg-transparent text-white hover:bg-gray-700 hover:text-white font-semibold py-2 px-4 rounded-lg"
-                href="/signup"
-              >
-                Sign Up
-              </Link>
+              <div className="xl:hidden flex items-center">
+                <Link
+                  className="bg-transparent text-white hover:bg-gray-700 hover:text-white font-semibold py-2 px-4 rounded-lg"
+                  href="/login"
+                >
+                  Login
+                </Link>
+                <Link
+                  className="bg-transparent text-white hover:bg-gray-700 hover:text-white font-semibold py-2 px-4 rounded-lg"
+                  href="/signup"
+                >
+                  Sign Up
+                </Link>
+              </div>
             </div>
           </nav>
         </section>

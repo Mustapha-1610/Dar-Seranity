@@ -14,9 +14,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing Inputs" });
     }
     let existingUser = await renter.findOne({ email: email.toUpperCase() });
-    if (existingUser || existingUser.gmailAccount) {
+    if (existingUser && existingUser.gmailAccount) {
       return NextResponse.json({
-        error: "Account Exists But Is Not A Gmail Account !",
+        error: "This Account Is Only Accessible Through Gmail Login !",
       });
     } else if (
       !existingUser ||
