@@ -16,7 +16,6 @@ const renterUserSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
   },
   profilePicture: {
     type: String,
@@ -79,6 +78,10 @@ const renterUserSchema = new Schema({
   },
   refreshToken: {
     type: String,
+  },
+  gmailAccount: {
+    type: Boolean,
+    default: false,
   },
 });
 const renter =

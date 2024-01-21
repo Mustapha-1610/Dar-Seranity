@@ -14,6 +14,7 @@ import {
 import app from "@/Helpers/firebase/firebase";
 import Image from "next/image";
 import Link from "next/link";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 export default function LandlordSignupPage() {
   const [open, setOpen] = React.useState(false);
   const [openSuccess, setOpenSuccess] = React.useState(false);
@@ -383,6 +384,28 @@ export default function LandlordSignupPage() {
           Sign Up
         </button>
       </form>
+      <div className="flex justify-center items-center mt-6">
+        <div className="w-1/4 border-b border-gray-400"></div>
+        <span className="ml-2 text-gray-500 font-medium text-sm">OR</span>
+        <div className="w-1/4 border-b border-gray-400"></div>
+      </div>
+      <button className="w-full max-w-xs mb-3 font-bold mt-5 shadow-sm rounded-lg py-3  text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
+        <GoogleOAuthProvider clientId="1013596441829-qrijadjokakadne57dol6o1vae3aj2nj.apps.googleusercontent.com">
+          <GoogleLogin
+            theme="outline"
+            size="large"
+            shape="pill"
+            width="280"
+            text="signup_with"
+            locale="english"
+            onSuccess={(credentialResponse) => console.log(credentialResponse)}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+            useOneTap
+          />
+        </GoogleOAuthProvider>
+      </button>
     </>
   );
 }
