@@ -20,17 +20,17 @@ export default function AboutMe() {
                       alt=""
                       width="400"
                       height="500"
-                      src="https://cdn.discordapp.com/attachments/1068668216559292427/1197616778713505823/IMG_2862.jpg?ex=65bbea8a&is=65a9758a&hm=1de6a17eb6438373f7a8cce72f4b289d233fb6170de1493cd98c3518eab9b115&"
+                      src="https://cdn.discordapp.com/attachments/1068668216559292427/1197615916289114193/IMG_5388.jpg?ex=65bbe9bd&is=65a974bd&hm=a3325502cebe0227021f7a4c86e0f61e47c091ce1be78ccb3dba5e0151061cc0&"
                       className="w-36 h-34 bg-gray-300 rounded-full mb-4 shrink-0"
                     ></Image>
-                    <h1 className="text-xl text-white font-bold">
+                    <h1 className="text-xl text-white font-bold mb-1">
                       Mustapha Talbi
                     </h1>
                     <p className="text-gray-100 ">Full Stack Web Developer</p>
-                    <div className="mt-6 flex flex-wrap gap-4 justify-center">
+                    <div className="mt-1 flex flex-wrap gap-4 justify-center">
                       <a
                         href="#"
-                        className=" rounded-xl bg-black text-white py-2 px-4 rounded"
+                        className=" rounded-xl bg-black text-white py-1 px- rounded"
                       >
                         Resume
                       </a>
@@ -38,7 +38,7 @@ export default function AboutMe() {
                   </div>
                   <hr className="my-6  border-t border-gray-300" />
                   <div className="flex text-gray-300 flex-col">
-                    <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">
+                    <span className="text-gray-700 uppercase font-bold tracking-wider mb-1">
                       Skills
                     </span>
                     <ul>
@@ -52,7 +52,7 @@ export default function AboutMe() {
                   </div>
                 </div>
               </div>
-              <div className="col-span-4 [hsla(0,0%,110%,0.8)] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-[hsla(0,0%,5%,0.7)] dark:shadow-black/20 md:py-16 md:px-12 -mt-[100px] backdrop-blur-[30px] sm:col-span-9">
+              <div className="col-span-4 [hsla(0,0%,110%,0.8)] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-[hsla(0,0%,5%,0.7)] dark:shadow-black/20 md:py-16 md:px-12 -mt-[70px] backdrop-blur-[30px] sm:col-span-9">
                 <div className="[hsla(0,0%,110%,0.8)]   shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-[hsla(0,0%,5%,0.7)] dark:shadow-black/20 md:py-16 md:px-5 -mt-[20px] backdrop-blur-[30px] rounded-lg p-6">
                   <h2 className="text-xl text-white font-bold mb-4">
                     About Me

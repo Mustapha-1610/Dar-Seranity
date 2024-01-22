@@ -150,7 +150,7 @@ export default function SendPassResetMail() {
                       <Link href="/login">Login</Link>
                     </p>
                     <Link
-                      href="/"
+                      href="/contactMe"
                       className="hover:text-blue-500 cursor-pointer"
                     >
                       Contact Me ?
