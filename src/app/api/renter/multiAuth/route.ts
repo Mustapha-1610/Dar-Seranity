@@ -40,6 +40,7 @@ export async function POST(request: NextRequest) {
             name: existingUser.name,
             surname: existingUser.surname,
             email: existingUser.email.toLowerCase(),
+            packCount: existingUser.propertyListingsCount,
           };
           const response = NextResponse.json({ success: true, landlordData });
           const accessToken = jwt.sign(

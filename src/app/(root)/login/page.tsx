@@ -38,8 +38,16 @@ export default function LoginPage() {
       });
       const data = await res.json();
       if (data.success) {
-        localStorage.setItem("renterData", JSON.stringify(data.renterData!));
-        router.push("/renter/profile");
+        if (data.landlordData) {
+          localStorage.setItem(
+            "landlordData",
+            JSON.stringify(data.landlordData!)
+          );
+          router.push("/landlord/profile");
+        } else if (data.renterData) {
+          localStorage.setItem("renterData", JSON.stringify(data.renterData!));
+          router.push("/renter/profile");
+        }
       } else if (data.error) {
         setErrorMessage(data.error);
         setShow(true);

@@ -1,6 +1,9 @@
 import mongoose, { Types, model, models } from "mongoose";
 const Schema = mongoose.Schema;
 const subscriptionPacksSchema = new Schema({
+  name: {
+    type: String,
+  },
   price: {
     type: String,
     required: true,
@@ -21,15 +24,14 @@ const subscriptionPacksSchema = new Schema({
         type: String,
         required: true,
       },
-      _id: {
+      id: {
         type: Schema.Types.ObjectId,
         ref: "landlord",
-        unique: true,
       },
     },
   ],
 });
-const renter =
+const subscriptionPacks =
   mongoose.models.subscriptionPacks ||
   mongoose.model("subscriptionPacks", subscriptionPacksSchema);
-export default renter;
+export default subscriptionPacks;

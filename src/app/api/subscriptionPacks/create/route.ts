@@ -6,8 +6,8 @@ connect();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { price, additions, negatives } = reqBody;
-    if (!price || !additions || !negatives) {
+    const { price, additions, negatives, name } = reqBody;
+    if (!price || !additions || !name) {
       return NextResponse.json({ error: "Missing Inputs" });
     } else {
       const existingPack = await subscriptionPacks.findOne({ price: price });
@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
           price,
           additions,
           negatives,
+          name,
         });
         return NextResponse.json({ success: "Pack Added" });
       }

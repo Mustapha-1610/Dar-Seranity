@@ -68,6 +68,24 @@ const landlordUserSchema = new Schema({
   refreshToken: {
     type: String,
   },
+  propertyListingsCount: {
+    gold: {
+      type: Number,
+      default: 0,
+    },
+    silver: {
+      type: Number,
+      default: 0,
+    },
+    basic: {
+      type: Number,
+      default: 1,
+    },
+    total: {
+      type: Number,
+      default: 1,
+    },
+  },
 });
 const landlord =
   mongoose.models.landlord || mongoose.model("landlord", landlordUserSchema);
