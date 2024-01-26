@@ -8,10 +8,13 @@ export const refreshLandlordToken = (
     success: "Valid",
     responseData,
   });
-  response.cookies.set("accessLandlordToken", newAccessToken!, {
-    httpOnly: true,
-    sameSite: "none",
-    secure: true,
-  });
+  if (newAccessToken) {
+    response.cookies.set("accessLandlordToken", newAccessToken, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
+  }
+
   return response;
 };

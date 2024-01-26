@@ -2,7 +2,8 @@ import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import landlord from "@/Modals/UsersModals/landlord";
 import { JwtPayload } from "jsonwebtoken";
-
+import { connect } from "@/DataBase/dbConfig";
+connect();
 export const verifyLandlordToken = async (request: NextRequest) => {
   try {
     const accessToken = request.cookies.get("accessLandlordToken")?.value || "";

@@ -5,7 +5,7 @@ import subscriptionPacks from "@/Modals/RentalModals/subscriptionPacks";
 connect();
 export async function GET() {
   try {
-    const packNames = await subscriptionPacks.find().select("name");
+    const packNames = await subscriptionPacks.find();
     return NextResponse.json({ packNames });
   } catch (err) {
     return errorHandler(err);

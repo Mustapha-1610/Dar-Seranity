@@ -1,6 +1,4 @@
 import { NextResponse, NextRequest } from "next/server";
-import { connect } from "@/DataBase/dbConfig";
-import renter from "@/Modals/UsersModals/renter";
 import { verifyRenterToken } from "@/Helpers/RouteProtection/renterRouteProtection";
 import { refreshAccessToken } from "@/Helpers/RouteProtection/refreshRenterToken";
 export async function POST(request: NextRequest) {
