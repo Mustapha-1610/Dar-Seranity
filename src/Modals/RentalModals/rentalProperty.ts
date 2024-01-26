@@ -45,6 +45,23 @@ const rentalPropertyListingsSchema = new Schema({
       required: true,
     },
   ],
+  title: {
+    type: String,
+  },
+  description: {
+    type: String,
+  },
+  createdAt: {
+    type: Date,
+  },
+  landlordInformations: {
+    name: {
+      type: String,
+    },
+    id: {
+      type: String,
+    },
+  },
 });
 const rentalPropertyListing =
   mongoose.models.rentalPropertyListing ||

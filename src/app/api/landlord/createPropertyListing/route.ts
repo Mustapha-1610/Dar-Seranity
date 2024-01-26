@@ -21,18 +21,33 @@ export async function POST(request: NextRequest) {
         bedroomCount,
         garden,
         balcony,
+        title,
+        description,
       } = reqBody;
       if (
         !chosenPack ||
         !cityId ||
+        !title ||
+        !description ||
         !municipalityName ||
-        !kitchenCount ||
-        !livingRoomCount ||
-        !restRoomCount ||
-        !bedroomCount ||
-        !garden ||
-        !balcony
+        kitchenCount === null ||
+        undefined ||
+        livingRoomCount === null ||
+        undefined ||
+        restRoomCount === null ||
+        undefined ||
+        bedroomCount === null ||
+        undefined
       ) {
+        console.log(
+          chosenPack,
+          cityId,
+          municipalityName,
+          kitchenCount,
+          livingRoomCount,
+          restRoomCount,
+          bedroomCount
+        );
         return NextResponse.json({ error: "Missing Inputs !" });
       } else if (!imageUrls) {
         return NextResponse.json({
@@ -43,9 +58,11 @@ export async function POST(request: NextRequest) {
         const landlordData = routeProtectionResponse.landlordAccount;
         if (chosenPack) {
           if (landlordData.propertyListingsCount[chosenPack] > 0) {
-            landlordData.propertyListingsCount[chosenPack] = -1;
+            landlordData.propertyListingsCount[chosenPack] -= 1;
             const cityName = await cities.findById(cityId);
             const newPropertyListing = await rentalPropertyListing.create({
+              title,
+              description,
               cityName: cityName.City,
               municipalityName,
               roomsCount: {
@@ -59,8 +76,25 @@ export async function POST(request: NextRequest) {
               propertyImages: imageUrls,
               enhancedVisibility: chosenPack !== "basic",
               featuredListing: chosenPack === "gold",
+              createdAt: new Date(),
+              landlordInformations: {
+                name: landlordData.name + " " + landlordData.surname,
+                id: landlordData._id,
+              },
             });
-            await landlordData.save();
+            if (newPropertyListing) {
+              landlordData.createdPropertyListings = {
+                title,
+                propertyId: newPropertyListing._id,
+                images: imageUrls,
+                createdAd: new Date(),
+              };
+              await landlordData.save();
+            } else {
+              return NextResponse.json({
+                error: "Server Error Try Again Later",
+              });
+            }
             return NextResponse.json({ success: "Created" });
           } else {
             return NextResponse.json({
@@ -77,7 +111,7 @@ export async function POST(request: NextRequest) {
         }
       }
     } else {
-      return NextResponse.json("test");
+      return NextResponse.json({ error: "error" });
     }
   } catch (err) {
     return errorHandler(err);

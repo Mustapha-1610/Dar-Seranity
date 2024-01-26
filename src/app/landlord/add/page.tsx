@@ -14,6 +14,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "@/Helpers/firebase/firebase";
+import TextArea from "antd/es/input/TextArea";
 export default function Add() {
   const [countForm, setCountForm] = useState<any>({
     kitchen: 0,
@@ -22,6 +23,8 @@ export default function Add() {
     bedrooms: 0,
     garden: false,
     balcony: false,
+    title: String,
+    description: String,
     houseImagesUrls: [],
   });
 
@@ -188,6 +191,8 @@ export default function Add() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            title: countForm.title,
+            description: countForm.description,
             cityId: selectedCity,
             municipalityName: selectedMunicipality,
             imageUrls: downloadURLs,
@@ -201,7 +206,11 @@ export default function Add() {
           }),
         });
         const response = await res.json();
-        console.log(response);
+        if (response.error) {
+          console.log(response.error);
+          setErrorMessage(response.error);
+        } else if (response.success) {
+        }
         setLoading(false);
       } catch (error) {
         console.error("Error fetching municipalities:", error);
@@ -245,7 +254,28 @@ export default function Add() {
           className="mt-4"
         >
           <div className="flex flex-col gap-4">
+            <div>
+              <label>Title : </label>
+              <input
+                className="w-80 border-black"
+                type="text"
+                name="title"
+                onChange={(e) => {
+                  setCountForm({ ...countForm, title: e.target.value });
+                }}
+              />
+            </div>
+            <div>
+              <label>Description : </label>
+              <TextArea
+                name="description"
+                onChange={(e) => {
+                  setCountForm({ ...countForm, description: e.target.value });
+                }}
+              />
+            </div>
             <div className="flex items-center gap-x-4">
+              <br />
               <label className="text-lg">Kitchen</label>
               <div className="flex items-center gap-x-2">
                 <button

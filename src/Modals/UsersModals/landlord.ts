@@ -81,11 +81,25 @@ const landlordUserSchema = new Schema({
       type: Number,
       default: 1,
     },
-    total: {
-      type: Number,
-      default: 1,
-    },
   },
+  createdPropertyListings: [
+    {
+      title: {
+        type: String,
+      },
+      propertyId: {
+        type: String,
+      },
+      images: [
+        {
+          type: String,
+        },
+      ],
+      createdAd: {
+        type: Date,
+      },
+    },
+  ],
 });
 const landlord =
   mongoose.models.landlord || mongoose.model("landlord", landlordUserSchema);
