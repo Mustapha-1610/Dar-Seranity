@@ -2,29 +2,24 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import { MdNotifications } from "react-icons/md";
 
 export default function LandlordNavbar() {
-  const [responseMessage, setResponseMessage] = useState("");
-  const [renterData, setRenterData] = useState<any>(null);
-  const [onlineRentersCount, setOnlineRentersCount] = useState<any>(0);
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  const [landlordData, setLandlordata] = useState<any>(undefined);
   const router = useRouter();
-  const logout = async () => {
+  const logout = async (e: any) => {
+    e.preventDefault();
     try {
-      const res: any = await fetch("/api/renter/logout", {
+      const res: any = await fetch("/api/landlord/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
       });
       const data = await res.json();
-      if (!data.success!) {
-        setResponseMessage(data.error!);
+      if (data.success!) {
+        localStorage.removeItem("landlordData");
+        router.push("/");
       } else {
       }
     } catch (err) {
@@ -32,15 +27,12 @@ export default function LandlordNavbar() {
     }
   };
   useEffect(() => {
-    const updatingOnlineRenterCountHandler = (count: any) => {
-      setOnlineRentersCount(count);
-    };
-    if (renterData) {
+    if (landlordData) {
     } else {
-      setRenterData(JSON.parse(localStorage.getItem("renterData")!));
+      setLandlordata(JSON.parse(localStorage.getItem("landlordData")!));
     }
     return () => {};
-  }, [renterData]);
+  }, [landlordData]);
   return (
     <>
       <nav className="bg-gray-900 text-white w-full py-4 sticky top-0 z-50">
@@ -60,6 +52,11 @@ export default function LandlordNavbar() {
               </Link>
             </li>
             <li>
+              <Link href="/landlord/subscriptionPacks">
+                <p className="hover:text-gray-200">Packages</p>
+              </Link>
+            </li>
+            <li>
               <Link href="/landlord/statistics">
                 <p className="hover:text-gray-200">Statistics</p>
               </Link>
@@ -73,15 +70,38 @@ export default function LandlordNavbar() {
               <MdNotifications size={25} />
             </a>
 
-            <div className=" xl:flex space-x-5 items-center">
-              <div>
+            <div className="xl:flex space-x-5 items-center">
+              <div
+                onClick={() => {
+                  router.push("/landlord/profile");
+                }}
+                className="relative"
+              >
                 <img
                   data-tooltip-target="tooltip-jese"
-                  className="w-10 h-10 rounded"
+                  className="w-9 h-9 rounded cursor-pointer"
                   src="https://firebasestorage.googleapis.com/v0/b/tunibids.appspot.com/o/Windows_10_Default_Profile_Picture.svg.png?alt=media&token=e7aca30d-6eea-45ff-8522-db048fcb8c38"
                   alt="Medium avatar"
                 />
               </div>
+            </div>
+            <div
+              onClick={logout}
+              className="relative px-2 cursor-pointer items-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#f60f0f"
+                strokeWidth="3"
+                strokeLinecap="square"
+                strokeLinejoin="round"
+              >
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3" />
+              </svg>
             </div>
           </div>
         </div>

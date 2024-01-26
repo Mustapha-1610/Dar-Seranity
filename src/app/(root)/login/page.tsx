@@ -43,10 +43,10 @@ export default function LoginPage() {
             "landlordData",
             JSON.stringify(data.landlordData!)
           );
-          router.push("/landlord/profile");
+          router.push("/landlord");
         } else if (data.renterData) {
           localStorage.setItem("renterData", JSON.stringify(data.renterData!));
-          router.push("/renter/profile");
+          router.push("/renter");
         }
       } else if (data.error) {
         setErrorMessage(data.error);
@@ -99,7 +99,7 @@ export default function LoginPage() {
       const data = await res.json();
       if (data.success) {
         localStorage.setItem("renterData", JSON.stringify(data.renterData!));
-        router.push("/renter/profile");
+        router.push("/renter");
       } else if (data.error) {
         setErrorMessage(data.error);
         setShow(true);
