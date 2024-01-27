@@ -1,4 +1,4 @@
-import mongoose, { Types, model, models } from "mongoose";
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 const subscriptionPacksSchema = new Schema({
   name: {
@@ -18,18 +18,27 @@ const subscriptionPacksSchema = new Schema({
       type: String,
     },
   ],
-  subscribers: [
-    {
-      Name: {
-        type: String,
-        required: true,
-      },
-      id: {
-        type: Schema.Types.ObjectId,
-        ref: "landlord",
-      },
+  subscribers: {
+    subscribersCount: {
+      type: Number,
     },
-  ],
+    subscribersInformations: [
+      {
+        name: {
+          type: String,
+        },
+        id: {
+          type: Schema.Types.ObjectId,
+        },
+      },
+    ],
+  },
+  listingsCount: {
+    type: Number,
+  },
+  transactionFees: {
+    type: Number,
+  },
 });
 const subscriptionPacks =
   mongoose.models.subscriptionPacks ||

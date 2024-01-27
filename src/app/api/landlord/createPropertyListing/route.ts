@@ -4,6 +4,7 @@ import { errorHandler } from "@/Helpers/errorHandler/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
 import rentalPropertyListing from "@/Modals/RentalModals/rentalProperty";
 import cities from "@/Modals/UtilityModals/cities";
+import subscriptionPacks from "@/Modals/RentalModals/subscriptionPacks";
 connect();
 export async function POST(request: NextRequest) {
   try {
@@ -39,15 +40,6 @@ export async function POST(request: NextRequest) {
         bedroomCount === null ||
         undefined
       ) {
-        console.log(
-          chosenPack,
-          cityId,
-          municipalityName,
-          kitchenCount,
-          livingRoomCount,
-          restRoomCount,
-          bedroomCount
-        );
         return NextResponse.json({ error: "Missing Inputs !" });
       } else if (!imageUrls) {
         return NextResponse.json({
@@ -59,6 +51,7 @@ export async function POST(request: NextRequest) {
         if (chosenPack) {
           if (landlordData.propertyListingsCount[chosenPack] > 0) {
             landlordData.propertyListingsCount[chosenPack] -= 1;
+            const pack = await subscriptionPacks.findOne({ name: chosenPack });
             const cityName = await cities.findById(cityId);
             const newPropertyListing = await rentalPropertyListing.create({
               title,
@@ -76,6 +69,7 @@ export async function POST(request: NextRequest) {
               propertyImages: imageUrls,
               enhancedVisibility: chosenPack !== "basic",
               featuredListing: chosenPack === "gold",
+              transactionFees: pack.transactionFees && pack.transactionFees,
               createdAt: new Date(),
               landlordInformations: {
                 name: landlordData.name + " " + landlordData.surname,

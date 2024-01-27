@@ -51,8 +51,6 @@ export default function SubscriptionFunction() {
         console.log(err);
       }
     };
-    if (landlordData) {
-    }
     getLandlordData();
     getSubscriptionPacks();
   }, []);
@@ -68,7 +66,7 @@ export default function SubscriptionFunction() {
         <div className="flex min-h-screen pt-[30px] px-[40px]">
           <div className="min-w-full">
             <p className="text-white text-2xl font-semibold mb-4">
-              Your Subscription
+              Your Packages Count :
             </p>
 
             <div className="flex space-x-4 mb-5">
@@ -98,7 +96,7 @@ export default function SubscriptionFunction() {
                   key={item._id}
                   className="w-full bg-white rounded-lg shadow-md border border-gray-200 divide-y"
                 >
-                  <div className="pt-[15px] px-[25px] pb-[25px]">
+                  <div className="pt-[40px] px-[45px] pb-[34px]">
                     <div className="flex justify-end">
                       <div className="bg-[#F6F6F7] rounded-[20px] flex justify-center align-center px-[12px]">
                         <p className="text-[#00153B] text-[12px] leading-[28px] font-bold">
@@ -146,7 +144,7 @@ export default function SubscriptionFunction() {
                     <div className="mt-[25px]">
                       <button
                         onClick={() => {
-                          console.log(item._id);
+                          router.push(`/landlord/checkoutPage/${item._id}`);
                         }}
                         className={`rounded-[5px] py-[15px] px-[25px] text-[14px] leading-[17px] font-semibold ${
                           item.name === "Gold"

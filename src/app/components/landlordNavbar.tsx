@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
@@ -77,10 +78,12 @@ export default function LandlordNavbar() {
                 }}
                 className="relative"
               >
-                <img
+                <Image
+                  height={120}
+                  width={120}
                   data-tooltip-target="tooltip-jese"
-                  className="w-9 h-9 rounded cursor-pointer"
-                  src="https://firebasestorage.googleapis.com/v0/b/tunibids.appspot.com/o/Windows_10_Default_Profile_Picture.svg.png?alt=media&token=e7aca30d-6eea-45ff-8522-db048fcb8c38"
+                  className="h-10 w-10 rounded-xl cursor-pointer"
+                  src="https://firebasestorage.googleapis.com/v0/b/dar-seranity.appspot.com/o/false1706350606184FzQFNXyWIAsKuau.jpg?alt=media&token=ee735708-a024-45d2-888e-dcac9d70a517"
                   alt="Medium avatar"
                 />
               </div>

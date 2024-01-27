@@ -5,7 +5,7 @@ export const refreshLandlordToken = (
   newAccessToken: any
 ) => {
   const response = NextResponse.json({
-    success: "Valid",
+    success: true,
     responseData,
   });
   if (newAccessToken) {

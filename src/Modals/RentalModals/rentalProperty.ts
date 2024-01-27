@@ -62,6 +62,9 @@ const rentalPropertyListingsSchema = new Schema({
       type: String,
     },
   },
+  transactionFees: {
+    type: Number,
+  },
 });
 const rentalPropertyListing =
   mongoose.models.rentalPropertyListing ||

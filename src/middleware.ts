@@ -29,7 +29,7 @@ export async function middleware(req: NextRequest) {
     if (renterToken) {
       const isValid = await verifyToken(renterToken);
       if (isValid) {
-        const renterProfileUrl = new URL("/renter/profile", req.nextUrl.origin);
+        const renterProfileUrl = new URL("/renter", req.nextUrl.origin);
         return NextResponse.redirect(renterProfileUrl);
       }
     } else {
@@ -37,10 +37,7 @@ export async function middleware(req: NextRequest) {
       if (landlorToken) {
         const isValid = await verifyToken(landlorToken);
         if (isValid) {
-          const landlordProfileUrl = new URL(
-            "/landlord/profile",
-            req.nextUrl.origin
-          );
+          const landlordProfileUrl = new URL("/landlord", req.nextUrl.origin);
           return NextResponse.redirect(landlordProfileUrl);
         }
       } else {

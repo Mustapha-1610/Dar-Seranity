@@ -1,4 +1,4 @@
-import mongoose, { Types, model, models } from "mongoose";
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 const landlordUserSchema = new Schema({
   name: {
@@ -69,15 +69,15 @@ const landlordUserSchema = new Schema({
     type: String,
   },
   propertyListingsCount: {
-    gold: {
+    Gold: {
       type: Number,
       default: 0,
     },
-    silver: {
+    Silver: {
       type: Number,
       default: 0,
     },
-    basic: {
+    Basic: {
       type: Number,
       default: 1,
     },
