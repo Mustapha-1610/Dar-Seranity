@@ -16,13 +16,14 @@ export async function POST(request: NextRequest) {
       if (packageData) {
         landlordData.propertyListingsCount[packageData.name] +=
           packageData.listingsCount;
-        await landlordData.save();
         packageData.subscribers.subscribersCount += 1;
         packageData.subscribers.subscribersInformations.push({
           name: landlordData.name + landlordData.surname,
           id: landlordData._id,
         });
         await packageData.save();
+        await landlordData.save();
+
         const frontLandlordData = {
           name: landlordData.name,
           surname: landlordData.surname,

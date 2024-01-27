@@ -1,8 +1,9 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import landlord from "@/Modals/UsersModals/landlord";
+import renter from "@/Modals/UsersModals/renter";
 import { JwtPayload } from "jsonwebtoken";
 import { connect } from "@/DataBase/dbConfig";
+import landlord from "@/Modals/UsersModals/landlord";
 connect();
 export const verifyLandlordToken = async (request: NextRequest) => {
   try {
@@ -15,7 +16,20 @@ export const verifyLandlordToken = async (request: NextRequest) => {
       const landlordAccount = await landlord.findById(
         decodedAccessToken.landlord_id
       );
-      return { isValid: true, landlordAccount };
+      const refreshToken =
+        request.cookies.get("refreshLandlordToken")?.value || "";
+      if (landlordAccount && landlordAccount.refreshToken === refreshToken) {
+        const newAccessToken = jwt.sign(
+          { landlord_id: landlordAccount._id },
+          process.env.ACCESS_TOKEN_SECRET!,
+          { expiresIn: "10m" }
+        );
+        return { isValid: true, newAccessToken, landlordAccount };
+      } else {
+        return denyAccess(request, "error Stage 1");
+      }
+    } else {
+      return denyAccess(request, "error Stage 2");
     }
   } catch (err) {
     try {
@@ -36,13 +50,25 @@ export const verifyLandlordToken = async (request: NextRequest) => {
             { expiresIn: "5m" }
           );
           return { isValid: true, newAccessToken, landlordAccount };
+        } else {
+          return denyAccess(request, "error Stage 3");
         }
       } else {
-        return { isValid: false, reason: "Login required" };
+        return denyAccess(request, "error Stage 4");
       }
     } catch (refreshErr) {
-      return { isValid: false, reason: "Login required" };
+      return denyAccess(request, "error Stage 5");
     }
   }
-  return { isValid: false, reason: "Login required" };
+};
+const denyAccess = (request: NextRequest, errorStage: string) => {
+  const response = NextResponse.json({
+    reason: "Login required",
+    request: request,
+    stage: errorStage,
+  });
+  response.cookies.set("refreshRenterToken", "", {
+    expires: new Date(0),
+  });
+  return { isValid: false, response };
 };

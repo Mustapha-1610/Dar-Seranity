@@ -37,7 +37,7 @@ export default function SubscriptionFunction() {
         if (response.responseData) {
           setLandlordData(response.responseData);
           const count: any = Object.entries(
-            response.responseData.listingsCount
+            response.responseData.propertyListingsCount
           ).map(([name, count]) => ({
             value: name,
             label: `${name} : ${count}`,

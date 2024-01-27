@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import rentalPropertyListing from "@/Modals/RentalModals/rentalProperty";
 import cities from "@/Modals/UtilityModals/cities";
 import subscriptionPacks from "@/Modals/RentalModals/subscriptionPacks";
+import { refreshLandlordToken } from "@/Helpers/RouteProtection/refreshLandlordToken";
 connect();
 export async function POST(request: NextRequest) {
   try {
@@ -67,8 +68,8 @@ export async function POST(request: NextRequest) {
               garden,
               balcony,
               propertyImages: imageUrls,
-              enhancedVisibility: chosenPack !== "basic",
-              featuredListing: chosenPack === "gold",
+              enhancedVisibility: chosenPack !== "Basic",
+              featuredListing: chosenPack === "Gold",
               transactionFees: pack.transactionFees && pack.transactionFees,
               createdAt: new Date(),
               landlordInformations: {
@@ -89,7 +90,24 @@ export async function POST(request: NextRequest) {
                 error: "Server Error Try Again Later",
               });
             }
-            return NextResponse.json({ success: "Created" });
+
+            const frontLandlordData = {
+              name: routeProtectionResponse.landlordAccount.name,
+              surname: routeProtectionResponse.landlordAccount.surname,
+              email: routeProtectionResponse.landlordAccount.email,
+              propertyListingsCount:
+                routeProtectionResponse.landlordAccount.propertyListingsCount,
+              notifications:
+                routeProtectionResponse.landlordAccount.notifications,
+              createdPropertyListings:
+                routeProtectionResponse.landlordAccount.createdPropertyListings,
+            };
+            return refreshLandlordToken(
+              frontLandlordData,
+              routeProtectionResponse.newAccessToken
+                ? routeProtectionResponse.newAccessToken
+                : null
+            );
           } else {
             return NextResponse.json({
               error:

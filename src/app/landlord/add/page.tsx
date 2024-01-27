@@ -31,7 +31,6 @@ export default function Add() {
   const [loading, setLoading] = useState<boolean>(false);
   const [houseImages, setHouseImages] = useState<any>([]);
   const [cities, setCities] = useState([]);
-  const [packs, setPacks] = useState([]);
   const [municipalities, setMunicipalities] = useState([]);
   const [selectedCity, setSelectedCity] = useState<any>(undefined);
   const [selectedPack, setSelectedPack] = useState<any>(undefined);
@@ -54,21 +53,31 @@ export default function Add() {
       [name]: prevCountForm[name] + v,
     }));
   };
-
-  useEffect(() => {
-    if (landlordData) {
-      const options = Object.entries(landlordData?.packCount).map(
-        ([name, count]) => ({
+  const fetchLandlordData = async () => {
+    try {
+      const res: any = await fetch("/api/landlord/getData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const response = await res.json();
+      if (response.responseData) {
+        setLandlordData(response.responseData);
+        const options = Object.entries(
+          response.responseData?.propertyListingsCount
+        ).map(([name, count]) => ({
           value: name,
           label: `${name} (${count})`,
           disabled: count === 0,
-        })
-      );
-      setOptions(options);
-    } else {
-      setLandlordData(JSON.parse(localStorage.getItem("landlordData")!));
+        }));
+        setOptions(options);
+      }
+    } catch (error) {
+      console.error("Error fetching cities:", error);
     }
-
+  };
+  useEffect(() => {
     const fetchCities = async () => {
       try {
         const res: any = await fetch("/api/cities/getAll", {
@@ -84,24 +93,9 @@ export default function Add() {
       }
     };
 
-    const fetchOffers = async () => {
-      try {
-        const res: any = await fetch("/api/subscriptionPacks/getAll", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const response = await res.json();
-        setPacks(response.packNames);
-      } catch (error) {
-        console.error("Error fetching Packs :", error);
-      }
-    };
-
     fetchCities();
-    fetchOffers();
-  }, [selectedCity, landlordData]);
+    fetchLandlordData();
+  }, [selectedCity]);
 
   const handleCityChange = async (event: any) => {
     setSelectedCity(event.target.value);
@@ -210,6 +204,7 @@ export default function Add() {
           console.log(response.error);
           setErrorMessage(response.error);
         } else if (response.success) {
+          fetchLandlordData();
         }
         setLoading(false);
       } catch (error) {

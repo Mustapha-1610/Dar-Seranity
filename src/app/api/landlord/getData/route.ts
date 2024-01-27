@@ -6,17 +6,18 @@ export async function POST(request: NextRequest) {
     const routeProtectionResponse: any = await verifyLandlordToken(request);
 
     if (routeProtectionResponse.isValid) {
-      const landlordData = {
+      const frontLandlordData = {
         name: routeProtectionResponse.landlordAccount.name,
         surname: routeProtectionResponse.landlordAccount.surname,
         email: routeProtectionResponse.landlordAccount.email,
-        createdListings:
-          routeProtectionResponse.landlordAccount.createdPropertyListings,
-        listingsCount:
+        propertyListingsCount:
           routeProtectionResponse.landlordAccount.propertyListingsCount,
+        notifications: routeProtectionResponse.landlordAccount.notifications,
+        createdPropertyListings:
+          routeProtectionResponse.landlordAccount.createdPropertyListings,
       };
       return refreshLandlordToken(
-        landlordData,
+        frontLandlordData,
         routeProtectionResponse.newAccessToken
           ? routeProtectionResponse.newAccessToken
           : null
