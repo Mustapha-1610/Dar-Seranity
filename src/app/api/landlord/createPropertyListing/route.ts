@@ -9,7 +9,7 @@ import { refreshLandlordToken } from "@/Helpers/RouteProtection/refreshLandlordT
 connect();
 export async function POST(request: NextRequest) {
   try {
-    const routeProtectionResponse = await verifyLandlordToken(request);
+    const routeProtectionResponse: any = await verifyLandlordToken(request);
     if (routeProtectionResponse.isValid) {
       const reqBody = await request.json();
       let {
