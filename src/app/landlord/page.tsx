@@ -2,10 +2,10 @@
 import { Carousel } from "@material-tailwind/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FaKitchenSet } from "react-icons/fa6";
 import { GrRestroom } from "react-icons/gr";
-import { FaBed } from "react-icons/fa";
-import { MdLiving } from "react-icons/md";
+import { PiArmchairDuotone } from "react-icons/pi";
+import { IoBedOutline } from "react-icons/io5";
+import { MdOutlineSoupKitchen } from "react-icons/md";
 
 export default function HomePage() {
   const [landlordData, setLandlordData] = useState<any>(undefined);
@@ -93,16 +93,16 @@ export default function HomePage() {
                             </div>
                           </div>
                           <div className="bg-white py-4 px-3">
-                            <h3 className="text-xs mb-2 font-bold">
+                            <h3 className="text-lg  mb-2 font-bold">
                               {item.title}
                             </h3>
                             <div className="flex justify-center items-center gap-2">
                               <div className="flex items-center gap-1">
-                                <MdLiving size={28} />
+                                <PiArmchairDuotone size={28} />
                                 <span>{item.roumNumbers.livingRoom}</span> /
                               </div>
                               <div className="flex items-center gap-1">
-                                <FaKitchenSet size={28} />
+                                <MdOutlineSoupKitchen size={28} />
                                 <span>{item.roumNumbers.kitchen}</span> /
                               </div>
                               <div className="flex items-center gap-1">
@@ -110,7 +110,7 @@ export default function HomePage() {
                                 <span>{item.roumNumbers.restRoom}</span> /
                               </div>
                               <div className="flex items-center gap-1">
-                                <FaBed size={28} />
+                                <IoBedOutline size={28} />
                                 <span>{item.roumNumbers.bedRoom}</span>
                               </div>
                             </div>
@@ -123,7 +123,9 @@ export default function HomePage() {
               </>
             ) : (
               <>
-                <h3>You Did not Publish Any Property Listing Yet</h3>
+                <h3 className="text-white font-bold">
+                  You Did not Publish Any Property Listing Yet
+                </h3>
               </>
             )}
           </div>
