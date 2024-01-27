@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Spin } from "antd";
 import { useRouter } from "next/navigation";
+import { Alert, Space } from "antd";
 export default function CheckoutPage({
   params,
 }: {
@@ -10,6 +11,8 @@ export default function CheckoutPage({
 }) {
   const [packageInfos, setPackageInfos] = useState<any>({});
   const [loading, setLoading] = useState(true);
+  const [show, setShow] = useState<Boolean>(false);
+
   const router = useRouter();
   useEffect(() => {
     const getPackageInfos = async () => {
@@ -33,6 +36,7 @@ export default function CheckoutPage({
   }, [params.packageId]);
   const handleSubscription = async (e: any) => {
     try {
+      setLoading(true);
       e.preventDefault();
       const res: any = await fetch("/api/landlord/subscribe", {
         method: "POST",
@@ -45,7 +49,15 @@ export default function CheckoutPage({
       });
       const response = await res.json();
       if (response.success) {
-        router.push("/landlord/subscriptionPacks");
+        setLoading(false);
+        setShow(true);
+        localStorage.setItem(
+          "landlordData",
+          JSON.stringify(response.responseData)
+        );
+        setTimeout(() => {
+          router.push("/landlord/subscriptionPacks");
+        }, 5500);
       }
     } catch (err) {}
   };
@@ -82,6 +94,20 @@ export default function CheckoutPage({
               Complete your order by providing your payment details.
             </p>
             <div className="">
+              {show && (
+                <Space
+                  className="mt-1"
+                  direction="vertical"
+                  style={{ width: "100%" }}
+                >
+                  <Alert
+                    message="Payment Submitted ! Thank You For Choosing Our Services"
+                    type="success"
+                    showIcon
+                  />
+                </Space>
+              )}
+
               <label
                 htmlFor="email"
                 className="mt-4 mb-2 block text-sm font-medium"
@@ -202,9 +228,11 @@ export default function CheckoutPage({
                     placeholder="Street Address"
                   />
                   <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                    <img
+                    <Image
+                      width={50}
+                      height={50}
                       className="h-4 w-4 object-contain"
-                      src="https://flagpack.xyz/_nuxt/4c829b6c0131de7162790d2f897a90fd.svg"
+                      src="https://firebasestorage.googleapis.com/v0/b/dar-seranity.appspot.com/o/Flag_of_Tunisia.png?alt=media&token=00280fbe-27e8-413b-8b3f-c8103c248bad"
                       alt=""
                     />
                   </div>

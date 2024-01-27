@@ -23,8 +23,16 @@ export async function POST(request: NextRequest) {
           id: landlordData._id,
         });
         await packageData.save();
+        const frontLandlordData = {
+          name: landlordData.name,
+          surname: landlordData.surname,
+          email: landlordData.email,
+          propertyListingsCount: landlordData.propertyListingsCount,
+          notifications: landlordData.notifications,
+          createdPropertyListings: landlordData.createdPropertyListings,
+        };
         return refreshLandlordToken(
-          landlordData,
+          frontLandlordData,
           routeProtectionResponse.newAccessToken
             ? routeProtectionResponse.newAccessToken
             : null
