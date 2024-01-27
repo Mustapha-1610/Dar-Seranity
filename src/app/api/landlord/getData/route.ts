@@ -15,6 +15,7 @@ export async function POST(request: NextRequest) {
         notifications: routeProtectionResponse.landlordAccount.notifications,
         createdPropertyListings:
           routeProtectionResponse.landlordAccount.createdPropertyListings,
+        profilePicture: routeProtectionResponse.landlordAccount.profilePicture,
       };
       return refreshLandlordToken(
         frontLandlordData,

@@ -47,7 +47,7 @@ export const verifyLandlordToken = async (request: NextRequest) => {
           const newAccessToken = jwt.sign(
             { landlord_id: landlordAccount._id },
             process.env.ACCESS_TOKEN_SECRET!,
-            { expiresIn: "5m" }
+            { expiresIn: "10m" }
           );
           return { isValid: true, newAccessToken, landlordAccount };
         } else {
@@ -61,13 +61,13 @@ export const verifyLandlordToken = async (request: NextRequest) => {
     }
   }
 };
-const denyAccess = (request: NextRequest, errorStage: string) => {
+const denyAccess: any = (request: NextRequest, errorStage: string) => {
   const response = NextResponse.json({
     reason: "Login required",
     request: request,
     stage: errorStage,
   });
-  response.cookies.set("refreshRenterToken", "", {
+  response.cookies.set("refreshLandlordToken", "", {
     expires: new Date(0),
   });
   return { isValid: false, response };

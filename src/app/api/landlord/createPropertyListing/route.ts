@@ -78,12 +78,18 @@ export async function POST(request: NextRequest) {
               },
             });
             if (newPropertyListing) {
-              landlordData.createdPropertyListings = {
+              landlordData.createdPropertyListings.push({
                 title,
                 propertyId: newPropertyListing._id,
                 images: imageUrls,
                 createdAd: new Date(),
-              };
+                roumNumbers: {
+                  kitchen: kitchenCount,
+                  livingRoom: livingRoomCount,
+                  bedRoom: bedroomCount,
+                  restRoom: restRoomCount,
+                },
+              });
               await landlordData.save();
             } else {
               return NextResponse.json({

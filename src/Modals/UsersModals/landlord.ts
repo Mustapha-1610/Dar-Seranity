@@ -84,6 +84,20 @@ const landlordUserSchema = new Schema({
   },
   createdPropertyListings: [
     {
+      roumNumbers: {
+        kitchen: {
+          type: Number,
+        },
+        livingRoom: {
+          type: Number,
+        },
+        restRoom: {
+          type: Number,
+        },
+        bedRoom: {
+          type: Number,
+        },
+      },
       title: {
         type: String,
       },
@@ -95,8 +109,12 @@ const landlordUserSchema = new Schema({
           type: String,
         },
       ],
-      createdAd: {
+      createdAt: {
         type: Date,
+      },
+      rented: {
+        type: Boolean,
+        default: false,
       },
     },
   ],

@@ -57,14 +57,14 @@ export default function CheckoutPage({
         );
         setTimeout(() => {
           router.push("/landlord/subscriptionPacks");
-        }, 5500);
+        }, 4000);
       }
     } catch (err) {}
   };
   return (
     <>
       <Spin spinning={loading} delay={50}>
-        <div className="grid mt-12 sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
+        <div className="grid mt-12 sm:px-10  lg:grid-cols-2 lg:px-20 xl:px-32">
           <div className="px-4 pt-8 ">
             <p className="text-xl font-medium">Order Summary</p>
             <p className="text-gray-400">

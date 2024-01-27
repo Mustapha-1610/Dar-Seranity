@@ -9,10 +9,12 @@ export const refreshLandlordToken = (
     responseData,
   });
   if (newAccessToken) {
+    const accessTokenExpiration = new Date(Date.now() + 10 * 60 * 1000);
     response.cookies.set("accessLandlordToken", newAccessToken, {
       httpOnly: true,
       sameSite: "none",
       secure: true,
+      expires: accessTokenExpiration,
     });
   }
 

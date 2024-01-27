@@ -59,15 +59,22 @@ export async function POST(request: NextRequest) {
           );
           existingUser.refreshToken = refreshToken;
           await existingUser.save();
+          const accessTokenExpiration = new Date(Date.now() + 10 * 60 * 1000);
+          const refreshTokenExpiration = new Date(
+            Date.now() + 365 * 24 * 60 * 60 * 1000
+          );
+
           response.cookies.set("accessLandlordToken", accessToken, {
             httpOnly: true,
             sameSite: "none",
             secure: true,
+            expires: accessTokenExpiration, // Use either expires or maxAge
           });
           response.cookies.set("refreshLandlordToken", refreshToken, {
             httpOnly: true,
             sameSite: "none",
             secure: true,
+            expires: refreshTokenExpiration, // Use either expires or maxAge
           });
           return response;
         }

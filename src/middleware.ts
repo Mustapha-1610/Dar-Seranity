@@ -24,8 +24,6 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   if (publicRoutes.includes(pathname)) {
     const renterToken = req.cookies.get("refreshRenterToken")?.value || "";
-    const landlorToken = req.cookies.get("refreshLandlordToken")?.value || "";
-
     if (renterToken) {
       const isValid = await verifyToken(renterToken);
       if (isValid) {
@@ -45,7 +43,6 @@ export async function middleware(req: NextRequest) {
       }
     }
   }
-
   if (!pathname.startsWith("/renter") && !pathname.startsWith("/landlord")) {
     return NextResponse.next();
   }

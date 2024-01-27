@@ -35,7 +35,6 @@ export default function Add() {
   const [selectedCity, setSelectedCity] = useState<any>(undefined);
   const [selectedPack, setSelectedPack] = useState<any>(undefined);
   const [errorMessage, setErrorMessage] = useState<String>("");
-  const [landlordData, setLandlordData] = useState<any>();
   const [options, setOptions] = useState<any>([]);
   const [selectedMunicipality, setSelectedMunicipality] =
     useState<any>(undefined);
@@ -63,7 +62,6 @@ export default function Add() {
       });
       const response = await res.json();
       if (response.responseData) {
-        setLandlordData(response.responseData);
         const options = Object.entries(
           response.responseData?.propertyListingsCount
         ).map(([name, count]) => ({

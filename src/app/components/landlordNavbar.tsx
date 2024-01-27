@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 import { MdNotifications } from "react-icons/md";
 
 export default function LandlordNavbar() {
-  const [landlordData, setLandlordata] = useState<any>(undefined);
+  const [landlordData, setLandlordData] = useState<any>(undefined);
   const router = useRouter();
   const logout = async (e: any) => {
     e.preventDefault();
@@ -27,13 +27,26 @@ export default function LandlordNavbar() {
       console.log(err);
     }
   };
-  useEffect(() => {
-    if (landlordData) {
-    } else {
-      setLandlordata(JSON.parse(localStorage.getItem("landlordData")!));
+  const fetchLandlordData = async () => {
+    try {
+      const res: any = await fetch("/api/landlord/getData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const response = await res.json();
+      if (response.responseData) {
+        console.log(response.responseData);
+        setLandlordData(response.responseData);
+      }
+    } catch (error) {
+      console.error("Error fetching cities:", error);
     }
-    return () => {};
-  }, [landlordData]);
+  };
+  useEffect(() => {
+    fetchLandlordData();
+  }, []);
   return (
     <>
       <nav className="bg-gray-900 text-white w-full py-4 sticky top-0 z-50">
@@ -83,7 +96,7 @@ export default function LandlordNavbar() {
                   width={120}
                   data-tooltip-target="tooltip-jese"
                   className="h-10 w-10 rounded-xl cursor-pointer"
-                  src="https://firebasestorage.googleapis.com/v0/b/dar-seranity.appspot.com/o/false1706350606184FzQFNXyWIAsKuau.jpg?alt=media&token=ee735708-a024-45d2-888e-dcac9d70a517"
+                  src={landlordData?.profilePicture}
                   alt="Medium avatar"
                 />
               </div>
