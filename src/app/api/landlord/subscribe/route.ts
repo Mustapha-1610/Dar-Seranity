@@ -1,6 +1,7 @@
 import { connect } from "@/DataBase/dbConfig";
 import { verifyLandlordToken } from "@/Helpers/RouteProtection/landlorRouteProtection";
 import { refreshLandlordToken } from "@/Helpers/RouteProtection/refreshLandlordToken";
+import { returnLandlordObject } from "@/Helpers/backFunctions/returnLandlordObject";
 import { errorHandler } from "@/Helpers/errorHandler/errorHandler";
 import subscriptionPacks from "@/Modals/RentalModals/subscriptionPacks";
 import { NextRequest, NextResponse } from "next/server";
@@ -24,14 +25,9 @@ export async function POST(request: NextRequest) {
         await packageData.save();
         await landlordData.save();
 
-        const frontLandlordData = {
-          name: landlordData.name,
-          surname: landlordData.surname,
-          email: landlordData.email,
-          propertyListingsCount: landlordData.propertyListingsCount,
-          notifications: landlordData.notifications,
-          createdPropertyListings: landlordData.createdPropertyListings,
-        };
+        const frontLandlordData = await returnLandlordObject(
+          routeProtectionResponse.landlordAccount
+        );
         return refreshLandlordToken(
           frontLandlordData,
           routeProtectionResponse.newAccessToken

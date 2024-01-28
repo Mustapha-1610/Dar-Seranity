@@ -13,8 +13,13 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { useRouter } from "next/navigation";
 import app from "@/Helpers/firebase/firebase";
 import TextArea from "antd/es/input/TextArea";
+import {
+  getLandlordLocalStorageData,
+  setLandlordLocalStorageData,
+} from "@/Helpers/frontFunctions/localStorageHandler";
 export default function Add() {
   const [countForm, setCountForm] = useState<any>({
     kitchen: 0,
@@ -37,6 +42,7 @@ export default function Add() {
   const [errorMessage, setErrorMessage] = useState<String>("");
   const [options, setOptions] = useState<any>([]);
   const [landlordData, setLandlordData] = useState<any>();
+  const router = useRouter();
   const [selectedMunicipality, setSelectedMunicipality] =
     useState<any>(undefined);
 
@@ -54,29 +60,18 @@ export default function Add() {
     }));
   };
   const fetchLandlordData = async () => {
-    try {
-      const res: any = await fetch("/api/landlord/getData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const response = await res.json();
-      if (response.responseData) {
-        const options = Object.entries(
-          response.responseData?.propertyListingsCount
-        ).map(([name, count]) => ({
-          value: name,
-          label: `${name} (${count})`,
-          disabled: count === 0,
-        }));
-        setOptions(options);
-        setLandlordData(response.responseData);
-      }
-    } catch (error) {
-      console.error("Error fetching cities:", error);
-    }
+    const landlordInfos = getLandlordLocalStorageData();
+    const options = Object.entries(landlordInfos.propertyListingsCount).map(
+      ([name, count]) => ({
+        value: name,
+        label: `${name} (${count})`,
+        disabled: count === 0,
+      })
+    );
+    setOptions(options);
+    setLandlordData(landlordInfos);
   };
+
   useEffect(() => {
     const fetchCities = async () => {
       try {
@@ -92,7 +87,6 @@ export default function Add() {
         console.error("Error fetching cities:", error);
       }
     };
-
     fetchCities();
     fetchLandlordData();
   }, [selectedCity]);
@@ -204,17 +198,14 @@ export default function Add() {
           console.log(response.error);
           setErrorMessage(response.error);
         } else if (response.success) {
-          fetchLandlordData();
+          setLandlordLocalStorageData(response.responseData);
+          router.push("/landlord");
         }
         setLoading(false);
       } catch (error) {
         console.error("Error fetching municipalities:", error);
       }
     }
-  };
-
-  const handleSelectedPack = (e: any) => {
-    setSelectedPack(e.target.value);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

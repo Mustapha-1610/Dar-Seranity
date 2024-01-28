@@ -1,5 +1,6 @@
 "use client";
 
+import { getLandlordLocalStorageData } from "@/Helpers/frontFunctions/localStorageHandler";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -23,7 +24,7 @@ export default function ProfilePage() {
     }
   };
   useEffect(() => {
-    fetchLandlordData();
+    setLandlordData(getLandlordLocalStorageData());
   }, []);
   return (
     <>

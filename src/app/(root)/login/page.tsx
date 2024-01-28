@@ -6,6 +6,7 @@ import { Spin } from "antd";
 import { Alert, Space } from "antd";
 import Link from "next/link";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { setLandlordLocalStorageData } from "@/Helpers/frontFunctions/localStorageHandler";
 
 export default function LoginPage() {
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -39,10 +40,7 @@ export default function LoginPage() {
       const data = await res.json();
       if (data.success) {
         if (data.landlordData) {
-          localStorage.setItem(
-            "landlordData",
-            JSON.stringify(data.landlordData!)
-          );
+          setLandlordLocalStorageData(data.landlordData);
           router.push("/landlord");
         } else if (data.renterData) {
           localStorage.setItem("renterData", JSON.stringify(data.renterData!));

@@ -2,9 +2,9 @@
 import { useState, useEffect } from "react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { getLandlordLocalStorageData } from "@/Helpers/frontFunctions/localStorageHandler";
 export default function SubscriptionFunction() {
   const [subscriptionPacks, setSubscriptionPacks] = useState([]);
-  const [landlordData, setLandlordData] = useState<any>(undefined);
   const [remainingPackCount, setRemainingPackCount] = useState([]);
   const router = useRouter();
   useEffect(() => {
@@ -25,28 +25,17 @@ export default function SubscriptionFunction() {
         console.log(err);
       }
     };
-    const getLandlordData = async () => {
+    const getLandlordData = () => {
       try {
-        const res: any = await fetch("/api/landlord/getData", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const response = await res.json();
-        if (response.responseData) {
-          setLandlordData(response.responseData);
-          const count: any = Object.entries(
-            response.responseData.propertyListingsCount
-          ).map(([name, count]) => ({
-            value: name,
-            label: `${name} : ${count}`,
-            disabled: count === 0,
-          }));
-          setRemainingPackCount(count);
-        } else {
-          console.log(response);
-        }
+        const landlordInfos = getLandlordLocalStorageData();
+        const count: any = Object.entries(
+          landlordInfos.propertyListingsCount
+        ).map(([name, count]) => ({
+          value: name,
+          label: `${name} : ${count}`,
+          disabled: count === 0,
+        }));
+        setRemainingPackCount(count);
       } catch (err) {
         console.log(err);
       }

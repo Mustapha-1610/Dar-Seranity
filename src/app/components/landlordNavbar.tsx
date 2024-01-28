@@ -1,4 +1,9 @@
 "use client";
+import {
+  getLandlordLocalStorageData,
+  logoutLandlord,
+  setLandlordLocalStorageData,
+} from "@/Helpers/frontFunctions/localStorageHandler";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -7,6 +12,7 @@ import { MdNotifications } from "react-icons/md";
 
 export default function LandlordNavbar() {
   const [landlordData, setLandlordData] = useState<any>(undefined);
+  const [firstLoad, setFirstLoad] = useState(true);
   const router = useRouter();
   const logout = async (e: any) => {
     e.preventDefault();
@@ -19,7 +25,7 @@ export default function LandlordNavbar() {
       });
       const data = await res.json();
       if (data.success!) {
-        localStorage.removeItem("landlordData");
+        logoutLandlord();
         router.push("/");
       } else {
       }
@@ -37,7 +43,7 @@ export default function LandlordNavbar() {
       });
       const response = await res.json();
       if (response.responseData) {
-        console.log(response.responseData);
+        setLandlordLocalStorageData(response.responseData);
         setLandlordData(response.responseData);
       }
     } catch (error) {
@@ -45,7 +51,13 @@ export default function LandlordNavbar() {
     }
   };
   useEffect(() => {
-    fetchLandlordData();
+    if (firstLoad) {
+      setLandlordData(getLandlordLocalStorageData());
+      fetchLandlordData();
+      setFirstLoad(false);
+    } else {
+      fetchLandlordData();
+    }
   }, []);
   return (
     <>

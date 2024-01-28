@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Spin } from "antd";
 import { useRouter } from "next/navigation";
 import { Alert, Space } from "antd";
+import { setLandlordLocalStorageData } from "@/Helpers/frontFunctions/localStorageHandler";
 export default function CheckoutPage({
   params,
 }: {
@@ -51,13 +52,10 @@ export default function CheckoutPage({
       if (response.success) {
         setLoading(false);
         setShow(true);
-        localStorage.setItem(
-          "landlordData",
-          JSON.stringify(response.responseData)
-        );
+        setLandlordLocalStorageData(response.responseData);
         setTimeout(() => {
           router.push("/landlord/subscriptionPacks");
-        }, 4000);
+        }, 3000);
       }
     } catch (err) {}
   };

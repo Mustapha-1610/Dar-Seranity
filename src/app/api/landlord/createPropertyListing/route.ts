@@ -6,6 +6,7 @@ import rentalPropertyListing from "@/Modals/RentalModals/rentalProperty";
 import cities from "@/Modals/UtilityModals/cities";
 import subscriptionPacks from "@/Modals/RentalModals/subscriptionPacks";
 import { refreshLandlordToken } from "@/Helpers/RouteProtection/refreshLandlordToken";
+import { returnLandlordObject } from "@/Helpers/backFunctions/returnLandlordObject";
 connect();
 export async function POST(request: NextRequest) {
   try {
@@ -97,17 +98,7 @@ export async function POST(request: NextRequest) {
               });
             }
 
-            const frontLandlordData = {
-              name: routeProtectionResponse.landlordAccount.name,
-              surname: routeProtectionResponse.landlordAccount.surname,
-              email: routeProtectionResponse.landlordAccount.email,
-              propertyListingsCount:
-                routeProtectionResponse.landlordAccount.propertyListingsCount,
-              notifications:
-                routeProtectionResponse.landlordAccount.notifications,
-              createdPropertyListings:
-                routeProtectionResponse.landlordAccount.createdPropertyListings,
-            };
+            const frontLandlordData = await returnLandlordObject(landlordData);
             return refreshLandlordToken(
               frontLandlordData,
               routeProtectionResponse.newAccessToken

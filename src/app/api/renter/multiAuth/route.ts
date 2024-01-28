@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import landlord from "@/Modals/UsersModals/landlord";
 import { errorHandler } from "@/Helpers/errorHandler/errorHandler";
+import { returnLandlordObject } from "@/Helpers/backFunctions/returnLandlordObject";
 connect();
 export async function POST(request: NextRequest) {
   try {
@@ -36,12 +37,7 @@ export async function POST(request: NextRequest) {
               "Account Disabled, Contact Administration For Further Informations",
           });
         } else {
-          const landlordData = {
-            name: existingUser.name,
-            surname: existingUser.surname,
-            email: existingUser.email.toLowerCase(),
-            packCount: existingUser.propertyListingsCount,
-          };
+          const landlordData = returnLandlordObject(existingUser);
           const response = NextResponse.json({ success: true, landlordData });
           const accessToken = jwt.sign(
             { landlord_id: existingUser._id },
