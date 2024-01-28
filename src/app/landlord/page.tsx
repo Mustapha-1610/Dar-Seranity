@@ -124,7 +124,7 @@ export default function HomePage() {
             ) : (
               <>
                 <h3 className="text-white font-bold">
-                  You Did not Publish Any Property Listing Yet
+                  You Did not Publish Any Property Listings Yet
                 </h3>
               </>
             )}

@@ -20,7 +20,7 @@ const landlordUserSchema = new Schema({
   profilePicture: {
     type: String,
     default:
-      "https://firebasestorage.googleapis.com/v0/b/tunibids.appspot.com/o/Windows_10_Default_Profile_Picture.svg.png?alt=media&token=e7aca30d-6eea-45ff-8522-db048fcb8c38",
+      "https://firebasestorage.googleapis.com/v0/b/dar-seranity.appspot.com/o/false1705809919539FzQFNXyWIAsKuau.jpg?alt=media&token=8e903ab6-861e-4a19-adb2-37c627442bf5",
   },
   verificationStatus: {
     type: Boolean,
