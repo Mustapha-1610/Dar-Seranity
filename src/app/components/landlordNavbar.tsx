@@ -58,7 +58,7 @@ export default function LandlordNavbar() {
     } else {
       fetchLandlordData();
     }
-  }, []);
+  }, [firstLoad]);
   return (
     <>
       <nav className="bg-gray-900 text-white w-full py-4 sticky top-0 z-50">
