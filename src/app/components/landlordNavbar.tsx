@@ -24,7 +24,7 @@ export default function LandlordNavbar() {
         },
       });
       const data = await res.json();
-      if (data.success!) {
+      if (data.success) {
         logoutLandlord();
         router.push("/");
       } else {
