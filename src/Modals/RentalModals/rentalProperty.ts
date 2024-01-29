@@ -71,7 +71,7 @@ const rentalPropertyListingsSchema = new Schema({
   scheduledListings: [
     {
       renterName: {
-        type: Number,
+        type: String,
       },
       renterId: {
         type: Schema.Types.ObjectId,
@@ -91,7 +91,7 @@ const rentalPropertyListingsSchema = new Schema({
         },
       },
       suggestedViewingDate: {
-        type: Number,
+        type: String,
       },
     },
   ],

@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
       const { propertyId } = reqBody;
       res.renterAccount.savedRentalProperties =
         res.renterAccount.savedRentalProperties.filter(
-          (item: any) => item.propertyId !== propertyId
+          (item: any) => item.propertyId.toString() !== propertyId
         );
       await res.renterAccount.save();
       const renterFrontData = returnRenterObject(res.renterAccount);

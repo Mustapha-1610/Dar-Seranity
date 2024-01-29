@@ -33,27 +33,28 @@ export default function RenterNavbar() {
       console.log(err);
     }
   };
-  const fetchRenterData = async () => {
-    try {
-      const res: any = await fetch("/api/renter/getData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const response = await res.json();
-      if (response.responseData) {
-        setRenterLocalStorageData(response.responseData);
-        setRenterData(response.responseData);
-      } else {
-        await logout(null);
-        router.push("/");
-      }
-    } catch (error) {
-      console.error("Error fetching cities:", error);
-    }
-  };
+
   useEffect(() => {
+    const fetchRenterData = async () => {
+      try {
+        const res: any = await fetch("/api/renter/getData", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const response = await res.json();
+        if (response.responseData) {
+          setRenterLocalStorageData(response.responseData);
+          setRenterData(response.responseData);
+        } else {
+          await logout(null);
+          router.push("/");
+        }
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      }
+    };
     if (firstLoad) {
       setRenterData(getRenterLocalStorageData());
       fetchRenterData();
@@ -61,7 +62,7 @@ export default function RenterNavbar() {
     } else {
       fetchRenterData();
     }
-  }, [firstLoad]);
+  }, [firstLoad, router]);
   return (
     <>
       <nav className="bg-gray-900 text-white w-full py-4 sticky top-0 z-50">

@@ -15,11 +15,13 @@ export async function POST(request: NextRequest) {
       const propetyInfos = await rentalPropertyListing.findById(propertyId);
       propetyInfos.scheduledListings = propetyInfos.scheduledListings.filter(
         (listing: any) =>
-          listing.renterId !== routeProtectionResponse.renterAccount._id
+          listing.renterId.toString() !==
+          routeProtectionResponse.renterAccount._id.toString()
       );
       routeProtectionResponse.renterAccount.viewingSchedules =
         routeProtectionResponse.renterAccount.viewingSchedules.filter(
-          (listing: any) => listing.propertyId !== propetyInfos._id
+          (listing: any) =>
+            listing.propertyId.toString() !== propetyInfos._id.toString()
         );
       await propetyInfos.save();
       await routeProtectionResponse.renterAccount.save();

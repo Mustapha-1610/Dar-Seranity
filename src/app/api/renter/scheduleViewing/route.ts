@@ -39,7 +39,9 @@ export async function POST(request: NextRequest) {
         scheduledFor: viewingDate,
       });
       await routeProtectionResponse.renterAccount.save();
-      const renterFrontData = returnRenterObject(request);
+      const renterFrontData = returnRenterObject(
+        routeProtectionResponse.renterAccount
+      );
       return refreshAccessToken(
         renterFrontData,
         routeProtectionResponse.newAccessToken

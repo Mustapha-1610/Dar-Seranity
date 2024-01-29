@@ -33,28 +33,29 @@ export default function LandlordNavbar() {
       console.log(err);
     }
   };
-  const fetchLandlordData = async () => {
-    try {
-      const res: any = await fetch("/api/landlord/getData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const response = await res.json();
-      if (response.responseData) {
-        setLandlordLocalStorageData(response.responseData);
-        setLandlordData(response.responseData);
-      } else {
-        await logout(null);
-        logoutLandlord();
-        router.push("/");
-      }
-    } catch (error) {
-      console.error("Error fetching cities:", error);
-    }
-  };
+
   useEffect(() => {
+    const fetchLandlordData = async () => {
+      try {
+        const res: any = await fetch("/api/landlord/getData", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const response = await res.json();
+        if (response.responseData) {
+          setLandlordLocalStorageData(response.responseData);
+          setLandlordData(response.responseData);
+        } else {
+          await logout(null);
+          logoutLandlord();
+          router.push("/");
+        }
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      }
+    };
     if (firstLoad) {
       setLandlordData(getLandlordLocalStorageData());
       fetchLandlordData();
@@ -62,7 +63,7 @@ export default function LandlordNavbar() {
     } else {
       fetchLandlordData();
     }
-  }, [firstLoad]);
+  }, [firstLoad, router]);
   return (
     <>
       <nav className="bg-gray-900 text-white w-full py-4 sticky top-0 z-50">
