@@ -30,7 +30,7 @@ const renterUserSchema = new Schema({
     type: Boolean,
     default: true,
   },
-  userReviews: [
+  landlordReviews: [
     {
       reviewerName: {
         type: String,
@@ -69,7 +69,6 @@ const renterUserSchema = new Schema({
       },
       rentedOn: {
         type: Date,
-        default: new Date(),
       },
     },
   ],
@@ -83,6 +82,28 @@ const renterUserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  savedRentalProperties: [
+    {
+      propertyId: {
+        type: Schema.Types.ObjectId,
+      },
+      propertyTitle: {
+        type: String,
+      },
+      propertyImages: [],
+      propertyRoomCount: [{}],
+    },
+  ],
+  duePayments: [
+    {
+      date: {
+        type: Date,
+      },
+      rentCost: {
+        type: Number,
+      },
+    },
+  ],
 });
 const renter =
   mongoose.models.renter || mongoose.model("renter", renterUserSchema);

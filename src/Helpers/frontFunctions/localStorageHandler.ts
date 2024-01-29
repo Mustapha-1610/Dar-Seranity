@@ -1,12 +1,12 @@
-export const setRenterData = (data: any) => {
+export const setRenterLocalStorageData = (data: any) => {
   localStorage.setItem("renterData", JSON.stringify(data));
 };
 
-export const getRenterData = () => {
+export const getRenterLocalStorageData = () => {
   return JSON.parse(localStorage.getItem("renterData")!);
 };
 
-export const logoutRenter = () => {
+export const logoutRenterLocalStorage = () => {
   localStorage.removeItem("renterData");
   return true;
 };

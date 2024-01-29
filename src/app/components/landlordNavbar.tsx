@@ -15,7 +15,7 @@ export default function LandlordNavbar() {
   const [firstLoad, setFirstLoad] = useState(true);
   const router = useRouter();
   const logout = async (e: any) => {
-    e.preventDefault();
+    e && e.preventDefault();
     try {
       const res: any = await fetch("/api/landlord/logout", {
         method: "POST",
@@ -45,6 +45,10 @@ export default function LandlordNavbar() {
       if (response.responseData) {
         setLandlordLocalStorageData(response.responseData);
         setLandlordData(response.responseData);
+      } else {
+        await logout(null);
+        logoutLandlord();
+        router.push("/");
       }
     } catch (error) {
       console.error("Error fetching cities:", error);
@@ -63,7 +67,7 @@ export default function LandlordNavbar() {
     <>
       <nav className="bg-gray-900 text-white w-full py-4 sticky top-0 z-50">
         <div className="container mx-auto flex justify-between items-center">
-          <Link href="/">
+          <Link href="/landlord">
             <p className="text-2xl font-bold font-heading">Dar-Seranity</p>
           </Link>
           <ul className="hidden md:flex space-x-12">

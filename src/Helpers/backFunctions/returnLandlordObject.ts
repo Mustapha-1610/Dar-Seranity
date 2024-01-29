@@ -1,7 +1,7 @@
 export const returnLandlordObject = async (landlordObject: any) => {
   const lanlordData = {
     name: landlordObject.name,
-    username: landlordObject.surname,
+    surname: landlordObject.surname,
     email: landlordObject.email,
     propertyListingsCount: landlordObject.propertyListingsCount,
     notifications: landlordObject.notifications,
