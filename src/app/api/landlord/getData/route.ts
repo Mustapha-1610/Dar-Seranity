@@ -8,7 +8,6 @@ export async function POST(request: NextRequest) {
     const landlordFrontData = await returnLandlordObject(
       routeProtectionResponse.landlordAccount
     );
-    console.log(landlordFrontData);
     if (routeProtectionResponse.isValid) {
       return refreshLandlordToken(
         landlordFrontData,

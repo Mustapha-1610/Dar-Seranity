@@ -63,12 +63,37 @@ const renterUserSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true,
       },
-      propertyName: {
+      propertyTitle: {
         type: String,
         required: true,
       },
       rentedOn: {
         type: Date,
+      },
+      rented: {
+        type: Boolean,
+        default: false,
+      },
+    },
+  ],
+  viewingSchedules: [
+    {
+      propertyId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+      },
+      propertyTitle: {
+        type: String,
+        required: true,
+      },
+      submittedOn: {
+        type: Date,
+      },
+      acceptanceStatus: {
+        type: Boolean,
+      },
+      scheduledFor: {
+        type: String,
       },
     },
   ],
@@ -90,8 +115,9 @@ const renterUserSchema = new Schema({
       propertyTitle: {
         type: String,
       },
-      propertyImages: [],
-      propertyRoomCount: [{}],
+      propertyDescription: {
+        type: String,
+      },
     },
   ],
   duePayments: [

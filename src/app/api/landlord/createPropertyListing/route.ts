@@ -26,6 +26,7 @@ export async function POST(request: NextRequest) {
         balcony,
         title,
         description,
+        price,
       } = reqBody;
       if (
         !chosenPack ||
@@ -40,7 +41,8 @@ export async function POST(request: NextRequest) {
         restRoomCount === null ||
         undefined ||
         bedroomCount === null ||
-        undefined
+        undefined ||
+        !price
       ) {
         return NextResponse.json({ error: "Missing Inputs !" });
       } else if (!imageUrls) {
@@ -58,6 +60,7 @@ export async function POST(request: NextRequest) {
             const newPropertyListing = await rentalPropertyListing.create({
               title,
               description,
+              price,
               cityName: cityName.City,
               municipalityName,
               roomsCount: {

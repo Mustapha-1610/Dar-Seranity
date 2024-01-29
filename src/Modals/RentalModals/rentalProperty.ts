@@ -65,6 +65,36 @@ const rentalPropertyListingsSchema = new Schema({
   transactionFees: {
     type: Number,
   },
+  price: {
+    type: Number,
+  },
+  scheduledListings: [
+    {
+      renterName: {
+        type: Number,
+      },
+      renterId: {
+        type: Schema.Types.ObjectId,
+      },
+      picture: {
+        type: String,
+      },
+      familyCount: {
+        adults: {
+          type: Number,
+        },
+        children: {
+          type: Number,
+        },
+        infants: {
+          type: Number,
+        },
+      },
+      suggestedViewingDate: {
+        type: Number,
+      },
+    },
+  ],
 });
 const rentalPropertyListing =
   mongoose.models.rentalPropertyListing ||

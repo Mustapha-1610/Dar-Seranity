@@ -25,6 +25,7 @@ export default function Add() {
     kitchen: 0,
     livingRooms: 0,
     restRooms: 0,
+    price: 0,
     bedrooms: 0,
     garden: false,
     balcony: false,
@@ -191,6 +192,7 @@ export default function Add() {
             garden: countForm.garden,
             balcony: countForm.balcony,
             chosenPack: selectedPack,
+            price: countForm.price,
           }),
         });
         const response = await res.json();
@@ -264,6 +266,17 @@ export default function Add() {
                         ...countForm,
                         description: e.target.value,
                       });
+                    }}
+                  />
+                </div>
+                <div>
+                  <label>Price : </label>
+                  <input
+                    className="w-80 border-black"
+                    type="text"
+                    name="price"
+                    onChange={(e) => {
+                      setCountForm({ ...countForm, price: e.target.value });
                     }}
                   />
                 </div>
