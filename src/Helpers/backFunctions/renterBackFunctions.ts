@@ -10,6 +10,7 @@ export const returnRenterObject = (renterData: any) => {
     savedRentalProperties: renterData.savedRentalProperties,
     duePayments: renterData.duePayments,
     viewingSchedules: renterData.viewingSchedules,
+    socketId: renterData.socketId,
   };
   return renterObject;
 };

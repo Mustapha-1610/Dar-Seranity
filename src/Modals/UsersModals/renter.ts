@@ -130,6 +130,9 @@ const renterUserSchema = new Schema({
       },
     },
   ],
+  socketId: {
+    type: String,
+  },
 });
 const renter =
   mongoose.models.renter || mongoose.model("renter", renterUserSchema);

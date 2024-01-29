@@ -22,9 +22,11 @@ export async function POST(request: NextRequest) {
         const characters =
           "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         let activationCode = "";
+        let socketId = "";
         for (let i = 0; i < 25; i++) {
           activationCode +=
             characters[Math.floor(Math.random() * characters.length)];
+          socketId += characters[Math.floor(Math.random() * characters.length)];
         }
         newRenter = await renter.create({
           name,
@@ -32,6 +34,7 @@ export async function POST(request: NextRequest) {
           email: email.toUpperCase(),
           password: bcrypt.hashSync(password),
           activationCode,
+          socketId,
         });
 
         await renterConfirmationMail(name, email, activationCode);

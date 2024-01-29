@@ -7,6 +7,7 @@ export const returnLandlordObject = async (landlordObject: any) => {
     notifications: landlordObject.notifications,
     createdPropertyListings: landlordObject.createdPropertyListings,
     profilePicture: landlordObject.profilePicture,
+    socketId: landlordObject.socketId,
   };
   return lanlordData;
 };

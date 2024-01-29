@@ -31,6 +31,12 @@ export async function POST(request: NextRequest) {
       newLandlord = await landlord.findOne({ email: email.toUpperCase() });
       if (!newLandlord) {
         const securePassword = bcrypt.hashSync(password);
+        let socketId = "";
+        const characters =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (let i = 0; i < 25; i++) {
+          socketId += characters[Math.floor(Math.random() * characters.length)];
+        }
         newLandlord = await landlord.create({
           name,
           surname,
@@ -38,6 +44,7 @@ export async function POST(request: NextRequest) {
           password: securePassword,
           idCardBackSideImage,
           idCardFrontSideImage,
+          socketId,
         });
         await landlordConfirmationMail(name, email);
         return NextResponse.json({

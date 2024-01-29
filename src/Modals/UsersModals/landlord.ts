@@ -118,6 +118,9 @@ const landlordUserSchema = new Schema({
       },
     },
   ],
+  socketId: {
+    type: String,
+  },
 });
 const landlord =
   mongoose.models.landlord || mongoose.model("landlord", landlordUserSchema);
