@@ -11,6 +11,7 @@ export async function POST(request: NextRequest) {
     if (routeProtectionResponse.isValid) {
       return refreshLandlordToken(
         landlordFrontData,
+        null,
         routeProtectionResponse.newAccessToken
           ? routeProtectionResponse.newAccessToken
           : null

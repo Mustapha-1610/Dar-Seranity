@@ -30,6 +30,7 @@ export async function POST(request: NextRequest) {
         );
         return refreshLandlordToken(
           frontLandlordData,
+          null,
           routeProtectionResponse.newAccessToken
             ? routeProtectionResponse.newAccessToken
             : null

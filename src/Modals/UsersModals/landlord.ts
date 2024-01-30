@@ -55,6 +55,12 @@ const landlordUserSchema = new Schema({
       notificationContext: {
         type: String,
       },
+      recievedAt: {
+        type: Date,
+      },
+      notificationImage: {
+        type: String,
+      },
     },
   ],
   idCardFrontSideImage: {

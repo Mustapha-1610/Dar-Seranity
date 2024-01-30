@@ -20,6 +20,7 @@ import {
   setLandlordLocalStorageData,
   setRenterLocalStorageData,
 } from "@/Helpers/frontFunctions/localStorageHandler";
+import landlordSocket from "@/Helpers/socketLogic/landlordSocket";
 
 export default function RentalPropertyInfos({
   params,
@@ -75,13 +76,6 @@ export default function RentalPropertyInfos({
       fetchPropertyInformations();
     }
   }, [params]);
-  const handleScheduleSubmittion = (e: any) => {
-    try {
-      e.preventDefault();
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const saveProperty = async (e: any) => {
     try {
       e.preventDefault();
@@ -141,6 +135,7 @@ export default function RentalPropertyInfos({
       if (res.success) {
         setRenterLocalStorageData(res.responseData),
           setRenterData(res.responseData);
+        landlordSocket.emit("refLanNotis", { data: res.extraData });
         setShow(false);
       }
     } catch (err) {

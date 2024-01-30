@@ -1,11 +1,12 @@
 import { connect } from "@/DataBase/dbConfig";
 import { errorHandler } from "@/Helpers/errorHandler/errorHandler";
 import { NextRequest } from "next/server";
-import renter from "@/Modals/UsersModals/renter";
 import rentalPropertyListing from "@/Modals/RentalModals/rentalProperty";
 import { verifyRenterToken } from "@/Helpers/RouteProtection/renterRouteProtection";
 import { returnRenterObject } from "@/Helpers/backFunctions/renterBackFunctions";
 import { refreshAccessToken } from "@/Helpers/RouteProtection/refreshRenterToken";
+import landlord from "@/Modals/UsersModals/landlord";
+import landlordSocket from "@/Helpers/socketLogic/landlordSocket";
 connect();
 export async function POST(request: NextRequest) {
   try {
@@ -42,8 +43,24 @@ export async function POST(request: NextRequest) {
       const renterFrontData = returnRenterObject(
         routeProtectionResponse.renterAccount
       );
+      const landlordData = await landlord.findById({
+        _id: propetyInfos.landlordInformations.id,
+      });
+      landlordData.notifications.push({
+        notificationsMessage:
+          "New Viewing Scheduled for : " + propetyInfos.title,
+        notificationContext: "scheduledViewings",
+        recievedAt: new Date(),
+        notificationImage: routeProtectionResponse.renterAccount.profilePicture,
+      });
+      const landlordSocketData = {
+        landlordSocketId: landlordData.socketId,
+        landlordMail: landlordData.email,
+      };
+      await landlordData.save();
       return refreshAccessToken(
         renterFrontData,
+        landlordSocketData,
         routeProtectionResponse.newAccessToken
       );
     } else {

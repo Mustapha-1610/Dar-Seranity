@@ -104,6 +104,7 @@ export async function POST(request: NextRequest) {
             const frontLandlordData = await returnLandlordObject(landlordData);
             return refreshLandlordToken(
               frontLandlordData,
+              null,
               routeProtectionResponse.newAccessToken
                 ? routeProtectionResponse.newAccessToken
                 : null

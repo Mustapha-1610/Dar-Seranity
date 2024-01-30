@@ -2,10 +2,12 @@ import { NextResponse } from "next/server";
 
 export const refreshLandlordToken = (
   responseData: any,
+  extraData: any,
   newAccessToken: any
 ) => {
   const response = NextResponse.json({
     success: true,
+    extraData,
     responseData,
   });
   if (newAccessToken) {

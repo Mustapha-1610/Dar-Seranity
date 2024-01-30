@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
         );
       await res.renterAccount.save();
       const renterFrontData = returnRenterObject(res.renterAccount);
-      return refreshAccessToken(renterFrontData, res.newAccessToken);
+      return refreshAccessToken(renterFrontData, null, res.newAccessToken);
     } else {
       return res.response;
     }

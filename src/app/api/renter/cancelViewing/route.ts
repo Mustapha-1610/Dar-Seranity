@@ -30,6 +30,7 @@ export async function POST(request: NextRequest) {
       );
       return refreshAccessToken(
         renterFrontData,
+        null,
         routeProtectionResponse.newAccessToken
       );
     } else {

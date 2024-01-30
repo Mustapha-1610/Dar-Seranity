@@ -2,8 +2,10 @@ import { NextResponse, NextRequest } from "next/server";
 import { verifyRenterToken } from "@/Helpers/RouteProtection/renterRouteProtection";
 import { refreshAccessToken } from "@/Helpers/RouteProtection/refreshRenterToken";
 import { returnRenterObject } from "@/Helpers/backFunctions/renterBackFunctions";
+import renterSocket from "@/Helpers/socketLogic/renterSocket";
 export async function POST(request: NextRequest) {
   try {
+    renterSocket.emit("testing");
     const routeProtectionResponse: any = await verifyRenterToken(request);
 
     if (routeProtectionResponse.isValid) {
@@ -12,6 +14,7 @@ export async function POST(request: NextRequest) {
       );
       return refreshAccessToken(
         renterFrontData,
+        null,
         routeProtectionResponse.newAccessToken
       );
     } else {
