@@ -14,7 +14,7 @@ export default function Browse() {
   const router = useRouter();
   const fetchAllPropertyListings = async () => {
     const res = await fetch("/api/propertyListing/getAll", {
-      method: "GET",
+      method: "POST",
     });
     const response = await res.json();
     if (response.success) {

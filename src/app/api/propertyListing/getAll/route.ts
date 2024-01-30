@@ -3,7 +3,7 @@ import { errorHandler } from "@/Helpers/errorHandler/errorHandler";
 import rentalPropertyListing from "@/Modals/RentalModals/rentalProperty";
 import { NextResponse } from "next/server";
 connect();
-export async function GET() {
+export async function POST() {
   try {
     const properties = await rentalPropertyListing
       .find()
