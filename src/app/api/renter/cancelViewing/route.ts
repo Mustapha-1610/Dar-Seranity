@@ -41,13 +41,16 @@ export async function POST(request: NextRequest) {
       await landlordData.save();
 
       await routeProtectionResponse.renterAccount.save();
-
+      const landlordSocketData = {
+        landlordSocketId: landlordData.socketId,
+        landlordMail: landlordData.email,
+      };
       const renterFrontData = returnRenterObject(
         routeProtectionResponse.renterAccount
       );
       return refreshAccessToken(
         renterFrontData,
-        null,
+        landlordSocketData,
         routeProtectionResponse.newAccessToken
       );
     } else {

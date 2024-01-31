@@ -72,7 +72,6 @@ export default function LandlordNavbar() {
     };
 
     landlordSocket.on("refreshData", (data: any) => {
-      console.log(data);
       fetchLandlordData();
     });
 
@@ -94,10 +93,8 @@ export default function LandlordNavbar() {
       const res = await response.json();
       if (res.responseData) {
         setLandlordLocalStorageData(res.responseData);
-        const unreadCount = res.responseData.notifications.filter(
-          (notification: any) => !notification.readStatus
-        ).length;
-        setUnreadNotificationsCount(unreadCount);
+
+        setUnreadNotificationsCount(0);
         setTimeout(() => {
           setLandlordData(res.responseData);
         }, 5000);

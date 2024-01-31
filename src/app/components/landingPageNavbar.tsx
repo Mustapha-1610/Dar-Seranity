@@ -19,7 +19,7 @@ export default function LandingPageNavbar() {
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-gray-200" href="/">
+                  <Link className="hover:text-gray-200" href="/browse">
                     Browse
                   </Link>
                 </li>

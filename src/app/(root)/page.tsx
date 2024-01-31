@@ -150,7 +150,7 @@ export default function Home() {
                                                     src={image}
                                                     onClick={() => {
                                                       router.push(
-                                                        `/renter/rentalPropertyInformations/${item._id}`
+                                                        `/propertyInformations/${item._id}`
                                                       );
                                                     }}
                                                     alt={`image ${index + 1}`}
@@ -166,7 +166,7 @@ export default function Home() {
                                         className="bg-white cursor-pointer py-4 px-3"
                                         onClick={() => {
                                           router.push(
-                                            `/renter/rentalPropertyInformations/${item._id}`
+                                            `/propertyInformations/${item._id}`
                                           );
                                         }}
                                       >

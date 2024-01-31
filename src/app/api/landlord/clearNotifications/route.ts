@@ -14,7 +14,6 @@ export async function POST(request: NextRequest) {
         notification.readStatus = true;
       });
       await landlordData.save();
-      console.log(landlordData);
       const landlordFrontData = await returnLandlordObject(landlordData);
       return refreshLandlordToken(landlordFrontData, null, res.newAccessToken);
     } else {

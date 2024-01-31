@@ -3,8 +3,7 @@
 import { DatePicker, DatePickerProps, Space, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { Carousel } from "@material-tailwind/react";
-import Image from "next/image";
-import { PiArmchairDuotone } from "react-icons/pi";
+
 import { MdOutlineChair } from "react-icons/md";
 
 import { MdOutlineSoupKitchen, MdBalcony } from "react-icons/md";
@@ -17,7 +16,6 @@ import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
 import { RangePickerProps } from "antd/es/date-picker";
 import {
   getRenterLocalStorageData,
-  setLandlordLocalStorageData,
   setRenterLocalStorageData,
 } from "@/Helpers/frontFunctions/localStorageHandler";
 import landlordSocket from "@/Helpers/socketLogic/landlordSocket";
@@ -156,7 +154,7 @@ export default function RentalPropertyInfos({
 
       if (res.success) {
         setRenterLocalStorageData(res.responseData);
-
+        landlordSocket.emit("refLanNotis", { data: res.extraData });
         setRenterData(res.responseData);
       }
     } catch (err) {
@@ -279,10 +277,10 @@ export default function RentalPropertyInfos({
                       <div className="flex mb-4">
                         <div className="mr-4">
                           <span className="font-bold text-gray-700 dark:text-gray-300">
-                            Price:
+                            Price :
                           </span>
-                          <span className="text-gray-600 dark:text-gray-300">
-                            $29.99
+                          <span className="text-gray-600 ml-1 dark:text-gray-300">
+                            {propertyInformations.price}$
                           </span>
                         </div>
                       </div>

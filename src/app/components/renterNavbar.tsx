@@ -13,6 +13,9 @@ import { MdNotifications } from "react-icons/md";
 export default function RenterNavbar() {
   const [renterData, setRenterData] = useState<any>();
   const [firstLoad, setFirstLoad] = useState(true);
+  const [unreadNotificationsCount, setUnreadNotificationsCount] =
+    useState<number>(0);
+  const [isNotificationMenuOpen, setNotificationMenuOpen] = useState(false);
   const router = useRouter();
   const logout = async (e: any) => {
     e && e.preventDefault();
@@ -46,6 +49,10 @@ export default function RenterNavbar() {
         const response = await res.json();
         if (response.responseData) {
           setRenterLocalStorageData(response.responseData);
+          const unreadCount = response.responseData.notifications.filter(
+            (notification: any) => !notification.readStatus
+          ).length;
+          setUnreadNotificationsCount(unreadCount);
           setRenterData(response.responseData);
         } else {
           await logout(null);
@@ -63,11 +70,29 @@ export default function RenterNavbar() {
       fetchRenterData();
     }
   }, [firstLoad, router]);
+  const handleNotificationChange = async (e: any) => {
+    e.preventDefault();
+    setNotificationMenuOpen(!isNotificationMenuOpen);
+    if (unreadNotificationsCount > 0) {
+      const response = await fetch("/api/renter/clearNotifications", {
+        method: "POST",
+      });
+      const res = await response.json();
+      if (res.responseData) {
+        setRenterLocalStorageData(res.responseData);
+
+        setUnreadNotificationsCount(0);
+        setTimeout(() => {
+          setRenterData(res.responseData);
+        }, 5000);
+      }
+    }
+  };
   return (
     <>
       <nav className="bg-gray-900 text-white w-full py-4 sticky top-0 z-50">
         <div className="container mx-auto flex justify-between items-center">
-          <Link href="/renter">
+          <Link href="/landlord">
             <p className="text-2xl font-bold font-heading">Dar-Seranity</p>
           </Link>
           <ul className="hidden md:flex space-x-12">
@@ -97,14 +122,70 @@ export default function RenterNavbar() {
               </Link>
             </li>
           </ul>
-          <div className="xl flex items-center">
-            <a
-              href="/login"
-              className="bg-transparent text-white  hover:text-white font-semibold py-1 px-3 rounded-lg"
-            >
-              <MdNotifications size={25} />
-            </a>
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4">
+              <div className="relative">
+                <div
+                  className="cursor-pointer"
+                  onClick={handleNotificationChange}
+                >
+                  {unreadNotificationsCount > 0 && (
+                    <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center">
+                      <span className="text-sm font-bold">
+                        {unreadNotificationsCount}
+                      </span>
+                    </div>
+                  )}
+                  <MdNotifications size={25} />
+                </div>
+                {isNotificationMenuOpen &&
+                  renterData?.notifications.length > 0 && (
+                    <div className="absolute mt-4 left-1/2 transform -translate-x-1/2 bg-white text-gray-800 border border-gray-300 rounded-md shadow-lg max-w-md z-10">
+                      <div className="py-2 px-3 border-b border-gray-300 font-bold">
+                        Notifications
+                      </div>
+                      <div className="h-80 w-80 overflow-y-auto">
+                        {renterData?.notifications
+                          .slice()
+                          .reverse()
+                          .map((notification: any, index: number) => {
+                            const notificationDate = new Date(
+                              notification.recievedAt
+                            );
+                            const formattedDate = `${notificationDate.toLocaleDateString()} ${notificationDate.toLocaleTimeString()}`;
 
+                            return (
+                              <div
+                                key={index}
+                                className="p-3 hover:bg-gray-100 cursor-pointer flex items-center"
+                              >
+                                <Image
+                                  height={40}
+                                  width={40}
+                                  data-tooltip-target="tooltip-jese"
+                                  className="h-10 w-10 rounded-xl cursor-pointer"
+                                  src={notification?.notificationImage}
+                                  alt="Medium avatar"
+                                />
+                                <div className="ml-2">
+                                  <p className="text-xs font-semibold">
+                                    {notification.notificationsMessage}
+                                  </p>
+                                  <p className="text-xs text-gray-500">
+                                    {`Sent at: ${formattedDate}`}
+                                    {notification.readStatus === false && (
+                                      <div className="   bg-blue-500 text-white rounded-full w-2 h-2" />
+                                    )}
+                                  </p>{" "}
+                                </div>
+                              </div>
+                            );
+                          })}
+                      </div>
+                    </div>
+                  )}
+              </div>
+            </div>
             <div className="xl:flex space-x-5 items-center">
               <div
                 onClick={() => {
