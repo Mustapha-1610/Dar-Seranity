@@ -11,6 +11,8 @@ export const returnRenterObject = (renterData: any) => {
     duePayments: renterData.duePayments,
     viewingSchedules: renterData.viewingSchedules,
     socketId: renterData.socketId,
+    ViewingRequests: renterData.ViewingRequests,
+    deniedRequests: renterData.deniedRequests,
   };
   return renterObject;
 };

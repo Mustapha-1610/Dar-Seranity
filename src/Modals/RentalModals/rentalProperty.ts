@@ -68,7 +68,47 @@ const rentalPropertyListingsSchema = new Schema({
   price: {
     type: Number,
   },
-  scheduledListings: [
+  scheduledViewings: [
+    {
+      renterName: {
+        type: String,
+      },
+      renterId: {
+        type: Schema.Types.ObjectId,
+      },
+      picture: {
+        type: String,
+      },
+      familyCount: {
+        type: Number,
+      },
+      viewingDate: {
+        type: String,
+      },
+    },
+  ],
+  rented: {
+    isRented: {
+      type: Boolean,
+      default: false,
+    },
+    renterProfilePictue: {
+      type: String,
+    },
+    rentedOn: {
+      type: String,
+    },
+    price: {
+      type: Number,
+    },
+    earned: {
+      type: Number,
+    },
+    isOnhold: {
+      type: Boolean,
+    },
+  },
+  ViewingRequests: [
     {
       renterName: {
         type: String,
@@ -91,6 +131,19 @@ const rentalPropertyListingsSchema = new Schema({
         },
       },
       suggestedViewingDate: {
+        type: String,
+      },
+    },
+  ],
+  possibleRenters: [
+    {
+      renterId: {
+        type: Schema.Types.ObjectId,
+      },
+      renterName: {
+        type: String,
+      },
+      renterPicutre: {
         type: String,
       },
     },

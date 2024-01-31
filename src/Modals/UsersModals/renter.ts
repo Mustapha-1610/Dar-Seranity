@@ -55,6 +55,12 @@ const renterUserSchema = new Schema({
       notificationContext: {
         type: String,
       },
+      sentAt: {
+        type: Date,
+      },
+      notificationImage: {
+        type: String,
+      },
     },
   ],
   rentedProperties: [
@@ -70,13 +76,24 @@ const renterUserSchema = new Schema({
       rentedOn: {
         type: Date,
       },
-      rented: {
-        type: Boolean,
-        default: false,
-      },
     },
   ],
   viewingSchedules: [
+    {
+      propertyId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+      },
+      propertyTitle: {
+        type: String,
+        required: true,
+      },
+      scheduledFor: {
+        type: String,
+      },
+    },
+  ],
+  ViewingRequests: [
     {
       propertyId: {
         type: Schema.Types.ObjectId,
@@ -93,6 +110,16 @@ const renterUserSchema = new Schema({
         type: Boolean,
       },
       scheduledFor: {
+        type: String,
+      },
+    },
+  ],
+  deniedRequests: [
+    {
+      propertyId: {
+        type: Schema.Types.ObjectId,
+      },
+      reason: {
         type: String,
       },
     },

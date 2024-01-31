@@ -200,57 +200,70 @@ export default function RentalPropertyInfos({
                           </Carousel>
                         </div>
                       </div>
-                      <div className="flex -mx-2 mb-4">
-                        <div className="w-1/2 px-2">
-                          {renterData?.viewingSchedules.some(
-                            (property: any) =>
-                              property.propertyId === propertyInformations._id
-                          ) ? (
-                            <>
-                              <button
-                                className="w-full bg-red-600 dark:bg-gray-700 text-white dark:text-white py-2 px-4 rounded-full font-bold hover:bg-red-500 dark:hover:bg-gray-600"
-                                onClick={unscheduleListing}
-                              >
-                                UnSchedule
-                              </button>
-                            </>
-                          ) : (
-                            <>
-                              <button
-                                onClick={() => {
-                                  setShow(!show);
-                                }}
-                                className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
-                              >
-                                {show ? "Cancel" : "Schedule Viewing"}
-                              </button>
-                            </>
-                          )}
-                        </div>
-                        <div className="w-1/2 px-2">
-                          {renterData?.savedRentalProperties.some(
-                            (property: any) =>
-                              property.propertyId === propertyInformations._id
-                          ) ? (
-                            <>
-                              <button
-                                className="w-full bg-red-600 dark:bg-gray-700 text-white dark:text-white py-2 px-4 rounded-full font-bold hover:bg-red-500 dark:hover:bg-gray-600"
-                                onClick={unsaveProperty}
-                              >
-                                Unsave
-                              </button>
-                            </>
-                          ) : (
-                            <>
-                              <button
-                                className="w-full bg-orange-600 dark:bg-gray-700 text-white dark:text-white py-2 px-4 rounded-full font-bold hover:bg-orange-500 dark:hover:bg-gray-600"
-                                onClick={saveProperty}
-                              >
-                                Save
-                              </button>
-                            </>
-                          )}
-                        </div>
+                      <div>
+                        {renterData?.viewingSchedules.some(
+                          (property: any) =>
+                            property.propertyId === propertyInformations._id
+                        ) ? (
+                          <p>Property Is Allready Scheduled For A Vieweing</p>
+                        ) : (
+                          <>
+                            <div className="flex -mx-2 mb-4">
+                              <div className="w-1/2 px-2">
+                                {renterData?.ViewingRequests.some(
+                                  (property: any) =>
+                                    property.propertyId ===
+                                    propertyInformations._id
+                                ) ? (
+                                  <>
+                                    <button
+                                      className="w-full bg-red-600 dark:bg-gray-700 text-white dark:text-white py-2 px-4 rounded-full font-bold hover:bg-red-500 dark:hover:bg-gray-600"
+                                      onClick={unscheduleListing}
+                                    >
+                                      UnSchedule
+                                    </button>
+                                  </>
+                                ) : (
+                                  <>
+                                    <button
+                                      onClick={() => {
+                                        setShow(!show);
+                                      }}
+                                      className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
+                                    >
+                                      {show ? "Cancel" : "Schedule Viewing"}
+                                    </button>
+                                  </>
+                                )}
+                              </div>
+                              <div className="w-1/2 px-2">
+                                {renterData?.savedRentalProperties.some(
+                                  (property: any) =>
+                                    property.propertyId ===
+                                    propertyInformations._id
+                                ) ? (
+                                  <>
+                                    <button
+                                      className="w-full bg-red-600 dark:bg-gray-700 text-white dark:text-white py-2 px-4 rounded-full font-bold hover:bg-red-500 dark:hover:bg-gray-600"
+                                      onClick={unsaveProperty}
+                                    >
+                                      Unsave
+                                    </button>
+                                  </>
+                                ) : (
+                                  <>
+                                    <button
+                                      className="w-full bg-orange-600 dark:bg-gray-700 text-white dark:text-white py-2 px-4 rounded-full font-bold hover:bg-orange-500 dark:hover:bg-gray-600"
+                                      onClick={saveProperty}
+                                    >
+                                      Save
+                                    </button>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                          </>
+                        )}
                       </div>
                     </div>
                     <div className="md:flex-1 px-4">

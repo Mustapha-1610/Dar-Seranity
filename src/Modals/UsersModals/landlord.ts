@@ -53,7 +53,12 @@ const landlordUserSchema = new Schema({
         default: false,
       },
       notificationContext: {
-        type: String,
+        context: {
+          type: String,
+        },
+        contextId: {
+          type: String,
+        },
       },
       recievedAt: {
         type: Date,
@@ -117,10 +122,6 @@ const landlordUserSchema = new Schema({
       ],
       createdAt: {
         type: Date,
-      },
-      rented: {
-        type: Boolean,
-        default: false,
       },
     },
   ],

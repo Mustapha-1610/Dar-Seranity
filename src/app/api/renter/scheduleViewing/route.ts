@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
         propertyId,
         {
           $push: {
-            scheduledListings: {
+            ViewingRequests: {
               renterName: routeProtectionResponse.renterAccount.name,
               picture: routeProtectionResponse.renterAccount.profilePicture,
               renterId: routeProtectionResponse.renterAccount._id,
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
           },
         }
       );
-      routeProtectionResponse.renterAccount.viewingSchedules.push({
+      routeProtectionResponse.renterAccount.ViewingRequests.push({
         propertyId: propetyInfos._id,
         propertyTitle: propetyInfos.title,
         submittedOn: new Date(),
@@ -47,9 +47,11 @@ export async function POST(request: NextRequest) {
         _id: propetyInfos.landlordInformations.id,
       });
       landlordData.notifications.push({
-        notificationsMessage:
-          "New Viewing Scheduled for : " + propetyInfos.title,
-        notificationContext: "scheduledViewings",
+        notificationsMessage: "New Viewing Request for : " + propetyInfos.title,
+        notificationContext: {
+          context: "scheduledViewing",
+          contextId: propetyInfos._id,
+        },
         recievedAt: new Date(),
         notificationImage: routeProtectionResponse.renterAccount.profilePicture,
       });

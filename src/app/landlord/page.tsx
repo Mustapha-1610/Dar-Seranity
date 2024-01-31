@@ -8,9 +8,11 @@ import { IoBedOutline } from "react-icons/io5";
 import { MdOutlineSoupKitchen } from "react-icons/md";
 import { getLandlordLocalStorageData } from "@/Helpers/frontFunctions/localStorageHandler";
 import { Spin } from "antd";
+import { useRouter } from "next/navigation";
 export default function HomePage() {
   const [landlordData, setLandlordData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const fetchLandlordData = async () => {
     try {
       const landlordInfos = getLandlordLocalStorageData();
@@ -102,7 +104,14 @@ export default function HomePage() {
                                         </Carousel>
                                       </div>
                                     </div>
-                                    <div className="bg-white py-4 px-3">
+                                    <div
+                                      onClick={() => {
+                                        router.push(
+                                          `/landlord/property/${item.propertyId}`
+                                        );
+                                      }}
+                                      className="bg-white py-4 px-3"
+                                    >
                                       <h3 className="text-lg  mb-2 font-bold">
                                         {item.title}
                                       </h3>

@@ -86,7 +86,6 @@ export async function POST(request: NextRequest) {
                 title,
                 propertyId: newPropertyListing._id,
                 images: imageUrls,
-                createdAd: new Date(),
                 roumNumbers: {
                   kitchen: kitchenCount,
                   livingRoom: livingRoomCount,
