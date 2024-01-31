@@ -1,5 +1,6 @@
 "use client";
 
+import renterSocket from "@/Helpers/socketLogic/renterSocket";
 import { useEffect, useState } from "react";
 
 export default function PropertyInformations({
@@ -25,12 +26,10 @@ export default function PropertyInformations({
       const response = await res.json();
       if (response.success) {
         setPropertyInformations(response.propertyListing);
-        console.log(response.propertyListing);
-
         setLoading(false);
         setDisplayedImage(response.propertyListing.propertyImages[0]);
       } else {
-        console.log(response.success);
+        console.log(response);
       }
     };
     if (params.id) {
@@ -48,10 +47,12 @@ export default function PropertyInformations({
       }),
     });
     const response = await res.json();
-    console.log(response);
-
     if (response.propertyListing) {
       setPropertyInformations(response.propertyListing);
+      renterSocket.emit(
+        "refreshRenterNotifications",
+        response.renterSocketData
+      );
     }
   };
   const acceptViewing = async (
@@ -72,9 +73,12 @@ export default function PropertyInformations({
       }),
     });
     const response = await res.json();
-    console.log(response);
     if (response.propertyListing) {
       setPropertyInformations(response.propertyListing);
+      renterSocket.emit(
+        "refreshRenterNotifications",
+        response.renterSocketData
+      );
     }
   };
   return (

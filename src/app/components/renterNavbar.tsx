@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { MdNotifications } from "react-icons/md";
-
+import renterSocket from "@/Helpers/socketLogic/renterSocket";
 export default function RenterNavbar() {
   const [renterData, setRenterData] = useState<any>();
   const [firstLoad, setFirstLoad] = useState(true);
@@ -54,6 +54,9 @@ export default function RenterNavbar() {
           ).length;
           setUnreadNotificationsCount(unreadCount);
           setRenterData(response.responseData);
+          await renterSocket.emit("newRenterConnected", {
+            renterSocketId: response.responseData.socketId,
+          });
         } else {
           await logout(null);
           router.push("/");
@@ -62,6 +65,9 @@ export default function RenterNavbar() {
         console.error("Error fetching cities:", error);
       }
     };
+    renterSocket.on("refreshData", (data: any) => {
+      fetchRenterData();
+    });
     if (firstLoad) {
       setRenterData(getRenterLocalStorageData());
       fetchRenterData();

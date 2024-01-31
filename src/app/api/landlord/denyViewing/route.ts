@@ -28,7 +28,10 @@ export async function POST(request: NextRequest) {
       });
       await renterAccount.save();
       await propertyListing.save();
-      return NextResponse.json({ propertyListing });
+      const renterSocketData = {
+        renterSocketId: renterAccount.socketId,
+      };
+      return NextResponse.json({ propertyListing, renterSocketData });
     } else {
       return res.response;
     }

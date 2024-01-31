@@ -35,14 +35,17 @@ export async function POST(request: NextRequest) {
       });
       renterAccount.notifications.push({
         notificationsMessage:
-          "Viewing Request Accept For : " + propertyListing.title,
+          "Viewing Request Accepted For : " + propertyListing.title,
         notificationContext: "viewingNotification",
         sentAt: new Date(),
         notificationImage: landlordAccount.profilePicture,
       });
       await renterAccount.save();
       await propertyListing.save();
-      return NextResponse.json({ propertyListing });
+      const renterSocketData = {
+        renterSocketId: renterAccount.socketId,
+      };
+      return NextResponse.json({ propertyListing, renterSocketData });
     } else {
       return res.response;
     }
