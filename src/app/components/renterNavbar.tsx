@@ -98,12 +98,12 @@ export default function RenterNavbar() {
     <>
       <nav className="bg-gray-900 text-white w-full py-4 sticky top-0 z-50">
         <div className="container mx-auto flex justify-between items-center">
-          <Link href="/landlord">
+          <Link href="/renter">
             <p className="text-2xl font-bold font-heading">Dar-Seranity</p>
           </Link>
           <ul className="hidden md:flex space-x-12">
             <li>
-              <Link href="/landlord">
+              <Link href="/renter">
                 <p className="hover:text-gray-200">Home</p>
               </Link>
             </li>
@@ -118,13 +118,8 @@ export default function RenterNavbar() {
               </Link>
             </li>
             <li>
-              <Link href="/landlord/subscriptionPacks">
+              <Link href="/renter">
                 <p className="hover:text-gray-200">Inbox</p>
-              </Link>
-            </li>
-            <li>
-              <Link href="/landlord/statistics">
-                <p className="hover:text-gray-200">Due Payments</p>
               </Link>
             </li>
           </ul>
@@ -156,7 +151,7 @@ export default function RenterNavbar() {
                           .reverse()
                           .map((notification: any, index: number) => {
                             const notificationDate = new Date(
-                              notification.recievedAt
+                              notification.sentAt
                             );
                             const formattedDate = `${notificationDate.toLocaleDateString()} ${notificationDate.toLocaleTimeString()}`;
 
@@ -195,11 +190,14 @@ export default function RenterNavbar() {
             <div className="xl:flex space-x-5 items-center">
               <div
                 onClick={() => {
-                  router.push("/landlord/profile");
+                  router.push("/renter/profile");
                 }}
                 className="relative"
               >
                 <Image
+                  onClick={() => {
+                    router.push("/renter/profile");
+                  }}
                   height={120}
                   width={120}
                   data-tooltip-target="tooltip-jese"

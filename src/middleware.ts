@@ -20,7 +20,16 @@ async function verifyToken(token: any) {
 }
 
 export async function middleware(req: NextRequest) {
-  const publicRoutes = ["/", "/login", "/signup"];
+  const publicRoutes = [
+    "/",
+    "/login",
+    "/signup",
+    "/browse",
+    "/propertyInformations",
+    "/propertyInformations/:id",
+    "/contactMe",
+    "/aboutMe",
+  ];
   const { pathname } = req.nextUrl;
   if (publicRoutes.includes(pathname)) {
     const renterToken = req.cookies.get("refreshRenterToken")?.value || "";

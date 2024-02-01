@@ -79,6 +79,8 @@ export default function PropertyInformations({
         "refreshRenterNotifications",
         response.renterSocketData
       );
+      const socketObject = response.extraData;
+      renterSocket.emit("remindViewing", { socketObject });
     }
   };
   return (

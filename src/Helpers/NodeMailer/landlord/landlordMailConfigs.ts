@@ -37,3 +37,28 @@ export const landlordConfirmationMail = async (name: string, email: string) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const sendLandlordReminderMail = async (
+  name: string,
+  email: string,
+  propertyTitle: string,
+  viewingDate: string
+) => {
+  await transport
+    .sendMail({
+      from: user,
+      to: email,
+      subject: "Dar-Seranity Scheduled Viewing Reminder",
+      html: `
+      <div style="font-family: Arial, sans-serif; font-size: 16px; padding: 20px; background-color: #F5F5F5; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <h2 style="text-align: center; margin-bottom: 20px;">Scheduled Viewing Reminder !</h2>
+  <div style="text-align: center; margin-bottom: 5px;">
+    <h3>Hello ${name}, You Have A Scheduled Viewing For Property ${propertyTitle} In The Next 3 Days Exactly At : ${viewingDate} </h3>
+  </div>
+  <div style="text-align: center; margin-bottom: 5px;">
+          <p>This Link Will Expire In 1 Hour </p>
+  </div>
+</div>`,
+    })
+    .catch((err) => console.log(err));
+};

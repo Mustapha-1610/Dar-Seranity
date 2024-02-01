@@ -2,7 +2,7 @@ export const returnRenterObject = (renterData: any) => {
   const renterObject = {
     name: renterData.name,
     surname: renterData.surname,
-    email: renterData.surname,
+    email: renterData.email,
     profilePicture: renterData.profilePicture,
     landlordReviews: renterData.landlordReviews,
     notifications: renterData.notifications,

@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
       const landlordAccount = res.landlordAccount;
       const reqBody = await request.json();
       const { renterId, propertyId, viewingDate, familyCount } = reqBody;
-      console.log(reqBody);
       const renterAccount = await renter.findById(renterId);
       const propertyListing = await rentalPropertyListing.findById(propertyId);
       propertyListing.ViewingRequests = propertyListing.ViewingRequests.filter(
@@ -45,7 +44,28 @@ export async function POST(request: NextRequest) {
       const renterSocketData = {
         renterSocketId: renterAccount.socketId,
       };
-      return NextResponse.json({ propertyListing, renterSocketData });
+      const extraData = {
+        renterData: {
+          renterId: renterAccount._id,
+        },
+        propertyData: {
+          propertyTitle: propertyListing.title,
+          propertyId: propertyListing._id,
+          viewingDate,
+        },
+        landlordData: {
+          landlordId: landlordAccount._id,
+        },
+        socketData: {
+          renterSocketData: renterAccount.socketId,
+          landlordSocketData: landlordAccount.socketId,
+        },
+      };
+      return NextResponse.json({
+        propertyListing,
+        renterSocketData,
+        extraData,
+      });
     } else {
       return res.response;
     }

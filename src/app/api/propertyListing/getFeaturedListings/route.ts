@@ -14,8 +14,6 @@ export async function POST() {
         { $sample: { size: 3 } }, // Randomly select 3 documents from the matched results
       ])
       .exec();
-
-    console.log(randomProperties);
     return NextResponse.json({ randomProperties });
   } catch (err) {
     return errorHandler(err);
