@@ -133,7 +133,8 @@ export default function RentalPropertyInfos({
       if (res.success) {
         setRenterLocalStorageData(res.responseData),
           setRenterData(res.responseData);
-        landlordSocket.emit("refLanNotis", { data: res.extraData });
+        const landlordSocketObject = res.extraData.landlordSocketId;
+        landlordSocket.emit("refLanNotis", landlordSocketObject);
         setShow(false);
       }
     } catch (err) {
