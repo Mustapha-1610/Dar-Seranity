@@ -37,6 +37,17 @@ export async function POST(request: NextRequest) {
             renterAccount.viewingSchedules.filter((property: any) => {
               property.propertyId.toString() !== propertyId.toString();
             });
+          if (renterAccount._id !== res.renterAccount._id) {
+            renterAccount.notifications.push({
+              notificationsMessage:
+                "Scheduled Viewing For Property : " +
+                propertyInformations.title +
+                " Has Been Canceld !",
+              notificationContext: "RentalOffer",
+              sentAt: new Date(),
+              notificationImage: propertyInformations.propertyImages[0],
+            });
+          }
           await renterAccount.save();
         });
       }
@@ -68,20 +79,30 @@ export async function POST(request: NextRequest) {
       propertyInformations.possibleRenters = [];
       propertyInformations.ViewingRequests = [];
       propertyInformations.scheduledViewings = [];
-      propertyInformations.rented = {
-        isRented: true,
-        renterProfilePictue: res.renterAccount.profilePicture,
-        rentedOn: new Date(),
-        earned: propertyInformations.price * 2,
-        isOnhold: false,
-      };
+      let newDate = new Date();
+      let oneMonthLater = new Date(newDate);
+      oneMonthLater.setMonth(oneMonthLater.getMonth() + 1);
 
       res.renterAccount.rentedProperties.push({
         propertyId,
         propertyTitle: propertyInformations.title,
         rentedOn: new Date(),
         price: propertyInformations.price,
+
+        nextPaymentDate: oneMonthLater,
       });
+      res.renterAccount.transactionHistory.push({
+        transactionAmount: propertyInformations.price,
+        transactionDate: new Date(),
+        reciever: propertyInformations.landlordInformations.name,
+        propety: {
+          propertyTitle: propertyInformations.title,
+          propertyId: propertyInformations._id,
+        },
+      });
+      res.renterAccount.totalRentPaid.total =
+        res.renterAccount.totalRentPaid.total += 1;
+      res.renterAccount.totalRentPaid.lastPaymentDate = new Date();
       res.renterAccount.rentalOffers = res.renterAccount.rentalOffers.filter(
         (property: any) =>
           String(property.propertyId) !== String(propertyInformations._id)
@@ -96,7 +117,7 @@ export async function POST(request: NextRequest) {
         notificationsMessage:
           "Rental Offer Accepted For : " +
           propertyInformations.title +
-          " Property By" +
+          " Property By " +
           res.renterAccount.name,
         notificationContext: {
           context: "acceptedRentalOffer",
@@ -104,6 +125,36 @@ export async function POST(request: NextRequest) {
         },
         recievedAt: new Date(),
         notificationImage: res.renterAccount.profilePicture,
+      });
+      let finalAmount = 0;
+      if (propertyInformations.transactionFees === 10) {
+        finalAmount +=
+          propertyInformations.price - propertyInformations.price * 0.045;
+      } else if (propertyInformations.transactionFees === 20) {
+        finalAmount +=
+          propertyInformations.price - propertyInformations.price * 0.04;
+      } else {
+        finalAmount +=
+          propertyInformations.price - propertyInformations.price * 0.5;
+      }
+      landlordData.earnings += finalAmount;
+      propertyInformations.rented = {
+        isRented: true,
+        renterProfilePictue: res.renterAccount.profilePicture,
+        rentedOn: newDate,
+        nextPaymentDate: oneMonthLater,
+        earned: finalAmount,
+        isOnhold: false,
+      };
+      landlordData.transactions.push({
+        recievedAmount: finalAmount,
+        recievedOn: new Date(),
+        recievedFrom: res.renterAccount.name + " " + res.renterAccount.surname,
+        propertyInformations: {
+          propertyTitle: propertyInformations.title,
+          propertyId: propertyInformations._id,
+          transactionFee: propertyInformations.transactionFees,
+        },
       });
       await landlordData.save();
 

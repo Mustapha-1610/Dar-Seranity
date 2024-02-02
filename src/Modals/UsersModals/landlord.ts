@@ -128,6 +128,57 @@ const landlordUserSchema = new Schema({
   socketId: {
     type: String,
   },
+  earnings: {
+    type: Number,
+    default: 0,
+  },
+  scheduledViewings: [
+    {
+      renterId: {
+        type: Schema.Types.ObjectId,
+      },
+      scheduledFor: {
+        type: Date,
+      },
+      propertyTitle: {
+        type: String,
+      },
+      propertyId: {
+        type: Schema.Types.ObjectId,
+      },
+      renterName: {
+        type: String,
+      },
+    },
+  ],
+  transactions: [
+    {
+      recievedAmount: {
+        type: Number,
+      },
+      recievedOn: {
+        type: Number,
+      },
+      recievedFrom: {
+        type: String,
+      },
+      propertyInformations: {
+        propertyTitle: {
+          type: String,
+        },
+        propertyId: {
+          type: Schema.Types.ObjectId,
+        },
+        transactionFee: {
+          type: Number,
+          default: 0,
+        },
+      },
+    },
+  ],
+  phoneNumber: {
+    type: Number,
+  },
 });
 const landlord =
   mongoose.models.landlord || mongoose.model("landlord", landlordUserSchema);

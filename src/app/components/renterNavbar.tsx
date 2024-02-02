@@ -113,7 +113,7 @@ export default function RenterNavbar() {
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/renter/myProperties">
                 <p className="hover:text-gray-200">My Properties</p>
               </Link>
             </li>

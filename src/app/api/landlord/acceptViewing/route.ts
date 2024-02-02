@@ -39,6 +39,13 @@ export async function POST(request: NextRequest) {
         sentAt: new Date(),
         notificationImage: landlordAccount.profilePicture,
       });
+      landlordAccount.scheduledViewings.push({
+        renterId,
+        scheduledFor: viewingDate,
+        propertyTitle: propertyListing.title,
+        propertyId: propertyListing._id,
+        renterName: renterAccount.name + " " + renterAccount.surname,
+      });
       await renterAccount.save();
       await propertyListing.save();
       const renterSocketData = {

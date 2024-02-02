@@ -79,6 +79,9 @@ const renterUserSchema = new Schema({
       price: {
         type: Number,
       },
+      nextPaymentDate: {
+        type: Date,
+      },
     },
   ],
   viewingSchedules: [
@@ -169,6 +172,36 @@ const renterUserSchema = new Schema({
   socketId: {
     type: String,
   },
+  totalRentPaid: {
+    total: {
+      type: Number,
+      default: 0,
+    },
+    lastPaymentDate: {
+      type: Date,
+    },
+  },
+  transactionHistory: [
+    {
+      transactionAmount: {
+        type: Number,
+      },
+      transactionDate: {
+        type: Number,
+      },
+      reciever: {
+        type: String,
+      },
+      propety: {
+        propertyTitle: {
+          type: String,
+        },
+        propertyId: {
+          type: Schema.Types.ObjectId,
+        },
+      },
+    },
+  ],
 });
 const renter =
   mongoose.models.renter || mongoose.model("renter", renterUserSchema);

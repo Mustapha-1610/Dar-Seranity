@@ -59,7 +59,7 @@ const rentalPropertyListingsSchema = new Schema({
       type: String,
     },
     id: {
-      type: String,
+      type: Schema.Types.ObjectId,
     },
   },
   transactionFees: {
@@ -100,10 +100,14 @@ const rentalPropertyListingsSchema = new Schema({
     },
     earned: {
       type: Number,
+      default: 0,
     },
     isOnhold: {
       type: Boolean,
       default: false,
+    },
+    nextPaymentDate: {
+      type: Date,
     },
   },
   ViewingRequests: [
