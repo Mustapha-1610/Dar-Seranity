@@ -1,7 +1,9 @@
 "use client";
 
 import renterSocket from "@/Helpers/socketLogic/renterSocket";
+import Image from "next/image";
 import { useEffect, useState } from "react";
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 
 export default function PropertyInformations({
   params,
@@ -14,7 +16,7 @@ export default function PropertyInformations({
   const [displayScheduledViewings, setDisplayScheduledViewings] =
     useState(false);
   const [displayViewingRequests, setDisplayViewingRequests] = useState(false);
-  const [displayPossibleRenters, setDisplayPossibleRenters] = useState(false);
+  const [displayPossibleRenters, setDisplayPossibleRenters] = useState(true);
   useEffect(() => {
     const fetchPropertyInformations = async () => {
       const res = await fetch("/api/propertyListing/get", {
@@ -81,6 +83,48 @@ export default function PropertyInformations({
       );
       const socketObject = response.extraData;
       renterSocket.emit("remindViewing", { socketObject });
+    }
+  };
+  const sendRentalOffer = async (e: any, renterId: any) => {
+    try {
+      const response = await fetch("/api/landlord/sendRentalOffer", {
+        method: "POST",
+        body: JSON.stringify({
+          renterId,
+          propertyId: propertyInformations._id,
+        }),
+      });
+      const res = await response.json();
+      if (res.success) {
+        setPropertyInformations(res.propertyInformations);
+        const renterSocketId = res.renterSocketData;
+        renterSocket.emit("refreshRenterNotifications", { renterSocketId });
+      } else {
+        console.log(res);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const declineRentalOffer = async (e: any, renterId: any) => {
+    try {
+      const response = await fetch("/api/landlord/declineRentalOffer", {
+        method: "POST",
+        body: JSON.stringify({
+          renterId,
+          propertyId: propertyInformations._id,
+        }),
+      });
+      const res = await response.json();
+      if (res.success) {
+        setPropertyInformations(res.propertyInformations);
+        const renterSocketId = res.renterSocketData;
+        renterSocket.emit("refreshRenterNotifications", { renterSocketId });
+      } else {
+        console.log(res);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
   return (
@@ -321,7 +365,10 @@ export default function PropertyInformations({
                             <thead>
                               <tr className="border-b">
                                 <th className="w-1/6"></th>
-                                <th className="w-1/4">Name</th>
+                                <th className="w-1/6">Name</th>
+                                <th className="w-1/4">Status</th>
+
+                                <th className="w-1/4">Action</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -329,14 +376,52 @@ export default function PropertyInformations({
                                 (item: any, index: any) => (
                                   <tr key={index} className="border-b">
                                     <td className="p-2 text-center">
-                                      <img
-                                        src={item.picture}
+                                      <Image
+                                        src={item.renterPicutre}
+                                        width={250}
+                                        height={250}
                                         alt=""
                                         className="w-full max-h-10 object-contain"
                                       />
                                     </td>
                                     <td className="p-2 text-sm text-center">
                                       {item.renterName}
+                                    </td>
+                                    <td className="p-2 text-sm text-center">
+                                      {item.responseStatus}
+                                    </td>
+                                    <td className="p-2 text-center">
+                                      {item.responseStatus ===
+                                      "Awaiting Response" ? (
+                                        <></>
+                                      ) : (
+                                        <>
+                                          <button>
+                                            <AiOutlineCheckCircle
+                                              onClick={(e) =>
+                                                sendRentalOffer(
+                                                  e,
+                                                  item.renterId
+                                                )
+                                              }
+                                              className="text-green-500"
+                                              size={24}
+                                            />
+                                          </button>{" "}
+                                          <button>
+                                            <AiOutlineCloseCircle
+                                              onClick={(e) =>
+                                                declineRentalOffer(
+                                                  e,
+                                                  item.renterId
+                                                )
+                                              }
+                                              className="text-red-500"
+                                              size={24}
+                                            />
+                                          </button>
+                                        </>
+                                      )}
                                     </td>
                                   </tr>
                                 )

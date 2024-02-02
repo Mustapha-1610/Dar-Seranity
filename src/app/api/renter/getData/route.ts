@@ -3,6 +3,8 @@ import { verifyRenterToken } from "@/Helpers/RouteProtection/renterRouteProtecti
 import { refreshAccessToken } from "@/Helpers/RouteProtection/refreshRenterToken";
 import { returnRenterObject } from "@/Helpers/backFunctions/renterBackFunctions";
 import renterSocket from "@/Helpers/socketLogic/renterSocket";
+import { connect } from "@/DataBase/dbConfig";
+connect();
 export async function POST(request: NextRequest) {
   try {
     renterSocket.emit("testing");

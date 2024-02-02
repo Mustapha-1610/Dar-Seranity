@@ -118,7 +118,7 @@ export default function RenterNavbar() {
               </Link>
             </li>
             <li>
-              <Link href="/renter">
+              <Link href="/renter/inbox">
                 <p className="hover:text-gray-200">Inbox</p>
               </Link>
             </li>

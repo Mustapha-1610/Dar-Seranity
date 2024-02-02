@@ -2,6 +2,8 @@ import { NextResponse, NextRequest } from "next/server";
 import { verifyLandlordToken } from "@/Helpers/RouteProtection/landlorRouteProtection";
 import { refreshLandlordToken } from "@/Helpers/RouteProtection/refreshLandlordToken";
 import { returnLandlordObject } from "@/Helpers/backFunctions/returnLandlordObject";
+import { connect } from "@/DataBase/dbConfig";
+connect();
 export async function POST(request: NextRequest) {
   try {
     const routeProtectionResponse: any = await verifyLandlordToken(request);

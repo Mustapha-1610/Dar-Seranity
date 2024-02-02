@@ -76,6 +76,9 @@ const renterUserSchema = new Schema({
       rentedOn: {
         type: Date,
       },
+      price: {
+        type: Number,
+      },
     },
   ],
   viewingSchedules: [
@@ -114,12 +117,18 @@ const renterUserSchema = new Schema({
       },
     },
   ],
-  deniedRequests: [
+  rentalOffers: [
     {
       propertyId: {
         type: Schema.Types.ObjectId,
       },
-      reason: {
+      rentingPrice: {
+        type: Number,
+      },
+      sentOn: {
+        type: Date,
+      },
+      propertyTitle: {
         type: String,
       },
     },

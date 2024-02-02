@@ -98,14 +98,12 @@ const rentalPropertyListingsSchema = new Schema({
     rentedOn: {
       type: String,
     },
-    price: {
-      type: Number,
-    },
     earned: {
       type: Number,
     },
     isOnhold: {
       type: Boolean,
+      default: false,
     },
   },
   ViewingRequests: [
@@ -145,6 +143,10 @@ const rentalPropertyListingsSchema = new Schema({
       },
       renterPicutre: {
         type: String,
+      },
+      responseStatus: {
+        type: String,
+        default: "No Offer Sent",
       },
     },
   ],

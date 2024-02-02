@@ -12,7 +12,7 @@ export const returnRenterObject = (renterData: any) => {
     viewingSchedules: renterData.viewingSchedules,
     socketId: renterData.socketId,
     ViewingRequests: renterData.ViewingRequests,
-    deniedRequests: renterData.deniedRequests,
+    rentalOffers: renterData.rentalOffers,
   };
   return renterObject;
 };
