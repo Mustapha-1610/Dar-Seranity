@@ -1,19 +1,11 @@
 "use client";
 
-import {
-  getLandlordLocalStorageData,
-  getRenterLocalStorageData,
-  setRenterLocalStorageData,
-} from "@/Helpers/frontFunctions/localStorageHandler";
-import landlordSocket from "@/Helpers/socketLogic/landlordSocket";
+import { getLandlordLocalStorageData } from "@/Helpers/frontFunctions/localStorageHandler";
 import { useEffect, useState } from "react";
-import { Space, Table, Tag } from "antd";
-import moment from "moment";
 import Dashboard from "./components/dashboard";
 import Earnings from "./components/earnings";
 import ScheduledViewings from "./components/ScheduledViewings";
 export default function StatisticsPage() {
-  const [renterData, setRenterData] = useState<any>({});
   const [landlordData, setLandlordData] = useState<any>({});
   const [activeTab, setActiveTab] = useState("rentedProperties");
   const [selectedComponent, setSelectedComponent] = useState(<Dashboard />);
@@ -239,7 +231,7 @@ export default function StatisticsPage() {
                     Created Property Listings
                   </p>
                   <h4 className="mt-3 block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                    {renterData?.createdPropertyListings?.length || 0}
+                    {landlordData?.createdPropertyListings?.length || 0}
                   </h4>
                 </div>
                 <div className=" border-blue-gray-50 p-4"></div>

@@ -1,15 +1,8 @@
 "use client";
 
-import {
-  getLandlordLocalStorageData,
-  getRenterLocalStorageData,
-  setLandlordLocalStorageData,
-  setRenterLocalStorageData,
-} from "@/Helpers/frontFunctions/localStorageHandler";
-import landlordSocket from "@/Helpers/socketLogic/landlordSocket";
-import { Space, Table } from "antd";
+import { getLandlordLocalStorageData } from "@/Helpers/frontFunctions/localStorageHandler";
+import { Table } from "antd";
 import Column from "antd/es/table/Column";
-import ColumnGroup from "antd/es/table/ColumnGroup";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";

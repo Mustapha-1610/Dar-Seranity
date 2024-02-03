@@ -4,10 +4,8 @@ import {
   getRenterLocalStorageData,
   setRenterLocalStorageData,
 } from "@/Helpers/frontFunctions/localStorageHandler";
-import landlordSocket from "@/Helpers/socketLogic/landlordSocket";
 import { useEffect, useState } from "react";
-import { Space, Table, Tag } from "antd";
-import moment from "moment";
+import { Space, Table } from "antd";
 import ColumnGroup from "antd/es/table/ColumnGroup";
 import Column from "antd/es/table/Column";
 import { useRouter } from "next/navigation";

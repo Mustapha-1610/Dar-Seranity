@@ -5,7 +5,6 @@ import { Table } from "antd";
 import Column from "antd/es/table/Column";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 export default function Dashboard() {
   const [landlordData, setLandlordData] = useState<any>({});
   useEffect(() => {

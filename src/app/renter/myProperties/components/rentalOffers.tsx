@@ -2,7 +2,6 @@
 
 import {
   getRenterLocalStorageData,
-  setLandlordLocalStorageData,
   setRenterLocalStorageData,
 } from "@/Helpers/frontFunctions/localStorageHandler";
 import landlordSocket from "@/Helpers/socketLogic/landlordSocket";

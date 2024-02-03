@@ -1,22 +1,13 @@
 "use client";
 
-import {
-  getLandlordLocalStorageData,
-  getRenterLocalStorageData,
-  setLandlordLocalStorageData,
-  setRenterLocalStorageData,
-} from "@/Helpers/frontFunctions/localStorageHandler";
-import landlordSocket from "@/Helpers/socketLogic/landlordSocket";
-import { Space, Table } from "antd";
+import { getLandlordLocalStorageData } from "@/Helpers/frontFunctions/localStorageHandler";
+import { Table } from "antd";
 import Column from "antd/es/table/Column";
-import ColumnGroup from "antd/es/table/ColumnGroup";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 export default function Earnings() {
-  const [renterData, setRenterData] = useState<any>(undefined);
   const [properties, setProperties] = useState<any>([]);
-  const [landlordData, setLandlordData] = useState<any>({});
   useEffect(() => {
     const fetchProperties = async () => {
       const response = await fetch("/api/landlord/getRentedProperties", {
@@ -29,7 +20,6 @@ export default function Earnings() {
       }
     };
     fetchProperties();
-    setLandlordData(getLandlordLocalStorageData());
   }, []);
 
   const router = useRouter();
