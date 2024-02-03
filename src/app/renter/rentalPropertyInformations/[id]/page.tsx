@@ -207,7 +207,14 @@ export default function RentalPropertyInfos({
                         ) ? (
                           <>
                             {" "}
-                            <p>Property Is Awaiting Rental Offer Response !</p>
+                            <p>
+                              Property Is Awaiting Rental Offer Response ! You
+                              Can Contact The Landlord On :{" "}
+                              {
+                                propertyInformations?.landlordInformations
+                                  ?.phoneNumber
+                              }
+                            </p>
                           </>
                         ) : (
                           <>
@@ -228,7 +235,11 @@ export default function RentalPropertyInfos({
                                 ) ? (
                                   <p>
                                     Property Is Allready Scheduled For A
-                                    Vieweing
+                                    Vieweing, You Can Contact The Landlord On :{" "}
+                                    {
+                                      propertyInformations?.landlordInformations
+                                        ?.phoneNumber
+                                    }
                                   </p>
                                 ) : (
                                   <>

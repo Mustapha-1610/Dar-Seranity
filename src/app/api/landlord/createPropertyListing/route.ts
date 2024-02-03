@@ -79,6 +79,7 @@ export async function POST(request: NextRequest) {
               landlordInformations: {
                 name: landlordData.name + " " + landlordData.surname,
                 id: landlordData._id,
+                phoneNumber: landlordData.phoneNumber,
               },
             });
             if (newPropertyListing) {

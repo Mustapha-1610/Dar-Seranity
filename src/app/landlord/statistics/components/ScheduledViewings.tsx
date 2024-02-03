@@ -24,7 +24,7 @@ export default function ScheduledViewings() {
   const router = useRouter();
   return (
     <>
-      {landlordData?.scheduledViewings.length > 0 ? (
+      {landlordData?.scheduledViewings?.length > 0 ? (
         <>
           <div className="mt-12">
             <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2 xl:w-full">
@@ -83,7 +83,7 @@ export default function ScheduledViewings() {
         </>
       ) : (
         <>
-          <p>No Transactions Occured Yet</p>
+          <p>There Are Currently No Scheduled Viewings For Any Property</p>
         </>
       )}
     </>

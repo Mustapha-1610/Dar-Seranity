@@ -101,14 +101,13 @@ export async function POST(request: NextRequest) {
         },
       });
       res.renterAccount.totalRentPaid.total =
-        res.renterAccount.totalRentPaid.total += 1;
+        res.renterAccount.totalRentPaid.total += propertyInformations.price;
       res.renterAccount.totalRentPaid.lastPaymentDate = new Date();
       res.renterAccount.rentalOffers = res.renterAccount.rentalOffers.filter(
         (property: any) =>
           String(property.propertyId) !== String(propertyInformations._id)
       );
-      await res.renterAccount.save();
-      await propertyInformations.save();
+
       const landlordData = await landlord.findById({
         _id: propertyInformations.landlordInformations.id,
       });
@@ -157,7 +156,8 @@ export async function POST(request: NextRequest) {
         },
       });
       await landlordData.save();
-
+      await res.renterAccount.save();
+      await propertyInformations.save();
       const renterFrontData = await returnRenterObject(res.renterAccount);
       return refreshAccessToken(
         renterFrontData,

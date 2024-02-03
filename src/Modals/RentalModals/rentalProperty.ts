@@ -61,6 +61,9 @@ const rentalPropertyListingsSchema = new Schema({
     id: {
       type: Schema.Types.ObjectId,
     },
+    phoneNumber: {
+      type: Number,
+    },
   },
   transactionFees: {
     type: Number,

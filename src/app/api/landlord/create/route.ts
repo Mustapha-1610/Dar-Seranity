@@ -16,8 +16,9 @@ export async function POST(request: NextRequest) {
       password,
       idCardFrontSideImage,
       idCardBackSideImage,
+      phoneNumber,
     } = reqBody;
-    if (!name || !surname || !email || !password) {
+    if (!name || !surname || !email || !password || !phoneNumber) {
       return NextResponse.json({ error: "Missing Inputs" });
     } else if (!idCardBackSideImage || !idCardFrontSideImage) {
       return NextResponse.json({
@@ -45,6 +46,7 @@ export async function POST(request: NextRequest) {
           idCardBackSideImage,
           idCardFrontSideImage,
           socketId,
+          phoneNumber,
         });
         await landlordConfirmationMail(name, email);
         return NextResponse.json({
