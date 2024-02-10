@@ -1,6 +1,6 @@
 "use client";
 
-import { DatePicker, DatePickerProps, Space, Spin } from "antd";
+import { Alert, DatePicker, DatePickerProps, Space, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { Carousel } from "@material-tailwind/react";
 
@@ -206,15 +206,16 @@ export default function RentalPropertyInfos({
                             propertyInformations._id.toString()
                         ) ? (
                           <>
-                            {" "}
-                            <p>
-                              Property Is Awaiting Rental Offer Response ! You
-                              Can Contact The Landlord On :{" "}
-                              {
+                            <Alert
+                              className="font-medium"
+                              message={
+                                "Property Is Awaiting Rental Offer Response ! You Can Contact The Landlord On : +216 " +
                                 propertyInformations?.landlordInformations
                                   ?.phoneNumber
                               }
-                            </p>
+                              type="success"
+                              showIcon
+                            />{" "}
                           </>
                         ) : (
                           <>
@@ -224,7 +225,12 @@ export default function RentalPropertyInfos({
                                 propertyInformations._id.toString()
                             ) ? (
                               <>
-                                <p>Property Is Already Rented !</p>
+                                <Alert
+                                  className="font-medium"
+                                  message={"Property Is Already Rented !"}
+                                  type="info"
+                                  showIcon
+                                />{" "}
                               </>
                             ) : (
                               <>
@@ -233,14 +239,21 @@ export default function RentalPropertyInfos({
                                     property.propertyId.toString() ===
                                     propertyInformations._id.toString()
                                 ) ? (
-                                  <p>
-                                    Property Is Allready Scheduled For A
-                                    Vieweing, You Can Contact The Landlord On :{" "}
-                                    {
-                                      propertyInformations?.landlordInformations
-                                        ?.phoneNumber
-                                    }
-                                  </p>
+                                  <Space
+                                    direction="vertical"
+                                    style={{ width: "100%" }}
+                                  >
+                                    <Alert
+                                      className="font-medium"
+                                      message={
+                                        "Property Is Already Scheduled For A Vieweing, You Can Contact The Landlord On : " +
+                                        propertyInformations
+                                          ?.landlordInformations?.phoneNumber
+                                      }
+                                      type="success"
+                                      showIcon
+                                    />
+                                  </Space>
                                 ) : (
                                   <>
                                     <div className="flex -mx-2 mb-4">

@@ -4,6 +4,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import renter from "@/Modals/UsersModals/renter";
 import landlord from "@/Modals/UsersModals/landlord";
 import { connect } from "@/DataBase/dbConfig";
+import { returnRenterObject } from "@/Helpers/backFunctions/renterBackFunctions";
 connect();
 export async function POST(request: NextRequest) {
   try {
@@ -25,18 +26,21 @@ export async function POST(request: NextRequest) {
       if (existingRenter) {
         return NextResponse.json({ error: "Account Exists Allready !" });
       } else {
+        const characters =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let socketId = "";
+        for (let i = 0; i < 25; i++) {
+          socketId += characters[Math.floor(Math.random() * characters.length)];
+        }
         const newRenter = await renter.create({
           name: renterToken.given_name,
           surname: renterToken.family_name,
           email: renterToken.email.toUpperCase(),
           gmailAccount: true,
           verificationStatus: true,
+          socketId,
         });
-        const renterData = {
-          name: newRenter.name,
-          surname: newRenter.surname,
-          email: newRenter.email,
-        };
+        const renterData = returnRenterObject(newRenter);
         const response = NextResponse.json({
           success: "Account Created !",
           renterData,

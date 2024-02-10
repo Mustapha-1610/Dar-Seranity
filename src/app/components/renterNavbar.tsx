@@ -117,11 +117,6 @@ export default function RenterNavbar() {
                 <p className="hover:text-gray-200">My Properties</p>
               </Link>
             </li>
-            <li>
-              <Link href="/renter/inbox">
-                <p className="hover:text-gray-200">Inbox</p>
-              </Link>
-            </li>
           </ul>
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-4">

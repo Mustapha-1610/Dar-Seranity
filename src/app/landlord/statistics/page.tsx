@@ -184,7 +184,7 @@ export default function StatisticsPage() {
                     Earnings
                   </p>
                   <h4 className="mt-3 block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                    {landlordData?.earnings}
+                    {landlordData?.earnings}$
                   </h4>
                 </div>
               </div>

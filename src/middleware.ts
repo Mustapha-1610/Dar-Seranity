@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import landlord from "./Modals/UsersModals/landlord";
+import { connect } from "./DataBase/dbConfig";
 async function verifyToken(token: any) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/verifyToken/renter`,

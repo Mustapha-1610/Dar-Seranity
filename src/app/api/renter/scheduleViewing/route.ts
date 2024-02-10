@@ -6,7 +6,6 @@ import { verifyRenterToken } from "@/Helpers/RouteProtection/renterRouteProtecti
 import { returnRenterObject } from "@/Helpers/backFunctions/renterBackFunctions";
 import { refreshAccessToken } from "@/Helpers/RouteProtection/refreshRenterToken";
 import landlord from "@/Modals/UsersModals/landlord";
-import landlordSocket from "@/Helpers/socketLogic/landlordSocket";
 connect();
 export async function POST(request: NextRequest) {
   try {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import LandlordNavbar from "../components/landlordNavbar";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Dar-Seranity",
@@ -16,6 +17,7 @@ export default function RootLayout({
     <>
       <LandlordNavbar />
       {children}
+      <SpeedInsights />
     </>
   );
 }

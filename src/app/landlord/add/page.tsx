@@ -221,274 +221,434 @@ export default function Add() {
       landlordData?.propertyListingsCount.Basic > 0 ? (
         <>
           <Spin spinning={loading} delay={500}>
-            {errorMessage && <div className="text-red-500">{errorMessage}</div>}
-            <div className="flex flex-col items-center">
-              <select
-                value={selectedPack}
-                className="m-4 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onChange={handleChange}
-              >
-                <option defaultValue={undefined}>Select a Pack</option>
-                {options.map((option: any) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                    disabled={option.disabled}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <form onSubmit={(e) => uploadHouseImages(e, houseImages, "imgUrl")}>
+              <div className="min-h-screen bg-gray-900 py-12 flex flex-col justify-center sm:py-16">
+                <div className="relative py-3 max-w-2xl mx-auto">
+                  <div className="relative px-8 py-12 bg-white mx-8 md:mx-auto shadow rounded-3xl sm:p-10">
+                    <div className="max-w-md mx-auto">
+                      <div className="flex items-center space-x-5">
+                        <div className="block pl-2 font-semibold text-xl self-start text-gray-700">
+                          <h2 className="leading-relaxed">
+                            Create a Property Listing
+                          </h2>
+                        </div>
+                      </div>
+                      <div className="divide-y divide-gray-200">
+                        <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                          <div className="flex flex-col">
+                            {errorMessage && (
+                              <div className="text-red-500">{errorMessage}</div>
+                            )}
+                            <div className="flex flex-col">
+                              <label className="leading-loose">
+                                Select a Pack
+                              </label>
+                              <div className="relative">
+                                <select
+                                  value={selectedPack}
+                                  onChange={handleChange}
+                                  className="mb-3 block appearance-none w-full bg-white border border-gray-300 text-gray-600 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                >
+                                  <option defaultValue={undefined}>
+                                    Choose A Certain Pack
+                                  </option>
+                                  {options.map((option: any) => (
+                                    <option
+                                      key={option.value}
+                                      value={option.value}
+                                      disabled={option.disabled}
+                                    >
+                                      {option.label}
+                                    </option>
+                                  ))}
+                                </select>
+                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-600">
+                                  <svg
+                                    className="w-4 h-4 fill-current"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      d="M14.293 5.293a1 1 0 0 1 1.414 1.414l-5 5a1 1 0 0 1-1.414 0l-5-5a1 1 0 1 1 1.414-1.414L10 10.586l4.293-4.293z"
+                                    ></path>
+                                  </svg>
+                                </div>
+                              </div>
+                            </div>
 
-            <form
-              onSubmit={(e) => uploadHouseImages(e, houseImages, "imgUrl")}
-              className="mt-4"
-            >
-              <div className="flex flex-col gap-4">
-                <div>
-                  <label>Title : </label>
-                  <input
-                    className="w-80 border-black"
-                    type="text"
-                    name="title"
-                    onChange={(e) => {
-                      setCountForm({ ...countForm, title: e.target.value });
-                    }}
-                  />
-                </div>
-                <div>
-                  <label>Description : </label>
-                  <TextArea
-                    name="description"
-                    onChange={(e) => {
-                      setCountForm({
-                        ...countForm,
-                        description: e.target.value,
-                      });
-                    }}
-                  />
-                </div>
-                <div>
-                  <label>Price : </label>
-                  <input
-                    className="w-80 border-black"
-                    type="text"
-                    name="price"
-                    onChange={(e) => {
-                      setCountForm({ ...countForm, price: e.target.value });
-                    }}
-                  />
-                </div>
-                <div className="flex items-center gap-x-4">
-                  <br />
-                  <label className="text-lg">Kitchen</label>
-                  <div className="flex items-center gap-x-2">
-                    <button
-                      type="button"
-                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      name="kitchen"
-                      disabled={countForm.kitchen <= 0}
-                      onClick={() => handleRoomCountChange("kitchen", -1)}
-                    >
-                      <AiOutlineMinusCircle />
-                    </button>
-                    <p>{countForm.kitchen}</p>
-                    <button
-                      type="button"
-                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      name="kitchen"
-                      onClick={() => handleRoomCountChange("kitchen", 1)}
-                    >
-                      <AiOutlinePlusCircle />
-                    </button>
-                  </div>
-                </div>
+                            <label className="leading-loose">Title </label>
+                            <input
+                              className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                              type="text"
+                              placeholder="Property Title"
+                              name="title"
+                              onChange={(e) => {
+                                setCountForm({
+                                  ...countForm,
+                                  title: e.target.value,
+                                });
+                              }}
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <label className="leading-loose">
+                              Description{" "}
+                            </label>
+                            <textarea
+                              name="description"
+                              onChange={(e) => {
+                                setCountForm({
+                                  ...countForm,
+                                  description: e.target.value,
+                                });
+                              }}
+                              className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                              placeholder="Optional"
+                            />
+                          </div>
 
-                <div className="flex items-center gap-x-4">
-                  <label className="text-lg">Living Rooms</label>
-                  <div className="flex items-center gap-x-2">
-                    <button
-                      type="button"
-                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      name="livingRooms"
-                      disabled={countForm.livingRooms <= 0}
-                      onClick={() => handleRoomCountChange("livingRooms", -1)}
-                    >
-                      <AiOutlineMinusCircle />
-                    </button>
-                    <p>{countForm.livingRooms}</p>
-                    <button
-                      type="button"
-                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      name="livingRooms"
-                      onClick={() => handleRoomCountChange("livingRooms", 1)}
-                    >
-                      <AiOutlinePlusCircle />
-                    </button>
-                  </div>
-                </div>
+                          <div className="flex items-center space-x-4">
+                            <div className="flex flex-col">
+                              <label className="leading-loose">
+                                Room Count
+                              </label>
+                              <div className="relative focus-within:text-gray-600 text-gray-400">
+                                <div className="flex items-center gap-x-4">
+                                  <label className="text-lg">Bedrooms</label>
+                                  <div className="flex items-center gap-x-2">
+                                    <button
+                                      type="button"
+                                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                      name="bedrooms"
+                                      disabled={countForm.bedrooms <= 0}
+                                      onClick={() =>
+                                        handleRoomCountChange("bedrooms", -1)
+                                      }
+                                    >
+                                      <AiOutlineMinusCircle />
+                                    </button>
+                                    <p>{countForm.bedrooms}</p>
+                                    <button
+                                      type="button"
+                                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                      name="bedrooms"
+                                      onClick={() =>
+                                        handleRoomCountChange("bedrooms", 1)
+                                      }
+                                    >
+                                      <AiOutlinePlusCircle />
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex flex-col">
+                              <label className="leading-loose">. </label>
+                              <div className="relative focus-within:text-gray-600 text-gray-400">
+                                <div className="flex items-center gap-x-4">
+                                  <label className="text-lg">Rest Rooms</label>
+                                  <div className="flex items-center gap-x-2">
+                                    <button
+                                      type="button"
+                                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                      name="restRooms"
+                                      disabled={countForm.restRooms <= 0}
+                                      onClick={() =>
+                                        handleRoomCountChange("restRooms", -1)
+                                      }
+                                    >
+                                      <AiOutlineMinusCircle />
+                                    </button>
+                                    <p>{countForm.restRooms}</p>
+                                    <button
+                                      type="button"
+                                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                      name="restRooms"
+                                      onClick={() =>
+                                        handleRoomCountChange("restRooms", 1)
+                                      }
+                                    >
+                                      <AiOutlinePlusCircle />
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
 
-                <div className="flex items-center gap-x-4">
-                  <label className="text-lg">Bedrooms</label>
-                  <div className="flex items-center gap-x-2">
-                    <button
-                      type="button"
-                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      name="bedrooms"
-                      disabled={countForm.bedrooms <= 0}
-                      onClick={() => handleRoomCountChange("bedrooms", -1)}
-                    >
-                      <AiOutlineMinusCircle />
-                    </button>
-                    <p>{countForm.bedrooms}</p>
-                    <button
-                      type="button"
-                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      name="bedrooms"
-                      onClick={() => handleRoomCountChange("bedrooms", 1)}
-                    >
-                      <AiOutlinePlusCircle />
-                    </button>
-                  </div>
-                </div>
+                          <div className="flex items-center space-x-4">
+                            <div className="flex flex-col">
+                              <div className="relative focus-within:text-gray-600 text-gray-400">
+                                <div className="mr-5 flex items-center gap-x-4">
+                                  <label className="text-lg">Kitchen</label>
+                                  <div className="flex items-center gap-x-2">
+                                    <button
+                                      type="button"
+                                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                      name="kitchen"
+                                      disabled={countForm.kitchen <= 0}
+                                      onClick={() =>
+                                        handleRoomCountChange("kitchen", -1)
+                                      }
+                                    >
+                                      <AiOutlineMinusCircle />
+                                    </button>
+                                    <p>{countForm.kitchen}</p>
+                                    <button
+                                      type="button"
+                                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                      name="kitchen"
+                                      onClick={() =>
+                                        handleRoomCountChange("kitchen", 1)
+                                      }
+                                    >
+                                      <AiOutlinePlusCircle />
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex flex-col">
+                              <div className="relative focus-within:text-gray-600 text-gray-400">
+                                <div className="flex items-center gap-x-4">
+                                  <label className="text-lg">
+                                    Living Rooms
+                                  </label>
+                                  <div className="flex items-center gap-x-2">
+                                    <button
+                                      type="button"
+                                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                      name="livingRooms"
+                                      disabled={countForm.livingRooms <= 0}
+                                      onClick={() =>
+                                        handleRoomCountChange("livingRooms", -1)
+                                      }
+                                    >
+                                      <AiOutlineMinusCircle />
+                                    </button>
+                                    <p>{countForm.livingRooms}</p>
+                                    <button
+                                      type="button"
+                                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                      name="livingRooms"
+                                      onClick={() =>
+                                        handleRoomCountChange("livingRooms", 1)
+                                      }
+                                    >
+                                      <AiOutlinePlusCircle />
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-4">
+                            <div className="flex flex-col">
+                              <div className="relative focus-within:text-gray-600 text-gray-400">
+                                <div className="mr-5 flex items-center gap-x-4">
+                                  <label className="text-lg">Balcony</label>
+                                  <div className="flex items-center gap-x-2">
+                                    <button
+                                      type="button"
+                                      className={`mr-5 w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border ${
+                                        !countForm.balcony
+                                          ? "bg-red-500 text-white"
+                                          : "bg-white text-gray-800"
+                                      } shadow-sm disabled:opacity-50 disabled:pointer-events-none dark:border-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600`}
+                                      name="restRooms"
+                                      onClick={() =>
+                                        setCountForm({
+                                          ...countForm,
+                                          balcony: false,
+                                        })
+                                      }
+                                    >
+                                      <AiOutlineCloseCircle />
+                                    </button>{" "}
+                                    <button
+                                      type="button"
+                                      className={`w-6  h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border ${
+                                        countForm.balcony
+                                          ? "bg-green-500 text-white"
+                                          : "bg-white text-gray-800"
+                                      } shadow-sm  disabled:opacity-50 disabled:pointer-events-none dark:border-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600`}
+                                      name="restRooms"
+                                      onClick={() =>
+                                        setCountForm({
+                                          ...countForm,
+                                          balcony: true,
+                                        })
+                                      }
+                                    >
+                                      <AiOutlineCheckCircle />
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex flex-col">
+                              <div className="relative focus-within:text-gray-600 text-gray-400">
+                                <div className="mr-5 flex items-center gap-x-4">
+                                  <label className="text-lg">Garden</label>
+                                  <div className="flex items-center gap-x-2">
+                                    <button
+                                      type="button"
+                                      className={`mr-5 w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border ${
+                                        !countForm.garden
+                                          ? "bg-red-500 text-white"
+                                          : "bg-white text-gray-800"
+                                      } shadow-sm disabled:opacity-50 disabled:pointer-events-none dark:border-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600`}
+                                      name="garden"
+                                      onClick={() =>
+                                        setCountForm({
+                                          ...countForm,
+                                          garden: false,
+                                        })
+                                      }
+                                    >
+                                      <AiOutlineCloseCircle />
+                                    </button>{" "}
+                                    <button
+                                      type="button"
+                                      className={`w-6  h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border ${
+                                        countForm.garden
+                                          ? "bg-green-500 text-white"
+                                          : "bg-white text-gray-800"
+                                      } shadow-sm  disabled:opacity-50 disabled:pointer-events-none dark:border-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600`}
+                                      name="garden"
+                                      onClick={() =>
+                                        setCountForm({
+                                          ...countForm,
+                                          garden: true,
+                                        })
+                                      }
+                                    >
+                                      <AiOutlineCheckCircle />
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex flex-col">
+                            <label className="leading-loose">Price</label>
+                            <input
+                              type="text"
+                              className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                              placeholder="Property Price"
+                              name="price"
+                              onChange={(e) => {
+                                setCountForm({
+                                  ...countForm,
+                                  price: e.target.value,
+                                });
+                              }}
+                            />
+                          </div>
+                          <div className="flex items-center space-x-4">
+                            <div className="mr-8 flex flex-col">
+                              <label className="leading-loose">City</label>
+                              <select
+                                value={selectedCity}
+                                onChange={handleCityChange}
+                                className="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                              >
+                                <option value="">Select a City</option>
+                                {cities.map((city: any) => (
+                                  <option key={city._id} value={city._id}>
+                                    {city.City}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div className="flex flex-col">
+                              <label className="leading-loose">
+                                Municipality
+                              </label>
+                              <select
+                                value={selectedMunicipality}
+                                onChange={handleMunicipalityChange}
+                                className="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                              >
+                                <option>Select a Municipality</option>
+                                {municipalities.map((municipality) => (
+                                  <option
+                                    key={municipality}
+                                    value={municipality}
+                                  >
+                                    {municipality}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="mt-4">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Select Images
+                          </label>
+                          <div className="mt-1 flex items-center">
+                            <label className="w-full flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 rounded-md cursor-pointer focus:outline-none focus:border-blue-500">
+                              <svg
+                                className="w-5 h-5 mr-2 text-gray-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                ></path>
+                              </svg>
+                              {houseImages.length > 0 ? (
+                                <p className="ml-3 text-sm text-gray-500">
+                                  {houseImages.length} image(s) selected
+                                </p>
+                              ) : (
+                                <>Browse</>
+                              )}
 
-                <div className="flex items-center gap-x-4">
-                  <label className="text-lg">Rest Rooms</label>
-                  <div className="flex items-center gap-x-2">
-                    <button
-                      type="button"
-                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      name="restRooms"
-                      disabled={countForm.restRooms <= 0}
-                      onClick={() => handleRoomCountChange("restRooms", -1)}
-                    >
-                      <AiOutlineMinusCircle />
-                    </button>
-                    <p>{countForm.restRooms}</p>
-                    <button
-                      type="button"
-                      className="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      name="restRooms"
-                      onClick={() => handleRoomCountChange("restRooms", 1)}
-                    >
-                      <AiOutlinePlusCircle />
-                    </button>
-                  </div>
-                </div>
+                              <input
+                                type="file"
+                                multiple
+                                onChange={handleImageSelection}
+                                className="hidden"
+                              />
+                            </label>
+                          </div>
+                        </div>
 
-                <div className="flex items-center gap-x-4">
-                  <label className="text-lg">Add Ons : </label>
-                  <br />
-                  <div className="flex items-center gap-x-2">
-                    <div className="flex items-center gap-x-4">
-                      <label className="addon-label">Balcony:</label>
-                      <button
-                        type="button"
-                        className={`w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border ${
-                          !countForm.balcony
-                            ? "bg-red-500 text-white"
-                            : "bg-white text-gray-800"
-                        } shadow-sm disabled:opacity-50 disabled:pointer-events-none dark:border-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600`}
-                        name="restRooms"
-                        onClick={() =>
-                          setCountForm({ ...countForm, balcony: false })
-                        }
-                      >
-                        <AiOutlineCloseCircle />
-                      </button>{" "}
-                      <button
-                        type="button"
-                        className={`w-6  h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border ${
-                          countForm.balcony
-                            ? "bg-green-500 text-white"
-                            : "bg-white text-gray-800"
-                        } shadow-sm  disabled:opacity-50 disabled:pointer-events-none dark:border-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600`}
-                        name="restRooms"
-                        onClick={() =>
-                          setCountForm({ ...countForm, balcony: true })
-                        }
-                      >
-                        <AiOutlineCheckCircle />
-                      </button>
+                        <div className="pt-4 flex items-center space-x-4">
+                          <button className="bg-red-400 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">
+                            <svg
+                              className="w-6 h-6 mr-3"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                              ></path>
+                            </svg>{" "}
+                            Cancel
+                          </button>
+                          <button className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">
+                            Create
+                          </button>
+                        </div>
+                      </div>
                     </div>
-
-                    <div className="flex items-center gap-x-2">
-                      <label className="addon-label">Garden:</label>
-
-                      <button
-                        type="button"
-                        className={`w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border ${
-                          !countForm.garden
-                            ? "bg-red-500 text-white"
-                            : "bg-white text-gray-800"
-                        } shadow-sm disabled:opacity-50 disabled:pointer-events-none dark:border-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600`}
-                        name="garden"
-                        onClick={() =>
-                          setCountForm({ ...countForm, garden: false })
-                        }
-                      >
-                        <AiOutlineCloseCircle />
-                      </button>
-                      <button
-                        type="button"
-                        className={`w-6  h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border ${
-                          countForm.garden
-                            ? "bg-green-500 text-white"
-                            : "bg-white text-gray-800"
-                        } shadow-sm  disabled:opacity-50 disabled:pointer-events-none dark:border-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600`}
-                        name="garden"
-                        onClick={() =>
-                          setCountForm({ ...countForm, garden: true })
-                        }
-                      >
-                        <AiOutlineCheckCircle />
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
-
-              <div className="flex flex-col items-center mt-4">
-                <select
-                  value={selectedCity}
-                  onChange={handleCityChange}
-                  className="select-dropdown"
-                >
-                  <option value="">Select a City</option>
-                  {cities.map((city: any) => (
-                    <option key={city._id} value={city._id}>
-                      {city.City}
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  value={selectedMunicipality}
-                  onChange={handleMunicipalityChange}
-                  className="select-dropdown"
-                >
-                  <option>Select a Municipality</option>
-                  {municipalities.map((municipality) => (
-                    <option key={municipality} value={municipality}>
-                      {municipality}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="mt-4">
-                <input
-                  type="file"
-                  multiple
-                  onChange={handleImageSelection}
-                  className="block w-full text-sm text-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                />
-              </div>
-
-              <button type="submit" className="submit-btn">
-                Submit
-              </button>
             </form>
           </Spin>
         </>

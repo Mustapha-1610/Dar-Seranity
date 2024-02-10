@@ -1,5 +1,6 @@
 export const returnRenterObject = (renterData: any) => {
   const renterObject = {
+    _id: renterData._id,
     name: renterData.name,
     surname: renterData.surname,
     email: renterData.email,

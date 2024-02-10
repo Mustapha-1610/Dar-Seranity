@@ -44,6 +44,7 @@ export async function POST(request: NextRequest) {
         undefined ||
         !price
       ) {
+        console.log(reqBody);
         return NextResponse.json({ error: "Missing Inputs !" });
       } else if (!imageUrls) {
         return NextResponse.json({
