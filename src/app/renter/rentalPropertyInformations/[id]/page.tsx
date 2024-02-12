@@ -14,6 +14,8 @@ import { MdCheckCircleOutline } from "react-icons/md";
 import { VscError } from "react-icons/vsc";
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
 import { RangePickerProps } from "antd/es/date-picker";
+import moment from "moment";
+
 import {
   getRenterLocalStorageData,
   setRenterLocalStorageData,
@@ -342,11 +344,11 @@ export default function RentalPropertyInfos({
                       </div>
                       <div className="mb-4">
                         <span className="font-bold text-gray-700 dark:text-gray-300">
-                          Posted At :
+                          Posted At :{" "}
+                          {new Date(
+                            propertyInformations?.createdAt
+                          ).toLocaleDateString()}
                         </span>
-                        <div className="flex items-center mt-2">
-                          {propertyInformations?.createdAt}
-                        </div>
                       </div>
                       <div className="mb-4">
                         <span className="font-bold text-gray-700 dark:text-gray-300">

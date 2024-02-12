@@ -82,13 +82,19 @@ export async function POST(request: NextRequest) {
       let newDate = new Date();
       let oneMonthLater = new Date(newDate);
       oneMonthLater.setMonth(oneMonthLater.getMonth() + 1);
-
+      const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      let scheduledEventId = "";
+      for (let i = 0; i < 25; i++) {
+        scheduledEventId +=
+          characters[Math.floor(Math.random() * characters.length)];
+      }
       res.renterAccount.rentedProperties.push({
         propertyId,
         propertyTitle: propertyInformations.title,
         rentedOn: new Date(),
         price: propertyInformations.price,
-
+        scheduledReminderJobId: scheduledEventId,
         nextPaymentDate: oneMonthLater,
       });
       res.renterAccount.transactionHistory.push({
@@ -158,12 +164,19 @@ export async function POST(request: NextRequest) {
       await landlordData.save();
       await res.renterAccount.save();
       await propertyInformations.save();
-      const renterFrontData = await returnRenterObject(res.renterAccount);
-      return refreshAccessToken(
-        renterFrontData,
-        landlordSocketData,
-        res.newAccessToken
-      );
+      const renterFrontData = returnRenterObject(res.renterAccount);
+
+      const extraData = {
+        landlordInformations: {
+          landlordSocketData,
+          landlordId: landlordData._id,
+        },
+        paymentDate: oneMonthLater,
+        renterId: res.renterAccount._id,
+        scheduledEventId,
+        propertyTitle: propertyInformations.title,
+      };
+      return refreshAccessToken(renterFrontData, extraData, res.newAccessToken);
     } else {
       return res.reponse;
     }

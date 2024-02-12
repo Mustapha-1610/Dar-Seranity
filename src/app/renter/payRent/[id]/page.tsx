@@ -6,7 +6,6 @@ import Image from "next/image";
 import { setRenterLocalStorageData } from "@/Helpers/frontFunctions/localStorageHandler";
 import landlordSocket from "@/Helpers/socketLogic/landlordSocket";
 import { Spin } from "antd";
-import renterSocket from "@/Helpers/socketLogic/renterSocket";
 
 export default function PaymentPage({ params }: { params: { id: string } }) {
   const [propertyInformations, setPropertyInformations] =
@@ -16,7 +15,7 @@ export default function PaymentPage({ params }: { params: { id: string } }) {
   const acceptRentalOffer = async (e: any) => {
     setLoading(true);
     try {
-      const response = await fetch("/api/renter/acceptRentingOffer", {
+      const response = await fetch("/api/renter/payRent", {
         method: "POST",
         body: JSON.stringify({
           propertyId: propertyInformations?._id,
@@ -26,10 +25,8 @@ export default function PaymentPage({ params }: { params: { id: string } }) {
       console.log(res);
       if (res.success) {
         setRenterLocalStorageData(res.responseData);
-        const landlordSocketId =
-          res.extraData.landlordInformations.landlordSocketData;
+        const landlordSocketId = res.extraData;
         landlordSocket.emit("refLanNotis", landlordSocketId);
-        renterSocket.emit("sendMonthlyReminderMails", res.extraData);
         setLoading(false);
         router.push("/renter/myProperties");
       }
@@ -254,10 +251,6 @@ export default function PaymentPage({ params }: { params: { id: string } }) {
                 <div className="mt-6">
                   <p className="text-sm font-medium text-gray-900">
                     Total : {propertyInformations?.price}$
-                  </p>
-                  <p className="mt-2  text-gray-500 italic ">
-                    be aware that you are required to pay upfront for the first
-                    month.
                   </p>
                 </div>
 

@@ -125,3 +125,26 @@ export const sendRenterReminderMail = async (
     })
     .catch((err) => console.log(err));
 };
+
+export const sendRentPaymentDueMails = async (
+  name: string,
+  email: string,
+  propertyTitle: string,
+  paymentDate: string
+) => {
+  await transport
+    .sendMail({
+      from: user,
+      to: email,
+      subject: "Dar-Seranity Rent Payment Reminder",
+      html: `
+      <div style="font-family: Arial, sans-serif; font-size: 16px; padding: 20px; background-color: #F5F5F5; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <h2 style="text-align: center; margin-bottom: 20px;">Rent Payment Reminder !</h2>
+  <div style="text-align: center; margin-bottom: 5px;">
+    <h3>Hello ${name}, Your Rent Payment For Property : ${propertyTitle} Is Due In 3 Days  </h3>
+    <h3>Payment Date : ${paymentDate} </h3>
+  </div>
+</div>`,
+    })
+    .catch((err) => console.log(err));
+};

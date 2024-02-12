@@ -1,15 +1,59 @@
 "use client";
 
-import { getRenterLocalStorageData } from "@/Helpers/frontFunctions/localStorageHandler";
+import {
+  getRenterLocalStorageData,
+  setRenterLocalStorageData,
+} from "@/Helpers/frontFunctions/localStorageHandler";
 import { useEffect, useState } from "react";
 import { Space, Table } from "antd";
 import moment from "moment";
 import ColumnGroup from "antd/es/table/ColumnGroup";
 import Column from "antd/es/table/Column";
 import { useRouter } from "next/navigation";
+import { Button, Modal } from "antd";
+import type { DatePickerProps } from "antd";
+import { DatePicker } from "antd";
+import { Spin } from "antd";
+import landlordSocket from "@/Helpers/socketLogic/landlordSocket";
+import renterSocket from "@/Helpers/socketLogic/renterSocket";
+
 export default function RentedProperties() {
   const [renterData, setRenterData] = useState<any>({});
+  const [modal2Open, setModal2Open] = useState(false);
+  const [vacationDate, setVacationDate] = useState<String>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const onChange: DatePickerProps["onChange"] = (date, dateString) => {
+    console.log(date, dateString);
+    setVacationDate(dateString);
+  };
   const router = useRouter();
+  const vacateHouse = async (e: any, propertyId: any) => {
+    try {
+      e.preventDefault();
+      console.log(propertyId, vacationDate);
+      const response = await fetch("/api/renter/vecateHouse", {
+        method: "POST",
+        body: JSON.stringify({
+          propertyId,
+          vacationDate,
+        }),
+      });
+      const res = await response.json();
+      console.log(res);
+      if (res.success) {
+        setRenterLocalStorageData(res.responseData);
+        setRenterData(res.responseData);
+        const landlordSocketId = res.extraData.landlordSocketData;
+        const scheduledJobId = res.extraData.scheduledJobId;
+        renterSocket.emit("cancelRentReminder", scheduledJobId);
+        landlordSocket.emit("refLanNotis", landlordSocketId);
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     setRenterData(getRenterLocalStorageData());
   }, []);
@@ -56,13 +100,13 @@ export default function RentedProperties() {
                     title="Rent Due Date"
                     dataIndex="nextPaymentDate"
                     key="nextPaymentDate"
-                    render={(text) => {
+                    render={(text, record: any) => {
+                      if (record.vacating) {
+                        return <p>Vacate On {record.vacatingOn}</p>;
+                      }
                       const currentDate = moment();
                       const dueDate = moment(text);
-
-                      // Check if the due date has passed
                       if (dueDate.isBefore(currentDate)) {
-                        // The due date has passed
                         const daysLate = currentDate.diff(dueDate, "days");
                         return (
                           <span style={{ color: "red" }}>
@@ -71,7 +115,6 @@ export default function RentedProperties() {
                           </span>
                         );
                       } else {
-                        // The due date has not passed, format it
                         const formattedDate = dueDate.format("MMM D, YYYY");
                         return <span>{formattedDate}</span>;
                       }
@@ -82,19 +125,18 @@ export default function RentedProperties() {
                     dataIndex="nextPaymentDate"
                     key="nextPaymentDate"
                     render={(text, record: any) => {
+                      if (record.vacating) {
+                        return <p>Vacate On {record.vacatingOn}</p>;
+                      }
                       const currentDate = moment();
                       const dueDate = moment(text);
-
-                      // Check if the due date has passed
                       if (dueDate.isBefore(currentDate)) {
-                        // The due date has passed
-                        const daysLate = currentDate.diff(dueDate, "days");
                         return (
                           <Space size="middle">
                             <a
                               onClick={() =>
                                 router.push(
-                                  `/renter/paymentPage/${record.propertyId}`
+                                  `/renter/payRent/${record.propertyId}`
                                 )
                               }
                             >
@@ -103,12 +145,63 @@ export default function RentedProperties() {
                           </Space>
                         );
                       } else {
-                        // The due date has not passed, format it
                         const formattedDate = dueDate.format("MMM D, YYYY");
-                        return <span>Rent Is Not Due Yet</span>;
+                        return (
+                          <span>Rent Is Not Due Yet , {formattedDate}</span>
+                        );
                       }
                     }}
                   />{" "}
+                  <Column
+                    title="Vacate"
+                    render={(record: any) => {
+                      if (record.vacating) {
+                        return <p>Vacate On {record.vacatingOn}</p>;
+                      }
+                      return (
+                        <Space size="middle">
+                          <Button onClick={() => setModal2Open(true)}>
+                            Vacate
+                          </Button>
+                          <Modal
+                            title="Vertically centered modal dialog"
+                            centered
+                            visible={modal2Open} // "open" attribute is deprecated, use "visible" instead
+                            onCancel={() => setModal2Open(false)}
+                            footer={[
+                              <Button
+                                key="submit"
+                                style={{
+                                  backgroundColor: "green",
+                                  color: "white",
+                                }}
+                                onClick={(e) => (
+                                  setModal2Open(false),
+                                  vacateHouse(e, record.propertyId)
+                                )}
+                              >
+                                Confirm
+                              </Button>,
+                              <Button
+                                key="back"
+                                onClick={() => setModal2Open(false)}
+                                style={{
+                                  backgroundColor: "red",
+                                  color: "white",
+                                }}
+                              >
+                                Cancel
+                              </Button>,
+                            ]}
+                          >
+                            <Space direction="vertical">
+                              <DatePicker onChange={onChange} />
+                            </Space>
+                          </Modal>
+                        </Space>
+                      );
+                    }}
+                  />
                 </Table>
               </div>
             </div>

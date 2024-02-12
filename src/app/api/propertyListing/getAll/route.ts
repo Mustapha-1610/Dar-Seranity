@@ -6,7 +6,7 @@ connect();
 export async function POST() {
   try {
     const properties = await rentalPropertyListing
-      .find({ "rented.isRented": false })
+      .find({ "rented.isRented": false, "rented.isOnhold": false })
       .sort({ enhancedVisibility: -1 })
       .exec();
     return NextResponse.json({ success: true, properties });

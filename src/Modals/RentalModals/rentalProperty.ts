@@ -112,6 +112,9 @@ const rentalPropertyListingsSchema = new Schema({
     nextPaymentDate: {
       type: Date,
     },
+    vacationDate: {
+      type: String,
+    },
   },
   ViewingRequests: [
     {

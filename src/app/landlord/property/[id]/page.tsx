@@ -4,7 +4,7 @@ import renterSocket from "@/Helpers/socketLogic/renterSocket";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
-
+import { useRouter } from "next/navigation";
 export default function PropertyInformations({
   params,
 }: {
@@ -13,27 +13,28 @@ export default function PropertyInformations({
   const [propertyInformations, setPropertyInformations] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const [displayedImage, setDisplayedImage] = useState("");
+  const router = useRouter();
   const [displayScheduledViewings, setDisplayScheduledViewings] =
     useState(false);
   const [displayViewingRequests, setDisplayViewingRequests] = useState(false);
   const [displayPossibleRenters, setDisplayPossibleRenters] = useState(true);
+  const fetchPropertyInformations = async () => {
+    const res = await fetch("/api/propertyListing/get", {
+      method: "POST",
+      body: JSON.stringify({
+        propertyId: params.id,
+      }),
+    });
+    const response = await res.json();
+    if (response.success) {
+      setPropertyInformations(response.propertyListing);
+      setLoading(false);
+      setDisplayedImage(response.propertyListing.propertyImages[0]);
+    } else {
+      console.log(response);
+    }
+  };
   useEffect(() => {
-    const fetchPropertyInformations = async () => {
-      const res = await fetch("/api/propertyListing/get", {
-        method: "POST",
-        body: JSON.stringify({
-          propertyId: params.id,
-        }),
-      });
-      const response = await res.json();
-      if (response.success) {
-        setPropertyInformations(response.propertyListing);
-        setLoading(false);
-        setDisplayedImage(response.propertyListing.propertyImages[0]);
-      } else {
-        console.log(response);
-      }
-    };
     if (params.id) {
       console.log(params.id);
       fetchPropertyInformations();
@@ -57,6 +58,7 @@ export default function PropertyInformations({
       );
     }
   };
+
   const acceptViewing = async (
     e: any,
     renterId: any,
@@ -122,6 +124,26 @@ export default function PropertyInformations({
         renterSocket.emit("refreshRenterNotifications", { renterSocketId });
       } else {
         console.log(res);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const deletePropertyListing = async (e: any, booleanResponse: Boolean) => {
+    try {
+      const response = await fetch("/api/landlord/editPropertyListing", {
+        method: "POST",
+        body: JSON.stringify({
+          propertyId: propertyInformations._id,
+          booleanResponse,
+        }),
+      });
+      const res = await response.json();
+      if (res.reposted) {
+        console.log(res);
+        setPropertyInformations(res.property);
+      } else {
+        router.push("/landlord");
       }
     } catch (err) {
       console.log(err);
@@ -201,6 +223,37 @@ export default function PropertyInformations({
                           {new Date(
                             propertyInformations.rented.nextPaymentDate
                           ).toLocaleDateString()}
+                        </div>
+                      </div>
+                    </>
+                  ) : propertyInformations?.rented.isOnhold ? (
+                    <>
+                      <div className="bg-gray-100 p-4 rounded-md shadow-md">
+                        <h2 className="text-lg font-semibold mb-4">
+                          Rent Information
+                        </h2>
+                        <div className="mb-2">
+                          <strong>Vacate Date : </strong>
+                          {new Date(
+                            propertyInformations.rented.vacationDate
+                          ).toLocaleDateString()}
+                        </div>
+
+                        <div className="mb-2">
+                          <strong>Earned:</strong> $
+                          {propertyInformations.rented.earned}
+                        </div>
+                        <div>
+                          <button
+                            onClick={(e) => deletePropertyListing(e, false)}
+                          >
+                            List Again
+                          </button>{" "}
+                          <button
+                            onClick={(e) => deletePropertyListing(e, true)}
+                          >
+                            Delete
+                          </button>
                         </div>
                       </div>
                     </>

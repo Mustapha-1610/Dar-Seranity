@@ -82,6 +82,16 @@ const renterUserSchema = new Schema({
       nextPaymentDate: {
         type: Date,
       },
+      vacating: {
+        type: Boolean,
+        default: false,
+      },
+      vacatingOn: {
+        type: String,
+      },
+      scheduledReminderJobId: {
+        type: String,
+      },
     },
   ],
   viewingSchedules: [
